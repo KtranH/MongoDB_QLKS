@@ -4,7 +4,7 @@
     <ul class="sidebar-nav" id="sidebar-nav">
 
       <li class="nav-item">
-        <a class="nav-link " href="index.html">
+        <a class="nav-link " href="/">
           <i class="bi bi-grid"></i>
           <span>Trang chủ</span>
         </a>
@@ -16,17 +16,17 @@
         </a>
         <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
-            <a href="components-alerts.html">
+            <a href="{{ route('showroom') }}">
               <i class="bi bi-circle"></i><span>Phòng</span>
             </a>
           </li>
           <li>
-            <a href="components-accordion.html">
+            <a href="{{ route('showcategoryroom') }}">
               <i class="bi bi-circle"></i><span>Loại phòng</span>
             </a>
           </li>
           <li>
-            <a href="components-badges.html">
+            <a href="{{ route('showservice') }}">
               <i class="bi bi-circle"></i><span>Dịch vụ</span>
             </a>
           </li>
@@ -39,12 +39,12 @@
         </a>
         <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
-            <a href="tables-general.html">
+            <a href="{{ route('showbooking') }}">
               <i class="bi bi-circle"></i><span>Quản lý đặt phòng</span>
             </a>
           </li>
           <li>
-            <a href="tables-data.html">
+            <a href="{{ route('showchecking') }}">
               <i class="bi bi-circle"></i><span>Quản lý nhận phòng</span>
             </a>
           </li>
@@ -57,12 +57,12 @@
         </a>
         <ul id="charts-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
-            <a href="charts-chartjs.html">
+            <a href="{{ route('showcheckout') }}">
               <i class="bi bi-circle"></i><span>Xử lý trả phòng</span>
             </a>
           </li>
           <li>
-            <a href="charts-apexcharts.html">
+            <a href="{{ route('showHistoryCheckout') }}">
               <i class="bi bi-circle"></i><span>Lịch sử trả phòng</span>
             </a>
           </li>
@@ -75,12 +75,12 @@
         </a>
         <ul id="icons-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
-            <a href="icons-bootstrap.html">
+            <a href="{{ route('showsearchlog') }}">
               <i class="bi bi-circle"></i><span>Tra cứu</span>
             </a>
           </li>
           <li>
-            <a href="icons-remix.html">
+            <a href="{{ route('showreport') }}">
               <i class="bi bi-circle"></i><span>Báo cáo</span>
             </a>
           </li>
