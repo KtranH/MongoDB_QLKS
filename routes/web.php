@@ -52,4 +52,7 @@ Route::middleware([CheckLogin::class])->group(function () {
 
     //Truy cập trang tài khoản
     Route::get('/account', [AccountController::class, 'Account'])->name("showaccount");
+
+    //Đăng xuất tài khoản
+    Route::get('/logout', [AccountController::class, 'Logout'])->name("logout");
 });

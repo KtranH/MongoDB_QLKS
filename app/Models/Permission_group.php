@@ -10,10 +10,11 @@ class Permission_group extends Model
     use HasFactory;
 
     protected $connection = 'mongodb';
-    protected $collection = 'permission_group';
+    protected $collection = 'nhomquyen';
 
     protected $fillable = [
         '_id',
-        'maq'
+        'maq',
+        'tennhom'
     ];
 }

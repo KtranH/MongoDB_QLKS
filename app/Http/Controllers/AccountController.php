@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Employee;
+use App\Models\Permission_group;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Hash;
 
@@ -12,7 +15,11 @@ class AccountController extends Controller
     //
     public function Account()
     {
-        return view('AccountController.Account');
+        $user = Employee::where('email', Cookie::get('tokenLogin'))->first();
+        $birthday = Carbon::instance($user->ngaysinh->toDateTime())->format('d-m-Y');
+        $startWork = Carbon::instance($user->ngvl->toDateTime())->format('d-m-Y');
+        $position = Permission_group::where('maq', $user->MaNhomQuyen)->first();
+        return view('AccountController.Account', compact('user', 'position', 'birthday', 'startWork'));
     }
     public function SignUp()
     {
@@ -46,12 +53,13 @@ class AccountController extends Controller
         }
 
         $cookie = Cookie::make('tokenLogin', $employee->email, 0);
-
         return redirect()->route('showhome')->withCookie($cookie);
     }
     public function Logout()
     {
-        return view('AccountController.Logout');
+        Auth::logout();
+        Cookie::forget('tokenLogin');
+        return redirect()->route('showlogin');
     }
     public function UpdateAccout()
     {
