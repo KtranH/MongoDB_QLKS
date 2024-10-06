@@ -30,6 +30,9 @@ Route::middleware([CheckLogin::class])->group(function () {
     //Truy cập trang quản lý loại phòng
     Route::get('/manage/categoryroom', [CategoryRoomController::class, 'CategoryRoom'])->name("showcategoryroom");
 
+    //Truy cập trang tùy chỉnh loại phòng
+    Route::get('/setting/categoryroom{id}', [CategoryRoomController::class, 'ShowUpdateCategoryRoom'])->name("showupdatecategoryroom");
+
     //Truy cập trang quản lý dịch vụ
     Route::get('/manage/service', [ServiceController::class, 'Service'])->name("showservice");
 

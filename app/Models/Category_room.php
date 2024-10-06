@@ -16,6 +16,11 @@ class Category_room extends Model
         '_id',
         'maloai',
         'succhua',
-        'tinhtrang'
+        'tinhtrang',
+        'dientich',
+        'mota',
+        'noithat',
+        'quydinh',
+        'tienich',
     ];
 }

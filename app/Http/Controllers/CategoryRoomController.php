@@ -14,4 +14,9 @@ class CategoryRoomController extends Controller
         $listCategoriesRoom = Category_room::all();
         return view('ManageController.CategoryRoom', compact('listCategoriesRoom'));
     }
+    public function ShowUpdateCategoryRoom($id)
+    {
+        $category_room = Category_room::where('_id', $id)->firstOrFail();
+        return view('ManageController.CategoryRoom_Update', compact('category_room'));
+    }
 }

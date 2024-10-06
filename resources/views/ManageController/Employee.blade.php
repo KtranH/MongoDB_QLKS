@@ -12,7 +12,7 @@
         <h1>Nhân viên</h1>
         <nav>
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="/">Home</a></li>
+                <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
                 <li class="breadcrumb-item">Quản lý</li>
                 <li class="breadcrumb-item active">Nhân viên</li>
             </ol>
