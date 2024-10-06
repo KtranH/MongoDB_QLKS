@@ -16,10 +16,7 @@ class AccountController extends Controller
     public function Account()
     {
         $user = Employee::where('email', Cookie::get('tokenLogin'))->first();
-        $birthday = Carbon::instance($user->ngaysinh->toDateTime())->format('d-m-Y');
-        $startWork = Carbon::instance($user->ngvl->toDateTime())->format('d-m-Y');
-        $position = Permission_group::where('maq', $user->MaNhomQuyen)->first();
-        return view('AccountController.Account', compact('user', 'position', 'birthday', 'startWork'));
+        return view('AccountController.Account', compact('user'));
     }
     public function SignUp()
     {

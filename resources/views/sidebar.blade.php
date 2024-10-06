@@ -30,6 +30,11 @@
               <i class="bi bi-circle"></i><span>Dịch vụ</span>
             </a>
           </li>
+          <li>
+            <a href="{{ route('showemployee') }}">
+              <i class="bi bi-circle"></i><span>Nhân viên</span>
+            </a>
+          </li>
         </ul>
       </li><!-- End Forms Nav -->
 

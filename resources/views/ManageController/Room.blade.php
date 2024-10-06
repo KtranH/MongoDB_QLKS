@@ -78,7 +78,9 @@
                                         <div class="col-md-8 col-lg-9">
                                             <select class="form-select" aria-label="Default select example" style="box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;" name="category">
                                                 <option selected value="Chưa rõ">Lựa chọn loại phòng</option>
-                                              
+                                                @foreach ($category_room as $item)
+                                                    <option value="{{ $item->_id }}">{{ $item->tenloai }}</option>
+                                                @endforeach
                                             </select>
                                         </div>
                                     </div>

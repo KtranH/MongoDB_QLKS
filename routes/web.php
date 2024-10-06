@@ -6,6 +6,7 @@ use App\Http\Controllers\CategoryRoomController;
 use App\Http\Controllers\CheckingController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ListEmployee;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\StatisticalController;
@@ -31,6 +32,9 @@ Route::middleware([CheckLogin::class])->group(function () {
 
     //Truy cập trang quản lý dịch vụ
     Route::get('/manage/service', [ServiceController::class, 'Service'])->name("showservice");
+
+    //Truy cập trang quản lý nhân viên
+    Route::get('/manage/employee', [ListEmployee::class, 'Employee'])->name("showemployee");
 
     //Truy cập trang đặt phòng
     Route::get('/booking', [BookingController::class, 'Booking'])->name("showbooking");
