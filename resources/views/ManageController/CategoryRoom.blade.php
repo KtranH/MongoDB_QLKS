@@ -48,15 +48,27 @@
                                   <tr>
                                     <th scope="col">Mã loại phòng</th>
                                     <th scope="col">Tên loại phòng</th>
-                                    <th scope="col">Số lượng</th>
                                     <th scope="col">Sức chứa</th>
-                                    <th scope="col">Giá thuê</th>
                                     <th scope="col">Tình trạng</th>
                                     <th scope="col">Chức năng</th>
                                   </tr>
                                 </thead>
                                 <tbody>
-                        
+                                  @foreach ($listCategoriesRoom as $item)
+                                    <tr>
+                                        <th scope="row"><a href="#">{{ $item->_id }}</a></th>
+                                        <td>{{ $item->tenloai}}</td>
+                                        <td><a href="#" class="text-primary"><?php echo $item->succhua ?></a></td>
+                                        @if ($item->tinhtrang == 0)
+                                            <td><span class="badge bg-danger">Không hoạt động</span></td>
+                                        @else
+                                            <td><span class="badge bg-success">Còn hoạt động</span></td>
+                                        @endif
+                                        <td><a href="#" type="button" class="btn btn-info" style="border-radius:20%;margin-right:20px;color:white;box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;background-color:#74C0FC"><i class="fi fi-rr-file-edit"></i></a><a href="#" type="button" title="Khôi phục" class="btn btn-info" style="border-radius:20%;margin-right:20px;color:white;box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;background-color:#74C0FC">
+                                          <i class="fa-solid fa-arrow-rotate-left" style="color: #ffffff;"></i></a><a href="#" type="button" class="btn btn-danger" style="border-radius:20%; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;">
+                                            <i class="fi fi-br-cross"></i></a></td>
+                                    </tr>              
+                                  @endforeach
                                 </tbody>
                               </table>
 
