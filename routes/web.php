@@ -33,6 +33,15 @@ Route::middleware([CheckLogin::class])->group(function () {
     //Truy cập trang tùy chỉnh loại phòng
     Route::get('/setting/categoryroom{id}', [CategoryRoomController::class, 'ShowUpdateCategoryRoom'])->name("showupdatecategoryroom");
 
+    //Xác nhận thêm loại phòng
+    Route::post('/setting/addmorecategoryroom', [CategoryRoomController::class, 'AddMoreCategoryRoom'])->name("addmorecategoryroom");
+
+    //Tùy chỉnh tình trạng loại phòng sang hoạt động
+    Route::get('/setting/activecategoryroom{id}', [CategoryRoomController::class, 'ActiveCategoryRoom'])->name("activecategoryroom");
+
+    //Tùy chỉnh tình trạng loại phòng sang không hoạt động
+    Route::get('/setting/disablecategoryroom{id}', [CategoryRoomController::class, 'DisableCategoryRoom'])->name("disablecategoryroom");
+
     //Truy cập trang quản lý dịch vụ
     Route::get('/manage/service', [ServiceController::class, 'Service'])->name("showservice");
 

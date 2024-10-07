@@ -10,7 +10,7 @@ class RoomController extends Controller
     //
     public function Room()
     {
-        $category_room = Category_room::all();
+        $category_room = Category_room::where('tinhtrang', 1)->get();
         return view('ManageController.Room', compact('category_room'));
     }
 }
