@@ -10,10 +10,7 @@ class Room_hotel extends Model
     use HasFactory;
     
     protected $connection = 'mongodb';
-<<<<<<< HEAD
-=======
 
->>>>>>> 13552dbd6c5203b5a54e2ae5506891de61513f70
     protected $collection = 'phong';
     protected $fillable = [
         '_id',
@@ -23,11 +20,8 @@ class Room_hotel extends Model
         'tinhtrang',
         'maloai'
     ];
-<<<<<<< HEAD
     public function category()
     {
         return $this->belongsTo(Category_room::class, 'maloai', '_id');
     }
-=======
->>>>>>> 13552dbd6c5203b5a54e2ae5506891de61513f70
 }

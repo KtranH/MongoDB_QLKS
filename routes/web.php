@@ -35,18 +35,9 @@ Route::middleware([CheckLogin::class])->group(function () {
 
     //Xác nhận thêm loại phòng
     Route::post('/setting/addmorecategoryroom', [CategoryRoomController::class, 'AddMoreCategoryRoom'])->name("addmorecategoryroom");
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
-    //Xác nhận thêm phòng
 
-    Route::post('/setting/addmoreroom', [RoomController::class, 'AddMoreRoom'])->name('addRoom');
->>>>>>> 61b263d (Update room)
->>>>>>> 2cf0236 (Update room)
-=======
->>>>>>> 13552dbd6c5203b5a54e2ae5506891de61513f70
+    //Xác nhận thêm phòng
+    Route::post('/setting/addmoreroom', [RoomController::class, 'AddMoreRoom'])->name('addroom');
 
     //Tùy chỉnh tình trạng loại phòng sang hoạt động
     Route::get('/setting/activecategoryroom{id}', [CategoryRoomController::class, 'ActiveCategoryRoom'])->name("activecategoryroom");
@@ -54,42 +45,24 @@ Route::middleware([CheckLogin::class])->group(function () {
     //Tùy chỉnh tình trạng loại phòng sang không hoạt động
     Route::get('/setting/disablecategoryroom{id}', [CategoryRoomController::class, 'DisableCategoryRoom'])->name("disablecategoryroom");
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> 2cf0236 (Update room)
-=======
->>>>>>> 13552dbd6c5203b5a54e2ae5506891de61513f70
     //Truy cập trang quản lý dịch vụ
     Route::get('/manage/service', [ServiceController::class, 'Service'])->name("showservice");
 
     //Truy cập trang quản lý nhân viên
     Route::get('/manage/employee', [ListEmployee::class, 'Employee'])->name("showemployee");
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
     //Tùy chỉnh tình trạng phòng sang hoạt động
     Route::get('/setting/activeroom{id}', [RoomController::class, 'ActiveRoom'])->name("activeroom");
 
     //Tùy chỉnh tình trạng phòng sang không hoạt động
     Route::get('/setting/disableroom{id}', [RoomController::class, 'DisableRoom'])->name("disableroom");
+
     //Truy cập trang quản lý dịch vụ
     Route::get('/manage/service', [ServiceController::class, 'Service'])->name("showservice");
-
-
-    
 
     //Truy cập trang quản lý nhân viên
     Route::get('/manage/employee', [ListEmployee::class, 'Employee'])->name("showemployee");
 
-
->>>>>>> 61b263d (Update room)
->>>>>>> 2cf0236 (Update room)
-=======
->>>>>>> 13552dbd6c5203b5a54e2ae5506891de61513f70
     //Truy cập trang đặt phòng
     Route::get('/booking', [BookingController::class, 'Booking'])->name("showbooking");
 
