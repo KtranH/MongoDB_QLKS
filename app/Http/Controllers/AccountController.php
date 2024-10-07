@@ -16,7 +16,6 @@ class AccountController extends Controller
     public function Account()
     {
         $user = Employee::where('email', Cookie::get('tokenLogin'))->first();
-        dd($user->getPosition->tennhom);
         return view('AccountController.Account', compact('user'));
     }
     public function SignUp()
