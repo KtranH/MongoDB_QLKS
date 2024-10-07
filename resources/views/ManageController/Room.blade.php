@@ -115,7 +115,6 @@
                                               @enderror
                                           </div>
                                       </div>
-    
                                       <div style="width:100%">
                                         <label for="fullName" class="col-md-4 col-lg-3 col-form-label"  style="font-weight:bold">Tên phòng:</label>
                                         <div class="col-md-8 col-lg-9">
@@ -137,10 +136,8 @@
                                         <input name="giathue" type="number" min = 1 class ="form-control" id="Country" style="box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;" required>
                                         <div class="invalid-feedback">Gía thuê không hợp lệ</div>
                                       </div>
-
                                     </div>
                                   </div>  
-
                                   <div class="text-center" style="margin-top:20px">
                                     <button type="submit" class="btn btn-primary">Thêm mới</button>
                                   </div>
