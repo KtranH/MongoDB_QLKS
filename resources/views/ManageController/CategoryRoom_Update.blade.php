@@ -55,7 +55,7 @@
 
                                     <!-- Form hiển thị thêm loại phòng -->
                                     <form class="needs-validation" novalidate method="POST" enctype="multipart/form-data"
-                                        action="{{ route('updatecategoryroom', $category_room->_id) }}">
+                                        action="{{ route('updatecategoryroom', ['id' => $category_room->_id]) }}">
                                         @csrf
                                         <div
                                             style="width:100%; display: flex;justify-content:space-around;margin-bottom: 20px">

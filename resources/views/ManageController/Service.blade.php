@@ -41,6 +41,18 @@
                              font-style: normal;
                              font-size: 14px;">Danh dịch vụ hiện có</h5>
 
+                             @if (Session::has('success'))
+                                <div class="alert alert-success" role="alert">
+                                    {{ Session::get('success') }}
+                                </div>                          
+                             @endif
+
+                             @if (Session::has('error'))
+                                <div class="alert alert-danger" role="alert">
+                                    {{ Session::get('error') }}
+                                </div>  
+                             @endif
+
                             <!-- Bảng hiển thị danh sách loại phòng -->
 
                             <table class="table table-borderless datatable">
@@ -55,7 +67,26 @@
                                   </tr>
                                 </thead>
                                 <tbody>
-                                   
+                                  @foreach ($service as $item)
+                                  <tr>
+                                      <th scope="row"><a href="#">{{ $item->_id }}</a></th>
+                                      <td><a href="#" class="text-primary">{{ $item->tendv }}</a></td>
+                                      <td>{{ $item->mota}}</td>
+                                      <td>{{ $item->giadv}}</td>
+                                      @if ($item->tinhtrang == 0)
+                                          <td><span class="badge bg-danger">Không hoạt động</span></td>
+                                      @else
+                                          <td><span class="badge bg-success">Còn hoạt động</span></td>
+                                      @endif
+                                      <td><a href="{{ route('showupdateservice', ['id' => $item->_id]) }}" type="button" class="btn btn-info" style="border-radius:20%;margin-right:20px;color:white;box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;background-color:#74C0FC">
+                                        <i class="fi fi-rr-file-edit"></i></a><a href="#" type="button" title="Khôi phục" class="btn btn-info" style="border-radius:20%;margin-right:20px;color:white;box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;background-color:#74C0FC">
+                                         <i class="fa-solid fa-arrow-rotate-left" style="color: #ffffff;"></i></a><a href="#" type="button" class="btn btn-danger" style="border-radius:20%; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;">
+                                          <i class="fi fi-br-cross"></i></a></td>
+                                      @if (Session::has('error'))
+                                          <td><div class="alert alert-danger" role="alert"> {{ Session::get('error') }} </div></td>
+                                      @endif
+                                  </tr>              
+                                @endforeach
                                 </tbody>
                               </table>
 
@@ -70,14 +101,14 @@
                                 font-style: normal;">Thêm một dịch vụ</h5>
                                 
                              <!-- Form hiển thị thêm loại phòng -->
-                                <form class="needs-validation" novalidate method="POST" enctype="multipart/form-data" action="#">
+                                <form class="needs-validation" novalidate method="POST" enctype="multipart/form-data" action="{{ route('addservice') }}">
                                 @csrf
                                   <div style="width:100%; margin-bottom: 50px">
     
                                       <div style="width:122%">
                                         <label for="fullName" class="col-md-4 col-lg-3 col-form-label"  style="font-weight:bold">Tên dịch vụ:</label>
                                         <div class="col-md-8 col-lg-9">
-                                          <input name="servicename" type="text" class="form-control" id="fullName" style="box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;" required>
+                                          <input name="tendv" type="text" class="form-control" id="fullName" style="box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;" required>
                                           <div class="invalid-feedback">Tên dịch vụ không hợp lệ</div>
                                         </div>
                                       </div>  
@@ -85,7 +116,7 @@
                                       <div style="width:122%">
                                         <label for="Country" class="col-md-4 col-lg-3 col-form-label"  style="font-weight:bold">Giá thuê:</label>
                                         <div class="col-md-8 col-lg-9">
-                                        <input name="price" type="number" min = 1 class ="form-control" id="Country" style="box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;" required>
+                                        <input name="giadv" type="number" min = 1 class ="form-control" id="Country" style="box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;" required>
                                         <div class="invalid-feedback">Giá không hợp lệ</div>
                                         </div>
                                       </div>
@@ -94,7 +125,7 @@
                                   <div class="row mb-3">
                                     <label for="about" class="col-md-4 col-lg-2 col-form-label"  style="font-weight:bold">Mô tả:</label>
                                     <div class="col-md-8 col-lg-9">
-                                      <textarea name="about" class="form-control" id="about" style="height: 100px; box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;margin-bottom:50px"required></textarea>
+                                      <textarea name="mota" class="form-control" id="about" style="height: 100px; box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;margin-bottom:50px"required></textarea>
                                       <div class="invalid-feedback">Mô tả không hợp lệ</div>
                                     </div>
                                   </div>
@@ -115,7 +146,7 @@
                                   <div class="row mb-3">
                                     <label for="Country" class="col-md-4 col-lg-2 col-form-label"  style="font-weight:bold">Đường dẫn hình ảnh 1:</label>
                                     <div class="col-md-8 col-lg-9">
-                                      <input name="image1" type="text" class ="form-control" id="image1" style="box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;" required>
+                                      <input name="image1" type="text" class ="form-control" id="image1" style="box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;">
                                       <div class="invalid-feedback">Hình ảnh không hợp lệ</div>
                                     </div>
                                   </div>

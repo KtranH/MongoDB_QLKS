@@ -57,6 +57,15 @@ Route::middleware([CheckLogin::class])->group(function () {
     //Truy cập trang quản lý dịch vụ
     Route::get('/manage/service', [ServiceController::class, 'Service'])->name("showservice");
 
+    //Xác nhận thêm dịch vụ
+    Route::post('/manage/addservice', [ServiceController::class, 'AddService'])->name("addservice");
+
+    //Truy cập trang tùy chỉnh dịch vụ
+    Route::get('/setting/service{id}', [ServiceController::class, 'ShowUpdateService'])->name("showupdateservice");
+
+    //Xác nhận tùy chỉnh dịch vụ
+    Route::post('/setting/updateservice{id}', [ServiceController::class, 'UpdateService'])->name("updateservice");
+
     //Truy cập trang quản lý nhân viên
     Route::get('/manage/employee', [ListEmployee::class, 'Employee'])->name("showemployee");
 
