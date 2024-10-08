@@ -103,7 +103,7 @@
 
                                       <div style="width:100%">
                                           <label for="company" class="col-md-4 col-lg-3 col-form-label"  style="font-weight:bold">Tên loại:</label>
-                                          <div class="col-md-8 col-lg-9">
+                                          <div class="col-md-8 col-lg-12">
                                               <select class="form-select @error ('maloai') is-invalid @enderror" aria-label="Default select example" style="box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;" name="maloai">
                                                   <option selected value="Chưa rõ">Lựa chọn loại phòng</option>
                                                   @foreach ($category_room as $item)
@@ -117,7 +117,7 @@
                                       </div>
                                       <div style="width:100%">
                                         <label for="fullName" class="col-md-4 col-lg-3 col-form-label"  style="font-weight:bold">Tên phòng:</label>
-                                        <div class="col-md-8 col-lg-9">
+                                        <div class="col-md-8 col-lg-12">
                                           <input name="tenphong" type="text" class="form-control" id="fullName" style="box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;" required>
                                           <div class="invalid-feedback">Tên phòng không hợp lệ</div>
                                         </div>
@@ -125,14 +125,14 @@
 
                                       <div style="width:100%">
                                         <label for="Country" class="col-md-4 col-lg-3 col-form-label"  style="font-weight:bold">Vị trí:</label>
-                                        <div class="col-md-8 col-lg-9">
+                                        <div class="col-md-8 col-lg-12">
                                         <input name="vitri" type="number" min = 1 class ="form-control" id="Country" style="box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;" required>
                                         <div class="invalid-feedback">Vị trí không hợp lệ</div>
                                       </div>
                                       
                                       <div style="width:100%">
                                         <label for="Country" class="col-md-4 col-lg-3 col-form-label"  style="font-weight:bold">Giá thuê:</label>
-                                        <div class="col-md-8 col-lg-9">
+                                        <div class="col-md-8 col-lg-12">
                                         <input name="giathue" type="number" min = 1 class ="form-control" id="Country" style="box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;" required>
                                         <div class="invalid-feedback">Gía thuê không hợp lệ</div>
                                       </div>
