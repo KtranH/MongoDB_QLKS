@@ -40,9 +40,18 @@
                                 font-weight: bold;
                                 font-style: normal;">Tùy chỉnh phòng</h5>
                                 
+                                @if (Session::has('success'))
+                                        <div class="alert alert-success" role="alert">
+                                            {{ Session::get('success') }}
+                                        </div>
+                                    @endif
+
                                 @if (Session::has('error'))
-                                    <div class="alert alert-danger" role="alert">{{ Session::get('error') }}</div>
+                                        <div class="alert alert-danger" role="alert">
+                                            {{ Session::get('error') }}
+                                        </div>
                                 @endif
+
 
                              <!-- Form hiển thị thêm phòng -->
                                 <form class="needs-validation" novalidate method="POST" enctype="multipart/form-data" action="{{ route("updateroom",["id" => $room->_id]) }}">

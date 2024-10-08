@@ -39,14 +39,42 @@ class RoomController extends Controller
             $room = new Room_hotel();
             $room->maloai = $request->maloai; 
             $room->tenphong = $request->tenphong;
-            $room->vitri = $request->vitri;
-            $room->giathue = $request->giathue;
+            $room->vitri = Intval($request->vitri);
+            $room->giathue = Intval($request->giathue);
             $room->tinhtrang = 1;
             $room->save();
 
             return redirect()->back()->with('success', 'Thêm thành công');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Có lỗi xảy ra, không thể thêm! ' . $e->getMessage());
+        }
+    }
+    public function UpdateRoom(Request $request, $id)
+    {
+        $request->validate([
+            'tenphong' => 'required',
+            'vitri' => 'required',
+            'giathue' => 'required',
+            
+        ],[
+            'tenphong.required' => 'Vui lòng nhập tên phòng',
+            'vitri.required' => 'Vui lòng nhập sức chứa',
+            'giathue.required' => 'Vui lòng nhập giá thuê',
+            
+        ]);
+        
+        try
+        {
+            $room = Room_hotel::where('_id', $id)->firstOrFail();
+            $room->tenphong = $request->tenphong;
+            $room->vitri = Intval($request->vitri);
+            $room->giathue = Intval($request->giathue);
+            $room->save();
+            return redirect()->back()->with('success', 'Cập nhật thay đổi thành công');
+        }
+        catch(\Exception $e)
+        {
+            return redirect()->back()->with('error', "Có lỗi xảy ra, không thể thay đổi!");
         }
     }
     public function ActiveRoom($id)
@@ -79,6 +107,7 @@ class RoomController extends Controller
     public function ShowUpdateRoom($id)
     {
         $room = Room_hotel::where('_id', $id)->firstOrFail();
-        return view('ManageController.Room_Update', compact('room'));
+        $category_room = Category_room::all();
+        return view('ManageController.Room_Update', compact('room', 'category_room'));
     }
 }

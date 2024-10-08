@@ -83,7 +83,7 @@
                                   
                                   <div class="row mb-3">
                                     <div class="col-md-8 col-lg-9">
-                                        <img id="avatarPreview1" src="{{ $selectService[0]->HINHANH }}" alt="Profile" style="max-width:120px;">
+                                        <img id="avatarPreview1" src="https://tecwood.com.vn/upload/ho-boi-hinh-oval.jpg" alt="Profile" style="max-width:120px;">
                                     </div>
                                   </div>
                                   <div class="row mb-3">

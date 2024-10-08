@@ -67,7 +67,7 @@
                                         @else
                                             <td><span class="badge bg-success">Còn hoạt động</span></td>
                                         @endif
-                                        <td><a href="" type="button" class="btn btn-info" style="border-radius:20%;margin-right:20px;color:white;box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;background-color:#74C0FC">
+                                        <td><a href="{{ route('showupdateroom', ['id' => $item->_id]) }}" type="button" class="btn btn-info" style="border-radius:20%;margin-right:20px;color:white;box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;background-color:#74C0FC">
                                           <i class="fi fi-rr-file-edit"></i></a><a href="{{ route('activeroom', ['id' => $item->_id]) }}" type="button" title="Khôi phục" class="btn btn-info" style="border-radius:20%;margin-right:20px;color:white;box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;background-color:#74C0FC">
                                            <i class="fa-solid fa-arrow-rotate-left" style="color: #ffffff;"></i></a><a href="{{ route('disableroom', ['id' => $item->_id]) }}" type="button" class="btn btn-danger" style="border-radius:20%; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;">
                                             <i class="fi fi-br-cross"></i></a></td>
