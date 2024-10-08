@@ -18,27 +18,29 @@ class RoomController extends Controller
     public function AddMoreRoom(Request $request)
     {
         $request->validate([
-            'maloai' => 'required',
             'tenphong' => 'required',
-            'succhua' => 'required',
+            'vitri' => 'required',
             'giathue' => 'required',
             
         ], 
 [
-            'maloai.required' => 'Vui lòng chọn mã loại phòng',
             'tenphong.required' => 'Vui lòng nhập tên phòng',
-            'succhua.required' => 'Vui lòng nhập sức chứa',
+            'vitri.required' => 'Vui lòng nhập sức chứa',
             'giathue.required' => 'Vui lòng nhập giá thuê',
             
         ]);
 
+        if($request->maloai == "Chưa rõ")
+        {
+            return redirect()->back()->with('error', 'Vui lòng chọn loại phòng');
+        }
+
         try {
-            // Tạo phòng mới
             $room = new Room_hotel();
-            $room->maloai = $request->maloai; // Lưu mã loại phòng
+            $room->maloai = $request->maloai; 
             $room->tenphong = $request->tenphong;
-            $room->vitri = $request->vitri;
-            $room->giathue = $request->giathue;
+            $room->vitri = Intval($request->vitri);
+            $room->giathue = Intval($request->giathue);
             $room->tinhtrang = 1;
             $room->save();
 
@@ -47,13 +49,39 @@ class RoomController extends Controller
             return redirect()->back()->with('error', 'Có lỗi xảy ra, không thể thêm! ' . $e->getMessage());
         }
     }
+    public function UpdateRoom(Request $request, $id)
+    {
+        $request->validate([
+            'tenphong' => 'required',
+            'vitri' => 'required',
+            'giathue' => 'required',
+            
+        ],[
+            'tenphong.required' => 'Vui lòng nhập tên phòng',
+            'vitri.required' => 'Vui lòng nhập sức chứa',
+            'giathue.required' => 'Vui lòng nhập giá thuê',
+            
+        ]);
+        
+        try
+        {
+            $room = Room_hotel::where('_id', $id)->firstOrFail();
+            $room->tenphong = $request->tenphong;
+            $room->vitri = Intval($request->vitri);
+            $room->giathue = Intval($request->giathue);
+            $room->save();
+            return redirect()->back()->with('success', 'Cập nhật thay đổi thành công');
+        }
+        catch(\Exception $e)
+        {
+            return redirect()->back()->with('error', "Có lỗi xảy ra, không thể thay đổi!");
+        }
+    }
     public function ActiveRoom($id)
     {
         try {
-            // Tìm phòng dựa trên ID
             $room = Room_hotel::findOrFail($id);
-            // Cập nhật tình trạng của phòng
-            $room->tinhtrang = 1; // Bạn có thể thay đổi giá trị này nếu muốn trạng thái khác
+            $room->tinhtrang = 1; 
             $room->save();
         
             return redirect()->back()->with('success', 'Cập nhật trạng thái phòng thành công');
@@ -65,10 +93,7 @@ class RoomController extends Controller
     {
         try
         {
-            // Tìm phòng dựa trên ID
             $room = Room_hotel::where('_id', $id)->firstOrFail();
-            
-            // Đặt tình trạng phòng thành không hoạt động
             $room->tinhtrang = 0;
             $room->save();
             return redirect()->back();
@@ -82,8 +107,7 @@ class RoomController extends Controller
     public function ShowUpdateRoom($id)
     {
         $room = Room_hotel::where('_id', $id)->firstOrFail();
-        return view('ManageController.Room_Update', compact('room'));
-        $category_room = Category_room::where('tinhtrang', 1)->get();
-        return view('ManageController.Room', compact('category_room'));
+        $category_room = Category_room::all();
+        return view('ManageController.Room_Update', compact('room', 'category_room'));
     }
 }

@@ -40,7 +40,11 @@
                              font-weight: 400;
                              font-style: normal;
                              font-size: 14px;">Danh sách loại phòng hiện có</h5>
-
+                             @if (Session::has('error'))
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                  <strong>{{ Session::get('error') }}</strong>
+                                </div>
+                             @endif
                             <!-- Bảng hiển thị danh sách loại phòng -->
 
                             <table class="table table-borderless datatable">

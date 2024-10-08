@@ -8,22 +8,8 @@
         "php": "^8.2",
         "jenssegers/mongodb": "^4.8",
         "laravel/framework": "^11.9",
-<<<<<<< HEAD
-<<<<<<< HEAD
         "laravel/tinker": "^2.9",
         "mongodb/laravel-mongodb": "^4.8"
-=======
-<<<<<<< HEAD
-        "laravel/tinker": "^2.9",
-        "mongodb/laravel-mongodb": "^4.8"
-=======
-        "laravel/tinker": "^2.9"
->>>>>>> 61b263d (Update room)
->>>>>>> 2cf0236 (Update room)
-=======
-        "laravel/tinker": "^2.9",
-        "mongodb/laravel-mongodb": "^4.8"
->>>>>>> 13552dbd6c5203b5a54e2ae5506891de61513f70
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
