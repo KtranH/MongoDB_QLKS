@@ -15,6 +15,12 @@ class Category_room extends Model
     protected $fillable = [
         '_id',
         'maloai',
-        'succhua'
+        'succhua',
+        'tinhtrang',
+        'dientich',
+        'mota',
+        'noithat',
+        'quydinh',
+        'tienich',
     ];
 }

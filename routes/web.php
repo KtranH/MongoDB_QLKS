@@ -6,6 +6,7 @@ use App\Http\Controllers\CategoryRoomController;
 use App\Http\Controllers\CheckingController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ListEmployee;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\StatisticalController;
@@ -29,8 +30,47 @@ Route::middleware([CheckLogin::class])->group(function () {
     //Truy cập trang quản lý loại phòng
     Route::get('/manage/categoryroom', [CategoryRoomController::class, 'CategoryRoom'])->name("showcategoryroom");
 
+    //Truy cập trang tùy chỉnh loại phòng
+    Route::get('/setting/categoryroom{id}', [CategoryRoomController::class, 'ShowUpdateCategoryRoom'])->name("showupdatecategoryroom");
+
+    //Xác nhận tùy chỉnh loại phòng
+    Route::post('/setting/updatecategoryroom{id}', [CategoryRoomController::class, 'UpdateCategoryRoom'])->name("updatecategoryroom");
+
+    //Xác nhận thêm loại phòng
+    Route::post('/setting/addmorecategoryroom', [CategoryRoomController::class, 'AddMoreCategoryRoom'])->name("addmorecategoryroom");
+
+    //Xác nhận thêm phòng
+    Route::post('/setting/addmoreroom', [RoomController::class, 'AddMoreRoom'])->name('addroom');
+
+    //Tùy chỉnh tình trạng loại phòng sang hoạt động
+    Route::get('/setting/activecategoryroom{id}', [CategoryRoomController::class, 'ActiveCategoryRoom'])->name("activecategoryroom");
+
+    //Tùy chỉnh tình trạng loại phòng sang không hoạt động
+    Route::get('/setting/disablecategoryroom{id}', [CategoryRoomController::class, 'DisableCategoryRoom'])->name("disablecategoryroom");
+
+    //Truy cập trang tùy chỉnh phòng
+    Route::get('/setting/room{id}', [RoomController::class, 'ShowUpdateRoom'])->name("showupdateroom");
+
+    //Xác nhận tùy chỉnh phòng
+    Route::post('/setting/updateroom{id}', [RoomController::class, 'UpdateRoom'])->name("updateroom");
+
     //Truy cập trang quản lý dịch vụ
     Route::get('/manage/service', [ServiceController::class, 'Service'])->name("showservice");
+
+    //Truy cập trang quản lý nhân viên
+    Route::get('/manage/employee', [ListEmployee::class, 'Employee'])->name("showemployee");
+
+    //Tùy chỉnh tình trạng phòng sang hoạt động
+    Route::get('/setting/activeroom{id}', [RoomController::class, 'ActiveRoom'])->name("activeroom");
+
+    //Tùy chỉnh tình trạng phòng sang không hoạt động
+    Route::get('/setting/disableroom{id}', [RoomController::class, 'DisableRoom'])->name("disableroom");
+
+    //Truy cập trang quản lý dịch vụ
+    Route::get('/manage/service', [ServiceController::class, 'Service'])->name("showservice");
+
+    //Truy cập trang quản lý nhân viên
+    Route::get('/manage/employee', [ListEmployee::class, 'Employee'])->name("showemployee");
 
     //Truy cập trang đặt phòng
     Route::get('/booking', [BookingController::class, 'Booking'])->name("showbooking");

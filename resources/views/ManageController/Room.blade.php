@@ -55,7 +55,27 @@
                                   </tr>
                                 </thead>
                                 <tbody>
-                                   
+                                  @foreach ($rooms as $item)
+                                    <tr>
+                                        <th scope="row"><a href="#">{{ $item->_id }}</a></th>
+                                        <td>{{ $item->tenphong}}</td>
+                                        <td><a href="#" class="text-primary"><?php echo $item->category->tenloai ?></a></td>
+                                        <td>{{ $item->category->succhua}}</td>
+                                        <td>{{ $item->giathue}}</td>
+                                        @if ($item->tinhtrang == 0)
+                                            <td><span class="badge bg-danger">Không hoạt động</span></td>
+                                        @else
+                                            <td><span class="badge bg-success">Còn hoạt động</span></td>
+                                        @endif
+                                        <td><a href="{{ route('showupdateroom', ['id' => $item->_id]) }}" type="button" class="btn btn-info" style="border-radius:20%;margin-right:20px;color:white;box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;background-color:#74C0FC">
+                                          <i class="fi fi-rr-file-edit"></i></a><a href="{{ route('activeroom', ['id' => $item->_id]) }}" type="button" title="Khôi phục" class="btn btn-info" style="border-radius:20%;margin-right:20px;color:white;box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;background-color:#74C0FC">
+                                           <i class="fa-solid fa-arrow-rotate-left" style="color: #ffffff;"></i></a><a href="{{ route('disableroom', ['id' => $item->_id]) }}" type="button" class="btn btn-danger" style="border-radius:20%; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;">
+                                            <i class="fi fi-br-cross"></i></a></td>
+                                        @if (Session::has('error'))
+                                            <td><div class="alert alert-danger" role="alert"> {{ Session::get('error') }} </div></td>
+                                        @endif
+                                    </tr>              
+                                  @endforeach
                                 </tbody>
                               </table>
 
@@ -68,39 +88,57 @@
                                 font-optical-sizing: auto;
                                 font-weight: bold;
                                 font-style: normal;">Thêm một phòng</h5>
+
+                                @if (Session::has('error'))
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                  <strong>{{ Session::get('error') }}</strong>
+                                </div>
+                                @endif
+
                                 
                              <!-- Form hiển thị thêm loại phòng -->
-                                <form class="needs-validation" novalidate method="POST" enctype="multipart/form-data" action="#">
-                                @csrf
-                                  <div style="width:100%; display: flex;justify-content:space-around;margin-bottom: 20px">
-                                    <div style="width:100%">
-                                        <label for="company" class="col-md-4 col-lg-3 col-form-label"  style="font-weight:bold">Tên loại:</label>
-                                        <div class="col-md-8 col-lg-9">
-                                            <select class="form-select" aria-label="Default select example" style="box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;" name="category">
-                                                <option selected value="Chưa rõ">Lựa chọn loại phòng</option>
-                                              
-                                            </select>
-                                        </div>
-                                    </div>
-    
+                                <form class="needs-validation" novalidate method="POST" action="{{ route('addroom') }}">
+                                 @csrf
+                                  <div style="width:100%; display: flex;justify-content:space-around;margin-bottom:20px; flex-wrap:wrap">
+
+                                      <div style="width:100%">
+                                          <label for="company" class="col-md-4 col-lg-3 col-form-label"  style="font-weight:bold">Tên loại:</label>
+                                          <div class="col-md-8 col-lg-12">
+                                              <select class="form-select @error ('maloai') is-invalid @enderror" aria-label="Default select example" style="box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;" name="maloai">
+                                                  <option selected value="Chưa rõ">Lựa chọn loại phòng</option>
+                                                  @foreach ($category_room as $item)
+                                                      <option value="{{ $item->_id }}">{{ $item->tenloai }}</option>
+                                                  @endforeach
+                                              </select>
+                                              @error('maloai')
+                                                  <div class="invalid-feedback">{{ $message }}</div>
+                                              @enderror
+                                          </div>
+                                      </div>
                                       <div style="width:100%">
                                         <label for="fullName" class="col-md-4 col-lg-3 col-form-label"  style="font-weight:bold">Tên phòng:</label>
-                                        <div class="col-md-8 col-lg-9">
-                                          <input name="roomname" type="text" class="form-control" id="fullName" style="box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;" required>
+                                        <div class="col-md-8 col-lg-12">
+                                          <input name="tenphong" type="text" class="form-control" id="fullName" style="box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;" required>
                                           <div class="invalid-feedback">Tên phòng không hợp lệ</div>
                                         </div>
                                       </div>  
 
                                       <div style="width:100%">
                                         <label for="Country" class="col-md-4 col-lg-3 col-form-label"  style="font-weight:bold">Vị trí:</label>
-                                        <div class="col-md-8 col-lg-9">
-                                        <input name="location" type="number" min = 1 class ="form-control" id="Country" style="box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;" required>
+                                        <div class="col-md-8 col-lg-12">
+                                        <input name="vitri" type="number" min = 1 class ="form-control" id="Country" style="box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;" required>
                                         <div class="invalid-feedback">Vị trí không hợp lệ</div>
-                                        </div>
+                                      </div>
+                                      
+                                      <div style="width:100%">
+                                        <label for="Country" class="col-md-4 col-lg-3 col-form-label"  style="font-weight:bold">Giá thuê:</label>
+                                        <div class="col-md-8 col-lg-12">
+                                        <input name="giathue" type="number" min = 1 class ="form-control" id="Country" style="box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;" required>
+                                        <div class="invalid-feedback">Gía thuê không hợp lệ</div>
+                                      </div>
                                     </div>
                                   </div>  
-              
-                                  <div class="text-center">
+                                  <div class="text-center" style="margin-top:20px">
                                     <button type="submit" class="btn btn-primary">Thêm mới</button>
                                   </div>
                                 </form>

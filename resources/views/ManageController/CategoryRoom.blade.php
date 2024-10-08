@@ -40,7 +40,11 @@
                              font-weight: 400;
                              font-style: normal;
                              font-size: 14px;">Danh sách loại phòng hiện có</h5>
-
+                             @if (Session::has('error'))
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                  <strong>{{ Session::get('error') }}</strong>
+                                </div>
+                             @endif
                             <!-- Bảng hiển thị danh sách loại phòng -->
 
                             <table class="table table-borderless datatable">
@@ -48,15 +52,31 @@
                                   <tr>
                                     <th scope="col">Mã loại phòng</th>
                                     <th scope="col">Tên loại phòng</th>
-                                    <th scope="col">Số lượng</th>
                                     <th scope="col">Sức chứa</th>
-                                    <th scope="col">Giá thuê</th>
                                     <th scope="col">Tình trạng</th>
                                     <th scope="col">Chức năng</th>
                                   </tr>
                                 </thead>
                                 <tbody>
-                        
+                                  @foreach ($listCategoriesRoom as $item)
+                                    <tr>
+                                        <th scope="row"><a href="#">{{ $item->_id }}</a></th>
+                                        <td>{{ $item->tenloai}}</td>
+                                        <td><a href="#" class="text-primary"><?php echo $item->succhua ?></a></td>
+                                        @if ($item->tinhtrang == 0)
+                                            <td><span class="badge bg-danger">Không hoạt động</span></td>
+                                        @else
+                                            <td><span class="badge bg-success">Còn hoạt động</span></td>
+                                        @endif
+                                        <td><a href="{{ route('showupdatecategoryroom', ['id' => $item->_id]) }}" type="button" class="btn btn-info" style="border-radius:20%;margin-right:20px;color:white;box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;background-color:#74C0FC">
+                                          <i class="fi fi-rr-file-edit"></i></a><a href="{{ route('activecategoryroom', ['id' => $item->_id]) }}" type="button" title="Khôi phục" class="btn btn-info" style="border-radius:20%;margin-right:20px;color:white;box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;background-color:#74C0FC">
+                                           <i class="fa-solid fa-arrow-rotate-left" style="color: #ffffff;"></i></a><a href="{{ route('disablecategoryroom', ['id' => $item->_id]) }}" type="button" class="btn btn-danger" style="border-radius:20%; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;">
+                                            <i class="fi fi-br-cross"></i></a></td>
+                                        @if (Session::has('error'))
+                                            <td><div class="alert alert-danger" role="alert"> {{ Session::get('error') }} </div></td>
+                                        @endif
+                                    </tr>              
+                                  @endforeach
                                 </tbody>
                               </table>
 
@@ -69,32 +89,44 @@
                                 font-optical-sizing: auto;
                                 font-weight: bold;
                                 font-style: normal;">Thêm một loại phòng</h5>
+
+                                @if (Session::has('error'))
+                                    <div class="alert alert-danger" role="alert">
+                                        {{ Session::get('error') }}
+                                    </div>
+                                @endif
                               
                              <!-- Form hiển thị thêm loại phòng -->
-                                <form class="needs-validation" novalidate method="POST" enctype="multipart/form-data" action="#">
+                                <form class="needs-validation" method="POST" enctype="multipart/form-data" action="{{ route('addmorecategoryroom') }}">
                                 @csrf
                                   <div style="width:100%; display: flex;justify-content:space-around;margin-bottom: 20px">
                                     <div style="width:100%">
                                         <label for="company" class="col-md-4 col-lg-3 col-form-label"  style="font-weight:bold">Tên loại:</label>
                                         <div class="col-md-8 col-lg-9">
-                                            <input name="namecategory" type="text" class="form-control" id="company" style="box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;" required>
-                                          <div class="invalid-feedback">Tên loại không hợp lệ</div>
+                                            <input name="tenloaiphong" type="text" class="form-control @error('tenloaiphong') is-invalid @enderror" id="company" style="box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;">
+                                            @error('tenloaiphong')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                     </div>
     
                                       <div style="width:100%">
                                         <label for="fullName" class="col-md-4 col-lg-3 col-form-label"  style="font-weight:bold">Sức chứa:</label>
                                         <div class="col-md-8 col-lg-9">
-                                          <input name="capacity" type="number" min = 1 class="form-control" id="fullName" style="box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;" required>
-                                          <div class="invalid-feedback">Sức chứa không hợp lệ</div>
+                                          <input name="succhua" min="1" type="number" class="form-control @error('succhua') is-invalid @enderror" id="fullName" style="box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;">
+                                          @error('succhua')
+                                              <div class="invalid-feedback">{{ $message }}</div>
+                                          @enderror
                                         </div>
                                       </div>  
 
                                       <div style="width:100%">
                                         <label for="Country" class="col-md-4 col-lg-3 col-form-label"  style="font-weight:bold">Diện tích:</label>
                                         <div class="col-md-8 col-lg-9">
-                                        <input name="area" type="number" min = 20 class ="form-control" id="Country" style="box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;" required>
-                                        <div class="invalid-feedback">Diện tích không hợp lệ</div>
+                                          <input name="dientich" type="number" min="20" class ="form-control @error('dientich') is-invalid @enderror" id="Country" style="box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;">
+                                          @error('dientich')
+                                              <div class="invalid-feedback">{{ $message }}</div>
+                                          @enderror
                                         </div>
                                     </div>
                                   </div>  
@@ -104,42 +136,41 @@
                                     <div style="width:100%">
                                         <label for="Country" class="col-md-4 col-lg-3 col-form-label" style="font-weight:bold">Tiện ích:</label>
                                         <div class="col-md-8 col-lg-9">
-                                        <input name="service" type="text" class ="form-control" id="Country" style="box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;" required>
-                                        <div class="invalid-feedback">Tiện ích không hợp lệ</div>
+                                          <input name="tienich" type="text" class ="form-control @error('tienich') is-invalid @enderror" id="Country" style="box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;">
+                                          @error('tienich')
+                                              <div class="invalid-feedback">{{ $message }}</div>
+                                          @enderror
                                         </div>
                                     </div>
 
                                     <div style="width:100%">
                                         <label for="Country" class="col-md-4 col-lg-3 col-form-label"  style="font-weight:bold">Nội thất:</label>
                                         <div class="col-md-8 col-lg-9">
-                                        <input name="interior" type="text" class ="form-control" id="Country" style="box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;" required>
-                                        <div class="invalid-feedback">Nội thất không hợp lệ</div>
+                                          <input name="noithat" type="text" class ="form-control @error('noithat') is-invalid @enderror" id="Country" style="box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;">
+                                          @error('noithat')
+                                              <div class="invalid-feedback">{{ $message }}</div>
+                                          @enderror
                                         </div>
                                     </div>
 
                                     <div style="width:100%">
                                         <label for="Country" class="col-md-4 col-lg-3 col-form-label"  style="font-weight:bold">Quy định:</label>
                                         <div class="col-md-8 col-lg-9">
-                                        <input name="regulations" type="text" class ="form-control" id="Country" style="box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;" required>
-                                        <div class="invalid-feedback">Quy định không hợp lệ</div>
+                                          <input name="quydinh" type="text" class ="form-control @error('quydinh') is-invalid @enderror" id="Country" style="box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;">
+                                          @error('quydinh')
+                                              <div class="invalid-feedback">{{ $message }}</div>
+                                          @enderror
                                         </div>
                                     </div>
                                   </div>
                                 
-                                    <div style="width:100%;margin-bottom:40px">
-                                        <label for="Job" class="col-md-4 col-lg-3 col-form-label"  style="font-weight:bold">Giá thuê:</label>
-                                        <div class="col-md-8 col-lg-11">
-                                        <input name="price" type="number" min = 1 class="form-control" id="Job" style="box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;" required>
-                                        <div class="invalid-feedback">Giá thuê không hợp lệ</div>
-                                        </div>
-                                    </div>
-              
-
                                   <div class="row mb-3">
                                     <label for="about" class="col-md-4 col-lg-2 col-form-label"  style="font-weight:bold">Mô tả:</label>
                                     <div class="col-md-8 col-lg-9">
-                                      <textarea name="about" class="form-control" id="about" style="height: 100px; box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;margin-bottom:50px"required></textarea>
-                                      <div class="invalid-feedback">Mô tả không hợp lệ</div>
+                                      <textarea name="mota" class="form-control @error('mota') is-invalid @enderror" id="about" style="height: 100px; box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;margin-bottom:50px"></textarea>
+                                      @error('mota')
+                                          <div class="invalid-feedback">{{ $message }}</div>
+                                      @enderror
                                     </div>
                                   </div>
 
@@ -159,7 +190,7 @@
                                   <div class="row mb-3">
                                     <label for="Country" class="col-md-4 col-lg-2 col-form-label"  style="font-weight:bold">Đường dẫn hình ảnh 1:</label>
                                     <div class="col-md-8 col-lg-9">
-                                      <input name="image1" type="text" class ="form-control" id="image1" style="box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;" required>
+                                      <input name="image1" type="text" class ="form-control" id="image1" style="box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;">
                                       <div class="invalid-feedback">Hình ảnh không hợp lệ</div>
                                     </div>
                                   </div>
@@ -172,7 +203,7 @@
                                   <div class="row mb-3">
                                     <label for="Country" class="col-md-4 col-lg-2 col-form-label"  style="font-weight:bold">Đường dẫn hình ảnh 2:</label>
                                     <div class="col-md-8 col-lg-9">
-                                      <input name="image2" type="text" class ="form-control" id="image2" style="box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;" required>
+                                      <input name="image2" type="text" class ="form-control" id="image2" style="box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;">
                                       <div class="invalid-feedback">Hình ảnh không hợp lệ</div>
                                     </div>
                                   </div>

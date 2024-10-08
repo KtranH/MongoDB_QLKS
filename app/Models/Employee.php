@@ -14,5 +14,9 @@ class Employee extends Model
     protected $fillable = ['_id','tennv','ngaysinh','tentk','ngvl','sdt','email','diachi','cmnd', 'MaNhomQuyen', 'Matkhau'];
 
     protected $hidden = ['Matkhau'];
-    protected $date = ['ngaysinh', 'ngvl'];
+
+    public function getPosition()
+    {
+        return $this->belongsTo(Permission_group::class, 'MaNhomQuyen', 'maq');
+    }
 }

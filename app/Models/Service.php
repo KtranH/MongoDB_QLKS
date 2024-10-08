@@ -16,5 +16,6 @@ class Service extends Model
         '_id',
         'tendv',
         'giadv',
+        'mota'
     ];
 }

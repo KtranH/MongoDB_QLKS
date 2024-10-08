@@ -20,4 +20,8 @@ class Room_hotel extends Model
         'tinhtrang',
         'maloai'
     ];
+    public function category()
+    {
+        return $this->belongsTo(Category_room::class, 'maloai', '_id');
+    }
 }

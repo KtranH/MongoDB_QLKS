@@ -61,7 +61,7 @@
                                 <div class="row mb-3">
                                   <label for="company" class="col-md-4 col-lg-3 col-form-label">Chức vụ</label>
                                   <div class="col-md-8 col-lg-9">
-                                    <input name="position" type="text" class="form-control" id="company" value="{{ $position->tennhom }}" disabled>
+                                    <input name="position" type="text" class="form-control" id="company" value="{{ $user->getPosition->tennhom }}" disabled>
                                   </div>
                                 </div>
 
@@ -100,7 +100,7 @@
                                     <div class="row mb-3">
                                       <label for="Phone" class="col-md-4 col-lg-3 col-form-label">Ngày Sinh</label>
                                       <div class="col-md-8 col-lg-9">
-                                        <input name="birthday" type="datetime" class="form-control" id="Phone" value="{{ $birthday }}"  required>
+                                        <input name="birthday" type="datetime" class="form-control" id="Phone" value="{{ \Carbon\Carbon::createFromTimestampMs($user->ngaysinh)->format('d-m-Y') }}"  required>
                                         <div class="invalid-feedback">Ngày sinh không hợp lệ</div>
                                       </div>
                                     </div>
@@ -108,8 +108,8 @@
                                     <div class="row mb-3">
                                       <label for="Email" class="col-md-4 col-lg-3 col-form-label">Ngày vào làm</label>
                                       <div class="col-md-8 col-lg-9">
-                                        <input name="birthday" type="datetime" class="form-control" id="Phone" value="{{ $startWork }}" required>
-                                        <div class="invalid-feedback">Giới tính không hợp lệ</div>
+                                        <input name="birthday" type="datetime" class="form-control" id="Phone" value="{{ \Carbon\Carbon::createFromTimestampMs($user->ngvl)->format('d-m-Y') }}" required>
+                                        <div class="invalid-feedback">Ngày vào làm không hợp lệ</div>
                                       </div>
                                     </div>            
                                     <div class="text-center">
