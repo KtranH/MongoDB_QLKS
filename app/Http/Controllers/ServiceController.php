@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Service;
+use App\Models\DichVu;
 use Illuminate\Http\Request;
 
 class ServiceController extends Controller
@@ -10,7 +10,7 @@ class ServiceController extends Controller
     //
     public function Service()
     {
-        $service = Service::all();
+        $service = DichVu::all();
         return view('ManageController.Service', compact('service'));
     }
     public function AddService(Request $request)
@@ -27,12 +27,12 @@ class ServiceController extends Controller
 
         try
         {
-            $service = new Service();
+            /*$service = new Service();
             $service->tendv = $request->tendv;
             $service->giadv = Intval($request->giadv);
             $service->mota = $request->mota;
             $service->tinhtrang = 1;
-            $service->save();
+            $service->save();*/
             return redirect()->back()->with('success', 'Thêm dịch vụ thành công');
         }
         catch(\Exception $e)
@@ -54,11 +54,11 @@ class ServiceController extends Controller
 
         try
         {
-            $service = Service::where('_id', $id)->firstOrFail();
+            /*$service = Service::where('_id', $id)->firstOrFail();
             $service->tendv = $request->tendv;
             $service->giadv = Intval($request->giadv);
             $service->mota = $request->mota;
-            $service->save();
+            $service->save();*/
             return redirect()->back()->with('success', 'Cập nhật dịch vụ thành công');
         }
         catch(\Exception $e)
@@ -68,7 +68,7 @@ class ServiceController extends Controller
     }
     public function ShowUpdateService($id)
     {
-        $service = Service::where('_id', $id)->firstOrFail();
+        $service = DichVu::where('_id', $id)->firstOrFail();
         return view('ManageController.Service_Update', compact('service'));
     }
 }

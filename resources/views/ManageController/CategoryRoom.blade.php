@@ -45,6 +45,11 @@
                                   <strong>{{ Session::get('error') }}</strong>
                                 </div>
                              @endif
+                             @if (Session::has('success'))
+                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                  <strong>{{ Session::get('success') }}</strong>
+                                </div>          
+                             @endif
                             <!-- Bảng hiển thị danh sách loại phòng -->
 
                             <table class="table table-borderless datatable">
@@ -61,9 +66,9 @@
                                   @foreach ($listCategoriesRoom as $item)
                                     <tr>
                                         <th scope="row"><a href="#">{{ $item->_id }}</a></th>
-                                        <td>{{ $item->tenloai}}</td>
-                                        <td><a href="#" class="text-primary"><?php echo $item->succhua ?></a></td>
-                                        @if ($item->tinhtrang == 0)
+                                        <td>{{ $item->MaLoai}}</td>
+                                        <td><a href="#" class="text-primary"><?php echo $item->SucChua ?></a></td>
+                                        @if ($item->TinhTrang == 0)
                                             <td><span class="badge bg-danger">Không hoạt động</span></td>
                                         @else
                                             <td><span class="badge bg-success">Còn hoạt động</span></td>

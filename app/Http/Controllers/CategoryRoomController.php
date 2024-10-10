@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category_room;
-use App\Models\Room_hotel;
+use App\Models\LoaiPhong;
 use Illuminate\Http\Request;
 
 class CategoryRoomController extends Controller
@@ -12,7 +11,7 @@ class CategoryRoomController extends Controller
 
     public function CategoryRoom()
     {
-        $listCategoriesRoom = Category_room::all();
+        $listCategoriesRoom = LoaiPhong::all();
         return view('ManageController.CategoryRoom', compact('listCategoriesRoom'));
     }
     public function AddMoreCategoryRoom(Request $request)
@@ -38,7 +37,7 @@ class CategoryRoomController extends Controller
 
        try
        {
-        $category_room = new Category_room();
+        /*$category_room = new Category_room();
         $category_room->tenloai = $request->tenloaiphong;
         $category_room->succhua = Intval($request->succhua);
         $category_room->dientich = Intval($request->dientich);
@@ -47,7 +46,7 @@ class CategoryRoomController extends Controller
         $category_room->quydinh = $request->quydinh;
         $category_room->mota = $request->mota;
         $category_room->tinhtrang = 1;
-        $category_room->save();
+        $category_room->save();*/
         return redirect()->back()->with('success', 'Thêm thành công');
        }
        catch(\Exception $e)
@@ -77,7 +76,7 @@ class CategoryRoomController extends Controller
 
         try
         {
-            $category_room = Category_room::where('_id', $id)->firstOrFail();
+            /*$category_room = Category_room::where('_id', $id)->firstOrFail();
             $category_room->tenloai = $request->tenloaiphong;
             $category_room->succhua = Intval($request->succhua);
             $category_room->dientich = Intval($request->dientich);
@@ -85,7 +84,7 @@ class CategoryRoomController extends Controller
             $category_room->noithat = $request->noithat;
             $category_room->quydinh = $request->quydinh;
             $category_room->mota = $request->mota;
-            $category_room->save();
+            $category_room->save();*/
             return redirect()->back()->with('success', 'Cập nhật thay đổi thành công');
         }
         catch(\Exception $e)
@@ -97,10 +96,10 @@ class CategoryRoomController extends Controller
     {
         try
         {
-            $category_room = Category_room::where('_id', $id)->firstOrFail();
+            /*$category_room = Category_room::where('_id', $id)->firstOrFail();
             $category_room->tinhtrang = 1;
             $category_room->save();
-            $room = Room_hotel::where('maloai', $id)->update(['tinhtrang' => 1]);
+            $room = Room_hotel::where('maloai', $id)->update(['tinhtrang' => 1]);*/
             return redirect()->back();
         }
         catch(\Exception $e)
@@ -112,10 +111,10 @@ class CategoryRoomController extends Controller
     {
         try
         {
-            $category_room = Category_room::where('_id', $id)->firstOrFail();
+            /*$category_room = Category_room::where('_id', $id)->firstOrFail();
             $category_room->tinhtrang = 0;
             $category_room->save();
-            $room = Room_hotel::where('maloai', $id)->update(['tinhtrang' => 0]);
+            $room = Room_hotel::where('maloai', $id)->update(['tinhtrang' => 0]);*/
             return redirect()->back();
         }
         catch(\Exception $e)
@@ -125,7 +124,7 @@ class CategoryRoomController extends Controller
     }
     public function ShowUpdateCategoryRoom($id)
     {
-        $category_room = Category_room::where('_id', $id)->firstOrFail();
+        $category_room = LoaiPhong::where('_id', $id)->firstOrFail();
         return view('ManageController.CategoryRoom_Update', compact('category_room'));
     }
 }

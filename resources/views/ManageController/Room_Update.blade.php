@@ -54,16 +54,18 @@
 
 
                              <!-- Form hiển thị thêm phòng -->
-                                <form class="needs-validation" novalidate method="POST" enctype="multipart/form-data" action="{{ route("updateroom",["id" => $room->_id]) }}">
+                                <form class="needs-validation" novalidate method="POST" enctype="multipart/form-data" action="{{ route("updateroom",["id" => $room[0]["TenPhong"]]) }}">
                                 @csrf
                                   <div style="width:100%; display: flex;justify-content:space-around;margin-bottom: 20px; flex-wrap:wrap">
                                     <div style="width:100%">
                                         <label for="company" class="col-md-4 col-lg-3 col-form-label"  style="font-weight:bold">Tên loại:</label>
                                         <div class="col-md-8 col-lg-12">
                                             <select class="form-select" aria-label="Default select example" style="box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;" name="category">
-                                                <option value="{{ $room->category->_id }}">{{ $room->category->tenloai }}</option>
+                                                <option value="{{ $room[1]["_id"] }}">{{ $room[1]["MaLoai"] }}</option>
                                                 @foreach ($category_room as $item)
-                                                    <option value="{{ $item->_id}}"><?php echo $item->tenloai ?></option>
+                                                    @if ($item["_id"] != $room[1]["_id"])
+                                                        <option value="{{ $item["_id"] }}">{{ $item["MaLoai"] }}</option>
+                                                    @endif
                                                 @endforeach
                                             </select>
                                         </div>
@@ -72,7 +74,7 @@
                                       <div style="width:100%">
                                         <label for="fullName" class="col-md-4 col-lg-3 col-form-label"  style="font-weight:bold">Tên phòng:</label>
                                         <div class="col-md-8 col-lg-12">
-                                          <input name="tenphong" type="text" class="form-control" id="fullName" style="box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;" value="{{ $room->tenphong }}" required>
+                                          <input name="tenphong" type="text" class="form-control" id="fullName" style="box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;" value="{{ $room[0]["TenPhong"] }}" required>
                                           <div class="invalid-feedback">Tên phòng không hợp lệ</div>
                                         </div>
                                       </div>  
@@ -80,7 +82,7 @@
                                       <div style="width:100%">
                                         <label for="Country" class="col-md-4 col-lg-3 col-form-label"  style="font-weight:bold">Vị trí:</label>
                                         <div class="col-md-8 col-lg-12">
-                                        <input name="vitri" type="number" min = 1 class ="form-control" id="Country" style="box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;" value="{{ $room->vitri }}" required>
+                                        <input name="vitri" type="number" min = 1 class ="form-control" id="Country" style="box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;" value="{{ $room[0]["ViTri"] }}" required>
                                         <div class="invalid-feedback">Vị trí không hợp lệ</div>
                                         </div>
                                      </div>
@@ -88,7 +90,7 @@
                                      <div style="width:100%">
                                         <label for="Country" class="col-md-4 col-lg-3 col-form-label"  style="font-weight:bold">Giá thuê:</label>
                                         <div class="col-md-8 col-lg-12">
-                                        <input name="giathue" type="number" min = 1 class ="form-control" id="Country" style="box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;" value="{{ $room->giathue }}" required>
+                                        <input name="giathue" type="number" min = 1 class ="form-control" id="Country" style="box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;" value="{{ $room[0]["GiaThue"] }}" required>
                                         <div class="invalid-feedback">Giá thuê không hợp lệ</div>
                                         </div>
                                      </div>

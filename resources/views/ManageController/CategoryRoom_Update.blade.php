@@ -65,7 +65,7 @@
                                                 <div class="col-md-8 col-lg-9">
                                                     <input name="tenloaiphong" type="text" class="form-control"
                                                         id="company" style="box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;"
-                                                        value="{{ $category_room->tenloai }}" required>
+                                                        value="{{ $category_room->MaLoai }}" required>
                                                     <div class="invalid-feedback">Tên loại không hợp lệ</div>
                                                 </div>
                                             </div>
@@ -76,7 +76,7 @@
                                                 <div class="col-md-8 col-lg-9">
                                                     <input name="succhua" type="number" min=1 class="form-control"
                                                         id="fullName" style="box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;"
-                                                        value="{{ $category_room->succhua }}" required>
+                                                        value="{{ $category_room->SucChua }}" required>
                                                     <div class="invalid-feedback">Sức chứa không hợp lệ</div>
                                                 </div>
                                             </div>
@@ -87,7 +87,7 @@
                                                 <div class="col-md-8 col-lg-9">
                                                     <input name="dientich" type="number" min=20 class ="form-control"
                                                         id="Country" style="box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;"
-                                                        value="{{ $category_room->dientich }}" required>
+                                                        value="{{ $category_room->DienTich }}" required>
                                                     <div class="invalid-feedback">Diện tích không hợp lệ</div>
                                                 </div>
                                             </div>
@@ -102,7 +102,7 @@
                                                 <div class="col-md-8 col-lg-9">
                                                     <input name="tienich" type="text" class ="form-control"
                                                         id="Country" style="box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;"
-                                                        value="{{ $category_room->tienich }}" required>
+                                                        value="{{ $category_room->TienIch }}" required>
                                                     <div class="invalid-feedback">Tiện ích không hợp lệ</div>
                                                 </div>
                                             </div>
@@ -113,7 +113,7 @@
                                                 <div class="col-md-8 col-lg-9">
                                                     <input name="noithat" type="text" class ="form-control"
                                                         id="Country" style="box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;"
-                                                        value="{{ $category_room->noithat }}" required>
+                                                        value="{{ $category_room->NoiThat }}" required>
                                                     <div class="invalid-feedback">Nội thất không hợp lệ</div>
                                                 </div>
                                             </div>
@@ -125,7 +125,7 @@
                                                     <input name="quydinh" type="text" class ="form-control"
                                                         id="Country"
                                                         style="box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;"
-                                                        value="{{ $category_room->quydinh }}" required>
+                                                        value="{{ $category_room->QuyDinh }}" required>
                                                     <div class="invalid-feedback">Quy định không hợp lệ</div>
                                                 </div>
                                             </div>
@@ -136,7 +136,7 @@
                                                 style="font-weight:bold">Mô tả:</label>
                                             <div class="col-md-8 col-lg-9">
                                                 <textarea name="mota" class="form-control" id="about"
-                                                    style="height: 100px; box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;margin-bottom:50px" required>{{ $category_room->mota }}</textarea>
+                                                    style="height: 100px; box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;margin-bottom:50px" required>{{ $category_room->MoTa }}</textarea>
                                                 <div class="invalid-feedback">Mô tả không hợp lệ</div>
                                             </div>
                                         </div>

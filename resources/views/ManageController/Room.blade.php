@@ -41,13 +41,24 @@
                              font-style: normal;
                              font-size: 14px;">Danh sách phòng hiện có</h5>
 
+                             @if (Session::has('success'))
+                               <div class="alert alert-success" role="alert">
+                                 {{ Session::get('success') }}
+                               </div>
+                             @endif
+
+                             @if (Session::has('error'))
+                               <div class="alert alert-danger" role="alert">
+                                 {{ Session::get('error') }}
+                               </div>
+                             @endif
+
                             <!-- Bảng hiển thị danh sách loại phòng -->
                             <table class="table table-borderless datatable">
                                 <thead>
                                   <tr>
-                                    <th scope="col">Mã phòng</th>
                                     <th scope="col">Tên phòng</th>
-                                    <th scope="col">Tên loại</th>
+                                    <th scope="col">Mã loại phòng</th>
                                     <th scope="col">Sức chứa</th>
                                     <th scope="col">Giá thuê</th>
                                     <th scope="col">Tình trạng</th>
@@ -56,25 +67,30 @@
                                 </thead>
                                 <tbody>
                                   @foreach ($rooms as $item)
-                                    <tr>
-                                        <th scope="row"><a href="#">{{ $item->_id }}</a></th>
-                                        <td>{{ $item->tenphong}}</td>
-                                        <td><a href="#" class="text-primary"><?php echo $item->category->tenloai ?></a></td>
-                                        <td>{{ $item->category->succhua}}</td>
-                                        <td>{{ $item->giathue}}</td>
-                                        @if ($item->tinhtrang == 0)
-                                            <td><span class="badge bg-danger">Không hoạt động</span></td>
-                                        @else
-                                            <td><span class="badge bg-success">Còn hoạt động</span></td>
-                                        @endif
-                                        <td><a href="{{ route('showupdateroom', ['id' => $item->_id]) }}" type="button" class="btn btn-info" style="border-radius:20%;margin-right:20px;color:white;box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;background-color:#74C0FC">
-                                          <i class="fi fi-rr-file-edit"></i></a><a href="{{ route('activeroom', ['id' => $item->_id]) }}" type="button" title="Khôi phục" class="btn btn-info" style="border-radius:20%;margin-right:20px;color:white;box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;background-color:#74C0FC">
-                                           <i class="fa-solid fa-arrow-rotate-left" style="color: #ffffff;"></i></a><a href="{{ route('disableroom', ['id' => $item->_id]) }}" type="button" class="btn btn-danger" style="border-radius:20%; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;">
-                                            <i class="fi fi-br-cross"></i></a></td>
-                                        @if (Session::has('error'))
-                                            <td><div class="alert alert-danger" role="alert"> {{ Session::get('error') }} </div></td>
-                                        @endif
-                                    </tr>              
+                                      @php
+                                        $MaLoai = $item->MaLoai;
+                                        $SucChua = $item->SucChua;
+                                      @endphp
+                                      @foreach ($item->DanhSachPhong as $x)
+                                      <tr>
+                                          <th scope="row"><a href="#">{{ $x["TenPhong"] }}</a></th>
+                                          <td><a href="#" class="text-primary">{{ $MaLoai }}</a></td>
+                                          <td>{{ $SucChua }}</td>
+                                          <td>{{ $x["GiaThue"] }}</td>
+                                          @if ($x["TinhTrang"] == 0)
+                                              <td><span class="badge bg-danger">Không hoạt động</span></td>
+                                          @else
+                                              <td><span class="badge bg-success">Còn hoạt động</span></td>
+                                          @endif
+                                          <td><a href="{{ route('showupdateroom', ['id' => $x["TenPhong"]]) }}" type="button" class="btn btn-info" style="border-radius:20%;margin-right:20px;color:white;box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;background-color:#74C0FC">
+                                            <i class="fi fi-rr-file-edit"></i></a><a href="{{ route('activeroom', ['id' => $x["TenPhong"]]) }}" type="button" title="Khôi phục" class="btn btn-info" style="border-radius:20%;margin-right:20px;color:white;box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;background-color:#74C0FC">
+                                            <i class="fa-solid fa-arrow-rotate-left" style="color: #ffffff;"></i></a><a href="{{ route('disableroom', ['id' => $x["TenPhong"]]) }}" type="button" class="btn btn-danger" style="border-radius:20%; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;">
+                                              <i class="fi fi-br-cross"></i></a></td>
+                                          @if (Session::has('error'))
+                                              <td><div class="alert alert-danger" role="alert"> {{ Session::get('error') }} </div></td>
+                                          @endif
+                                      </tr>
+                                      @endforeach
                                   @endforeach
                                 </tbody>
                               </table>
@@ -106,8 +122,8 @@
                                           <div class="col-md-8 col-lg-12">
                                               <select class="form-select @error ('maloai') is-invalid @enderror" aria-label="Default select example" style="box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;" name="maloai">
                                                   <option selected value="Chưa rõ">Lựa chọn loại phòng</option>
-                                                  @foreach ($category_room as $item)
-                                                      <option value="{{ $item->_id }}">{{ $item->tenloai }}</option>
+                                                  @foreach ($rooms as $item)
+                                                      <option value="{{ $item->_id }}">{{ $item->MaLoai }}</option>
                                                   @endforeach
                                               </select>
                                               @error('maloai')

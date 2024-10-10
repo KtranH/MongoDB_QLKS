@@ -70,10 +70,10 @@
                                   @foreach ($service as $item)
                                   <tr>
                                       <th scope="row"><a href="#">{{ $item->_id }}</a></th>
-                                      <td><a href="#" class="text-primary">{{ $item->tendv }}</a></td>
-                                      <td>{{ $item->mota}}</td>
-                                      <td>{{ $item->giadv}}</td>
-                                      @if ($item->tinhtrang == 0)
+                                      <td><a href="#" class="text-primary">{{ $item->TenDichVu }}</a></td>
+                                      <td>{{ $item->MoTa}}</td>
+                                      <td>{{ $item->GiaDichVu}}</td>
+                                      @if ($item->TinhTrang == 0)
                                           <td><span class="badge bg-danger">Không hoạt động</span></td>
                                       @else
                                           <td><span class="badge bg-success">Còn hoạt động</span></td>

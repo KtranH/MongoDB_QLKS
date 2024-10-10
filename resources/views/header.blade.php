@@ -1,7 +1,3 @@
-@php
-  $user = DB::table('nhanvien')->where('email', Cookie::get('tokenLogin'))->first();
-  $position = DB::table('nhomquyen')->where('maq', $user["MaNhomQuyen"])->first();
-@endphp
 <!-- ======= Header ======= -->
 <header id="header" class="header fixed-top d-flex align-items-center">
 
@@ -24,13 +20,13 @@
         <li class="nav-item dropdown pe-3">
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
             <img src="https://icons.veryicon.com/png/o/miscellaneous/two-color-icon-library/user-286.png" loading="lazy" alt="Profile" class="rounded-circle">
-            <span class="d-none d-md-block dropdown-toggle ps-2">{{ $user['tennv'] }}</span>
+            <span class="d-none d-md-block dropdown-toggle ps-2">{{ $user[0]['TenNhanVien'] }}</span>
           </a><!-- End Profile Iamge Icon -->
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
-              <h6>{{ $user['tennv'] }}</h6>
-              <span>{{ $position['tennhom'] }}</span>
+              <h6>{{ $user[0]['TenNhanVien'] }}</h6>
+              <span>{{ $user[1]['TenQuyenHan'] }}</span>
             </li>
             <li>
               <hr class="dropdown-divider">

@@ -41,12 +41,20 @@
                              font-weight: 400;
                              font-style: normal;">Danh sách nhân viên hiện tại</h5>
 
+                             @if (Session::has('success'))
+                                <div class="alert alert-success" role="alert">{{ Session::get('success') }}</div>
+                             @endif
+
+                             @if (Session::has('error'))  
+                                <div class="alert alert-danger" role="alert">{{ Session::get('error') }}</div>
+                             @endif
+
                             <!-- Bảng hiển thị danh sách loại phòng -->
 
                             <table class="table table-borderless datatable">
                                 <thead>
                                   <tr>
-                                    <th scope="col">Mã nhân viên</th>
+                                    <th scope="col">CMND</th>
                                     <th scope="col">Họ tên</th>
                                     <th scope="col">Ngày sinh</th>
                                     <th scope="col">Ngày vào làm</th>
@@ -57,25 +65,29 @@
                                   </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($employee as $item)
-                                        <tr>
-                                            <th scope="row"><a href="#" class="text-primary">{{ $item->_id }}</a></th>
-                                            <td>{{ $item->tennv }} </td>
-                                            <td>{{ \Carbon\Carbon::createFromTimestampMs($item->ngaysinh)->format('d-m-Y') }}</td>
-                                            <td>{{ \Carbon\Carbon::createFromTimestampMs($item->ngvl)->format('d-m-Y') }}</td>
-                                            <td>{{ $item->sdt }} </td>
-                                            <td>{{ $item->getPosition->tennhom }} </td>
-                                            @if ($item->tinhtrang == 0)
-                                                <td><span class="badge bg-danger">Không hoạt động</span></td>
-                                            @else
-                                                <td><span class="badge bg-success">Còn hoạt động</span></td>
-                                            @endif
-                                            <td><a href="#" type="button" class="btn btn-info" style="border-radius:20%;margin-right:20px;color:white;box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;background-color:#74C0FC">
-                                                <i class="fi fi-rr-file-edit"></i></a><a href="#" type="button" title="Khôi phục" class="btn btn-info" style="border-radius:20%;margin-right:20px;color:white;box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;background-color:#74C0FC">
-                                                    <i class="fa-solid fa-arrow-rotate-left" style="color: #ffffff;"></i></a><a href="#" type="button" class="btn btn-danger" style="border-radius:20%; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;">
-                                                        <i class="fi fi-br-cross"></i></a></td>
-                                        </tr>              
+                                  @foreach ($employee as $item)
+                                    @php
+                                      $ChucVu = $item->TenQuyenHan;
+                                    @endphp
+                                    @foreach ($item->DanhSachTaiKhoan as $x)
+                                    <tr>
+                                        <th scope="row"><a href="#" class="text-primary">{{ $x["CMND"] }}</a></th>
+                                        <td>{{ $x["TenNhanVien"] }}</td>
+                                        <td>{{ \Carbon\Carbon::createFromTimestampMs($x["NgaySinh"])->format('d-m-Y') }}</td>
+                                        <td>{{ \Carbon\Carbon::createFromTimestampMs($x["NgayVaoLam"])->format('d-m-Y') }}</td>
+                                        <td>{{ $x["SDT"] }}</td>
+                                        <td>{{ $ChucVu }}</td>
+                                        @if ($x["IsDelete"] == 1)
+                                            <td><span class="badge bg-danger">Không hoạt động</span></td>
+                                        @else
+                                            <td><span class="badge bg-success">Còn hoạt động</span></td>
+                                        @endif
+                                        <td><a href="" type="button" class="btn btn-info" style="border-radius:20%;margin-right:20px;color:white;box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;background-color:#74C0FC"><i class="fi fi-rr-file-edit"></i>
+                                        </a><a href="" type="button" title="Khôi phục" class="btn btn-info" style="border-radius:20%;margin-right:20px;color:white;box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;background-color:#74C0FC"><i class="fa-solid fa-arrow-rotate-left" style="color: #ffffff;"></i></a>
+                                        <a href="" type="button" class="btn btn-danger" style="border-radius:20%; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;"><i class="fi fi-br-cross"></i></a></td>
+                                    </tr>              
                                     @endforeach
+                                  @endforeach
                                 </tbody>
                               </table>
 
@@ -96,7 +108,7 @@
                                     <div style="width:100%">
                                         <label for="company" class="col-md-4 col-lg-3 col-form-label"  style="font-weight:bold">Họ tên:</label>
                                         <div class="col-md-8 col-lg-9">
-                                            <input name="fullname" type="text" class="form-control" id="company" style="box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;" required>
+                                            <input name="tennhanvien" type="text" class="form-control" id="company" style="box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;" required>
                                           <div class="invalid-feedback">Họ tên không hợp lệ</div>
                                         </div>
                                     </div>
@@ -104,18 +116,18 @@
                                       <div style="width:100%">
                                         <label for="fullName" class="col-md-4 col-lg-3 col-form-label"  style="font-weight:bold">Ngày sinh:</label>
                                         <div class="col-md-8 col-lg-9">
-                                          <input name="birth" type="date" class="form-control" id="fullName" style="box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;" required>
+                                          <input name="ngaysinh" type="date" class="form-control" id="fullName" style="box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;" required>
                                           <div class="invalid-feedback">Ngày sinh không hợp lệ</div>
                                         </div>
                                       </div>  
 
                                       <div style="width:100%">
-                                        <label for="Country" class="col-md-4 col-lg-3 col-form-label"  style="font-weight:bold">Điện thoại:</label>
+                                        <label for="fullName" class="col-md-4 col-lg-3 col-form-label"  style="font-weight:bold">Ngày vào làm:</label>
                                         <div class="col-md-8 col-lg-9">
-                                        <input name="phone" type="number" min = "1" minlength="10" class ="form-control" id="Country" style="box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;" required>
-                                        <div class="invalid-feedback">Điện thoại không hợp lệ</div>
+                                          <input name="ngayvaolam" type="date" class="form-control" id="fullName" style="box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;" required>
+                                          <div class="invalid-feedback">Ngày vào làm không hợp lệ</div>
                                         </div>
-                                    </div>
+                                      </div> 
                                   </div>  
               
                                   <div style="width:100%; display: flex;justify-content:space-around;margin-bottom: 20px">
@@ -130,33 +142,39 @@
                                     <div style="width:100%">
                                         <label for="Job" class="col-md-4 col-lg-3 col-form-label"  style="font-weight:bold">Password:</label>
                                         <div class="col-md-8 col-lg-9">
-                                        <input name="pass" type="password" minlength="6" class="form-control" id="Job" style="box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;" required>
+                                        <input name="matkhau" type="password" minlength="6" class="form-control" id="Job" style="box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;" required>
                                         <div class="invalid-feedback">Password không hợp lệ</div>
                                         </div>
                                     </div>
 
                                     <div style="width:100%">
-                                        <label for="Country" class="col-md-4 col-lg-3 col-form-label" style="font-weight:bold;">Giới tính:</label>
+                                        <label for="Job" class="col-md-4 col-lg-3 col-form-label"  style="font-weight:bold">CMND:</label>
                                         <div class="col-md-8 col-lg-9">
-                                            <select class="form-select" aria-label="Default select example" style="box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;" name="gender">
-                                                <option selected value="Chưa rõ">Lựa chọn giới tính</option>
-                                                <option value="Nam">Nam</option>
-                                                <option value="Nữ">Nữ</option>
-                                            </select>
+                                        <input name="cmnd" type="password" minlength="6" class="form-control" id="Job" style="box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;" required>
+                                        <div class="invalid-feedback">CMND không hợp lệ</div>
                                         </div>
                                     </div>
 
                                   </div>
             
                                   <div style="row mb-3">
+                                    <label for="Job" class="col-md-4 col-lg-3 col-form-label"  style="font-weight:bold">Số điện thoại:</label>
+                                    <div class="col-md-8 col-lg-11">
+                                      <input name="sdt" type="number" min = "1" minlength="10" class ="form-control" id="Country" style="box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;" required>
+                                      <div class="invalid-feedback">Điện thoại không hợp lệ</div>
+                                    </div>
+                                  </div>
+
+                                  <div style="row mb-3">
                                     <label for="Job" class="col-md-4 col-lg-3 col-form-label"  style="font-weight:bold">Chức năng:</label>
                                     <div class="col-md-8 col-lg-9">
-                                        <select class="form-select" aria-label="Default select example" style="box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;margin-bottom:60px;width:122%" name="position">
-                                            <option selected value="N02">Nhân viên</option>
-                                            <option value="N01">Admin</option>
+                                        <select class="form-select" aria-label="Default select example" style="box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;margin-bottom:60px;width:122%" name="tenquyenhan">
+                                            @foreach ($employee as $item)
+                                                <option value="{{ $item->_id }}">{{ $item->TenQuyenHan }}</option>
+                                            @endforeach
                                         </select>
                                     </div>
-                                </div>
+                                  </div>
 
                                   <div class="row mb-3">
                                     <label for="about" class="col-md-4 col-lg-2 col-form-label"  style="font-weight:bold">Địa chỉ:</label>

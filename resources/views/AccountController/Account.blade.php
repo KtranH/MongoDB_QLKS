@@ -20,8 +20,8 @@
                 <div class="card" style="border-radius:20px;">
                     <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
                         <img src="https://icons.veryicon.com/png/o/miscellaneous/two-color-icon-library/user-286.png" alt="Profile" class="rounded-circle">
-                        <h2>{{ $user->tennv }}</h2>
-                        <h3>{{ $user->email }}</h3>
+                        <h2>{{ $user[0]["TenNhanVien"] }}</h2>
+                        <h3>{{ $user[0]["Email"] }}</h3>
                         <div class="social-links mt-2">
                             <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
                             <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
@@ -61,14 +61,14 @@
                                 <div class="row mb-3">
                                   <label for="company" class="col-md-4 col-lg-3 col-form-label">Chức vụ</label>
                                   <div class="col-md-8 col-lg-9">
-                                    <input name="position" type="text" class="form-control" id="company" value="{{ $user->getPosition->tennhom }}" disabled>
+                                    <input name="position" type="text" class="form-control" id="company" value="{{ $user[1]["TenQuyenHan"] }}" disabled>
                                   </div>
                                 </div>
 
                                     <div class="row mb-3">
                                       <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Họ và tên</label>
                                       <div class="col-md-8 col-lg-9">
-                                        <input name="fullName" type="text" class="form-control" id="fullName" value="{{ $user->tennv }}" required>
+                                        <input name="fullName" type="text" class="form-control" id="fullName" value="{{ $user[0]["TenNhanVien"] }}" required>
                                         <div class="invalid-feedback">Họ tên không hợp lệ</div>
                                       </div>
                                     </div>
@@ -76,7 +76,7 @@
                                     <div class="row mb-3">
                                       <label for="company" class="col-md-4 col-lg-3 col-form-label">Địa chỉ</label>
                                       <div class="col-md-8 col-lg-9">
-                                        <input name="address" type="text" class="form-control" id="company" value="{{ $user->diachi }}" required>
+                                        <input name="address" type="text" class="form-control" id="company" value="{{ $user[0]["DiaChi"] }}" required>
                                         <div class="invalid-feedback">Địa chỉ không hợp lệ</div>
                                       </div>
                                     </div>
@@ -84,7 +84,7 @@
                                     <div class="row mb-3">
                                       <label for="Job" class="col-md-4 col-lg-3 col-form-label">Số điện thoại</label>
                                       <div class="col-md-8 col-lg-9">
-                                        <input name="phone" type="number" min = 1 minlength= 10 class="form-control" id="Job" value="{{ $user->sdt }}" required>
+                                        <input name="phone" type="number" min = 1 minlength= 10 class="form-control" id="Job" value="{{ $user[0]["SDT"] }}" required>
                                         <div class="invalid-feedback">Điện thoại không hợp lệ</div>
                                       </div>
                                     </div>
@@ -92,7 +92,7 @@
                                     <div class="row mb-3">
                                       <label for="Address" class="col-md-4 col-lg-3 col-form-label">Email</label>
                                       <div class="col-md-8 col-lg-9">
-                                        <input name="email" type="email" class="form-control" id="Address" value="{{ $user->email }}" required>
+                                        <input name="email" type="email" class="form-control" id="Address" value="{{ $user[0]["Email"] }}" required>
                                         <div class="invalid-feedback">Email không hợp lệ</div>
                                       </div>
                                     </div>
@@ -100,7 +100,7 @@
                                     <div class="row mb-3">
                                       <label for="Phone" class="col-md-4 col-lg-3 col-form-label">Ngày Sinh</label>
                                       <div class="col-md-8 col-lg-9">
-                                        <input name="birthday" type="datetime" class="form-control" id="Phone" value="{{ \Carbon\Carbon::createFromTimestampMs($user->ngaysinh)->format('d-m-Y') }}"  required>
+                                        <input name="birthday" type="datetime" class="form-control" id="Phone" value="{{ \Carbon\Carbon::createFromTimestampMs($user[0]["NgaySinh"])->format('d-m-Y') }}"  required>
                                         <div class="invalid-feedback">Ngày sinh không hợp lệ</div>
                                       </div>
                                     </div>
@@ -108,7 +108,7 @@
                                     <div class="row mb-3">
                                       <label for="Email" class="col-md-4 col-lg-3 col-form-label">Ngày vào làm</label>
                                       <div class="col-md-8 col-lg-9">
-                                        <input name="birthday" type="datetime" class="form-control" id="Phone" value="{{ \Carbon\Carbon::createFromTimestampMs($user->ngvl)->format('d-m-Y') }}" required>
+                                        <input name="birthday" type="datetime" class="form-control" id="Phone" value="{{ \Carbon\Carbon::createFromTimestampMs($user[0]["NgayVaoLam"])->format('d-m-Y') }}" required>
                                         <div class="invalid-feedback">Ngày vào làm không hợp lệ</div>
                                       </div>
                                     </div>            

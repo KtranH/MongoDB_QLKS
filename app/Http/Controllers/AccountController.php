@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Employee;
-use App\Models\Permission_group;
+use App\Models\NguoiDung;
+use App\QueryDB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -13,9 +13,10 @@ use Illuminate\Support\Facades\Hash;
 class AccountController extends Controller
 {
     //
+    use QueryDB;
     public function Account()
     {
-        $user = Employee::where('email', Cookie::get('tokenLogin'))->first();
+        $user = $this->Inf_User(Cookie::get('tokenLogin'));
         return view('AccountController.Account', compact('user'));
     }
     public function SignUp()
@@ -41,15 +42,16 @@ class AccountController extends Controller
         $email = $request->input('email');
         $password = $request->input('password');
 
-        $employee = Employee::where('email', $email)->first();
-        if (!$employee) {
+        $user = $this->Inf_User($email);
+
+        if (!$user) {
             return redirect()->back()->with('error', 'Tài khoản hoặc mật khẩu không đúng');
         }
-        if (!Hash::check($password, $employee->Matkhau)) {
+        if (!Hash::check($password, $user[0]["MatKhau"])) {
             return redirect()->back()->with('error', 'Tài khoản hoặc mật khẩu không đúng');
         }
 
-        $cookie = Cookie::make('tokenLogin', $employee->email, 0);
+        $cookie = Cookie::make('tokenLogin', $user[0]["Email"], 0);
         return redirect()->route('showhome')->withCookie($cookie);
     }
     public function Logout()

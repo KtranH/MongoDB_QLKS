@@ -66,9 +66,6 @@ Route::middleware([CheckLogin::class])->group(function () {
     //Xác nhận tùy chỉnh dịch vụ
     Route::post('/setting/updateservice{id}', [ServiceController::class, 'UpdateService'])->name("updateservice");
 
-    //Truy cập trang quản lý nhân viên
-    Route::get('/manage/employee', [ListEmployee::class, 'Employee'])->name("showemployee");
-
     //Tùy chỉnh tình trạng phòng sang hoạt động
     Route::get('/setting/activeroom{id}', [RoomController::class, 'ActiveRoom'])->name("activeroom");
 

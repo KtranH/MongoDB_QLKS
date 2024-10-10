@@ -5,17 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use MongoDB\Laravel\Eloquent\Model;
 
-class Receiption extends Model
+class DichVu extends Model
 {
     use HasFactory;
 
-    protected $connection = 'mongodb';
+    protected $collection = 'DichVu';
 
-    protected $collection = 'hoadon';
     protected $fillable = [
-        '_id',
-        'mapdp',
-        'ngaylap',
-        'thanhtoan',
+        'TenDichVu',
+        'GiaDichVu',
+        'MoTa'
     ];
 }

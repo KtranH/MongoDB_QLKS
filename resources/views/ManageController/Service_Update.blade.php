@@ -59,7 +59,7 @@
                                       <div style="width:122%">
                                         <label for="fullName" class="col-md-4 col-lg-3 col-form-label"  style="font-weight:bold">Tên dịch vụ:</label>
                                         <div class="col-md-8 col-lg-9">
-                                          <input name="tendv" type="text" class="form-control" id="fullName" style="box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;" value="{{ $service->tendv }}" required>
+                                          <input name="tendv" type="text" class="form-control" id="fullName" style="box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;" value="{{ $service->TenDichVu }}" required>
                                           <div class="invalid-feedback">Tên dịch vụ không hợp lệ</div>
                                         </div>
                                       </div>  
@@ -67,7 +67,7 @@
                                       <div style="width:122%">
                                         <label for="Country" class="col-md-4 col-lg-3 col-form-label"  style="font-weight:bold">Giá thuê:</label>
                                         <div class="col-md-8 col-lg-9">
-                                        <input name="giadv" type="number" min = 1 class ="form-control" id="Country" style="box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;" value="{{ $service->giadv }}" required>
+                                        <input name="giadv" type="number" min = 1 class ="form-control" id="Country" style="box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;" value="{{ $service->GiaDichVu }}" required>
                                         <div class="invalid-feedback">Giá không hợp lệ</div>
                                         </div>
                                       </div>
@@ -76,7 +76,7 @@
                                   <div class="row mb-3">
                                     <label for="about" class="col-md-4 col-lg-2 col-form-label"  style="font-weight:bold">Mô tả:</label>
                                     <div class="col-md-8 col-lg-9">
-                                      <textarea name="mota" class="form-control" id="about" style="height: 100px; box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;margin-bottom:50px" required>{{ $service->mota }}</textarea>
+                                      <textarea name="mota" class="form-control" id="about" style="height: 100px; box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;margin-bottom:50px" required>{{ $service->MoTa }}</textarea>
                                       <div class="invalid-feedback">Mô tả không hợp lệ</div>
                                     </div>
                                   </div>
