@@ -100,7 +100,7 @@
                                     <div class="row mb-3">
                                       <label for="Phone" class="col-md-4 col-lg-3 col-form-label">Ngày Sinh</label>
                                       <div class="col-md-8 col-lg-9">
-                                        <input name="birthday" type="datetime" class="form-control" id="Phone" value="{{ \Carbon\Carbon::createFromTimestampMs($user[0]["NgaySinh"])->format('d-m-Y') }}"  required>
+                                        <input name="birthday" type="date" class="form-control" id="Phone" value="{{ \Carbon\Carbon::createFromTimestampMs($user[0]["NgaySinh"])->format('Y-m-d') }}"  required>
                                         <div class="invalid-feedback">Ngày sinh không hợp lệ</div>
                                       </div>
                                     </div>
@@ -108,7 +108,7 @@
                                     <div class="row mb-3">
                                       <label for="Email" class="col-md-4 col-lg-3 col-form-label">Ngày vào làm</label>
                                       <div class="col-md-8 col-lg-9">
-                                        <input name="birthday" type="datetime" class="form-control" id="Phone" value="{{ \Carbon\Carbon::createFromTimestampMs($user[0]["NgayVaoLam"])->format('d-m-Y') }}" required>
+                                        <input name="birthday" type="date" class="form-control" id="Phone" value="{{ \Carbon\Carbon::createFromTimestampMs($user[0]["NgayVaoLam"])->format('Y-m-d') }}" required>
                                         <div class="invalid-feedback">Ngày vào làm không hợp lệ</div>
                                       </div>
                                     </div>            

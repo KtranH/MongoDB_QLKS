@@ -78,6 +78,9 @@ Route::middleware([CheckLogin::class])->group(function () {
     //Truy cập trang quản lý nhân viên
     Route::get('/manage/employee', [ListEmployee::class, 'Employee'])->name("showemployee");
 
+    //Truy cập trang tùy chỉnh nhân viên
+    Route::get('/setting/employee{id}', [ListEmployee::class, 'ShowUpdateEmployee'])->name("showupdateemployee");
+
     //Truy cập trang đặt phòng
     Route::get('/booking', [BookingController::class, 'Booking'])->name("showbooking");
 

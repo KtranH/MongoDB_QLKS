@@ -60,7 +60,7 @@
                                     <div style="width:100%">
                                         <label for="company" class="col-md-4 col-lg-3 col-form-label"  style="font-weight:bold">Tên loại:</label>
                                         <div class="col-md-8 col-lg-12">
-                                            <select class="form-select" aria-label="Default select example" style="box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;" name="category">
+                                            <select class="form-select" aria-label="Default select example" style="box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;" name="maloai">
                                                 <option value="{{ $room[1]["_id"] }}">{{ $room[1]["MaLoai"] }}</option>
                                                 @foreach ($category_room as $item)
                                                     @if ($item["_id"] != $room[1]["_id"])

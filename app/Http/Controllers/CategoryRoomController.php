@@ -76,15 +76,15 @@ class CategoryRoomController extends Controller
 
         try
         {
-            /*$category_room = Category_room::where('_id', $id)->firstOrFail();
-            $category_room->tenloai = $request->tenloaiphong;
-            $category_room->succhua = Intval($request->succhua);
-            $category_room->dientich = Intval($request->dientich);
-            $category_room->tienich = $request->tienich;
-            $category_room->noithat = $request->noithat;
-            $category_room->quydinh = $request->quydinh;
-            $category_room->mota = $request->mota;
-            $category_room->save();*/
+            $categoryRoom = LoaiPhong::where('_id', $id)->firstOrFail();
+            $categoryRoom->MaLoai = $request->tenloaiphong;
+            $categoryRoom->SucChua = intval($request->succhua);
+            $categoryRoom->DienTich = intval($request->dientich);
+            $categoryRoom->TienIch = $request->tienich;
+            $categoryRoom->NoiThat = $request->noithat;
+            $categoryRoom->QuyDinh = $request->quydinh;
+            $categoryRoom->MoTa = $request->mota;
+            $categoryRoom->save();
             return redirect()->back()->with('success', 'Cập nhật thay đổi thành công');
         }
         catch(\Exception $e)

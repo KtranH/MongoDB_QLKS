@@ -20,6 +20,18 @@ trait QueryDB
             return [$inf, $user];
         }
     }
+    public function Get_User($id)
+    {
+        $user = NguoiDung::where('DanhSachTaiKhoan.CMND', $id)->first();
+        if($user == null){
+            return false;
+        }
+        else
+        {
+            $inf = collect($user->DanhSachTaiKhoan)->first();
+            return [$inf, $user];
+        }
+    }
     public function Get_Room($id)
     {
         $query = LoaiPhong::where('DanhSachPhong.TenPhong', $id)->firstOrFail();

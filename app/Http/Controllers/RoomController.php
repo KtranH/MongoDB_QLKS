@@ -65,18 +65,42 @@ class RoomController extends Controller
         
         try
         {
-            /*$room = Room_hotel::where('_id', $id)->firstOrFail();
-            $room->tenphong = $request->tenphong;
-            $room->vitri = Intval($request->vitri);
-            $room->giathue = Intval($request->giathue);
-            $room->save();*/
-            return redirect()->back()->with('success', 'Cập nhật thay đổi thành công');
+            $room = LoaiPhong::where("DanhSachPhong.TenPhong", $id)->firstOrFail();
+
+            $getRoomKey = collect($room->DanhSachPhong)->where('TenPhong', $id)->keys()->firstOrFail();
+        
+            if ($room == null || $getRoomKey === false) {
+                return redirect()->back()->with('error', 'Không tìm thấy phòng');
+            }
+                 
+            $updatedRoom = [
+                'TenPhong' => $request->input('tenphong'),
+                'ViTri' => intval($request->input('vitri')),
+                'GiaThue' => doubleval($request->input('giathue')),
+                'TinhTrang' => $room->DanhSachPhong[$getRoomKey]['TinhTrang'] 
+            ];
+        
+            if ($room->_id != $request->input('maloai')) {
+                $room->pull('DanhSachPhong', $room->DanhSachPhong[$getRoomKey]);
+                $room->save();
+        
+                $newRoomType = LoaiPhong::where('_id', $request->input('maloai'))->firstOrFail();
+                $newRoomType->push('DanhSachPhong', $updatedRoom);
+                $newRoomType->save();
+            } else {
+                $room->DanhSachPhong[$getRoomKey] = $updatedRoom;
+                $room->save();
+            }
+            
+            return redirect()->back()->with('success', 'Cập nhật phòng thành công');
+            
         }
         catch(\Exception $e)
         {
-            return redirect()->back()->with('error', "Có lỗi xảy ra, không thể thay đổi!");
+            return redirect()->back()->with('error', "Có lỗi xảy ra, không thể thay đổi!" . $e->getMessage());
         }
     }
+
     public function ActiveRoom($id)
     {
         try {
@@ -107,10 +131,6 @@ class RoomController extends Controller
     public function ShowUpdateRoom($id)
     {
         $room = $this->Get_Room($id);
-        if($room == false)
-        {
-            return back()->with('error', 'Không tìm thấy phòng');
-        }
         $category_room = LoaiPhong::all();
         return view('ManageController.Room_Update', compact('room', 'category_room'));
     }

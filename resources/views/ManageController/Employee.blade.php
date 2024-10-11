@@ -39,7 +39,8 @@
                              <h5 class="card-title" style="font-family: 'Montserrat', sans-serif;
                              font-optical-sizing: auto;
                              font-weight: 400;
-                             font-style: normal;">Danh sách nhân viên hiện tại</h5>
+                             font-style: normal;
+                             font-size: 14px;">Danh sách nhân viên hiện tại</h5>
 
                              @if (Session::has('success'))
                                 <div class="alert alert-success" role="alert">{{ Session::get('success') }}</div>
@@ -82,7 +83,7 @@
                                         @else
                                             <td><span class="badge bg-success">Còn hoạt động</span></td>
                                         @endif
-                                        <td><a href="" type="button" class="btn btn-info" style="border-radius:20%;margin-right:20px;color:white;box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;background-color:#74C0FC"><i class="fi fi-rr-file-edit"></i>
+                                        <td><a href="{{ route('showupdateemployee', ['id' => $x["CMND"]]) }}" type="button" class="btn btn-info" style="border-radius:20%;margin-right:20px;color:white;box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;background-color:#74C0FC"><i class="fi fi-rr-file-edit"></i>
                                         </a><a href="" type="button" title="Khôi phục" class="btn btn-info" style="border-radius:20%;margin-right:20px;color:white;box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;background-color:#74C0FC"><i class="fa-solid fa-arrow-rotate-left" style="color: #ffffff;"></i></a>
                                         <a href="" type="button" class="btn btn-danger" style="border-radius:20%; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;"><i class="fi fi-br-cross"></i></a></td>
                                     </tr>              
