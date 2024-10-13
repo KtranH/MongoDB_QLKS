@@ -37,16 +37,18 @@ class CategoryRoomController extends Controller
 
        try
        {
-        /*$category_room = new Category_room();
-        $category_room->tenloai = $request->tenloaiphong;
-        $category_room->succhua = Intval($request->succhua);
-        $category_room->dientich = Intval($request->dientich);
-        $category_room->tienich = $request->tienich;
-        $category_room->noithat = $request->noithat;
-        $category_room->quydinh = $request->quydinh;
-        $category_room->mota = $request->mota;
-        $category_room->tinhtrang = 1;
-        $category_room->save();*/
+        $categoryRoom = new LoaiPhong();
+        $categoryRoom->MaLoai = $request->tenloaiphong;
+        $categoryRoom->SucChua = intval($request->succhua);
+        $categoryRoom->DienTich = doubleval($request->dientich);
+        $categoryRoom->TienIch = $request->tienich;
+        $categoryRoom->NoiThat = $request->noithat;
+        $categoryRoom->QuyDinh = $request->quydinh;
+        $categoryRoom->MoTa = $request->mota;
+        $categoryRoom->TinhTrang = 1;
+        $categoryRoom->DanhSachPhong = [];
+        $categoryRoom->save();
+
         return redirect()->back()->with('success', 'Thêm thành công');
        }
        catch(\Exception $e)
@@ -79,7 +81,7 @@ class CategoryRoomController extends Controller
             $categoryRoom = LoaiPhong::where('_id', $id)->firstOrFail();
             $categoryRoom->MaLoai = $request->tenloaiphong;
             $categoryRoom->SucChua = intval($request->succhua);
-            $categoryRoom->DienTich = intval($request->dientich);
+            $categoryRoom->DienTich = doubleval($request->dientich);
             $categoryRoom->TienIch = $request->tienich;
             $categoryRoom->NoiThat = $request->noithat;
             $categoryRoom->QuyDinh = $request->quydinh;
@@ -96,30 +98,24 @@ class CategoryRoomController extends Controller
     {
         try
         {
-            /*$category_room = Category_room::where('_id', $id)->firstOrFail();
-            $category_room->tinhtrang = 1;
-            $category_room->save();
-            $room = Room_hotel::where('maloai', $id)->update(['tinhtrang' => 1]);*/
-            return redirect()->back();
+            LoaiPhong::where('_id', $id)->update(['TinhTrang' => 1, '$set' => ['DanhSachPhong.$[].TinhTrang' => 1]]);
+            return response()->json(['success' => true, 'message' => 'Cập nhật trạng thái thành công']);
         }
         catch(\Exception $e)
         {
-            return redirect()->back()->with('error', "Có lỗi xảy ra, không thể thay đổi!");
+            return response()->json(['success' => false, 'message' => 'Có lỗi xảy ra, không thể thay đổi! ' . $e->getMessage()], 500);
         }
     }
     public function DisableCategoryRoom($id)
     {
         try
         {
-            /*$category_room = Category_room::where('_id', $id)->firstOrFail();
-            $category_room->tinhtrang = 0;
-            $category_room->save();
-            $room = Room_hotel::where('maloai', $id)->update(['tinhtrang' => 0]);*/
-            return redirect()->back();
+            LoaiPhong::where('_id', $id)->update(['TinhTrang' => 0, '$set' => ['DanhSachPhong.$[].TinhTrang' => 0]]);
+            return response()->json(['success' => true, 'message' => 'Cập nhật trạng thái thành công']);
         }
         catch(\Exception $e)
         {
-            return redirect()->back()->with('error', "Có lỗi xảy ra, không thể thay đổi!");
+            return response()->json(['success' => false, 'message' => 'Có lỗi xảy ra, không thể thay đổi! ' . $e->getMessage()], 500);
         }
     }
     public function ShowUpdateCategoryRoom($id)

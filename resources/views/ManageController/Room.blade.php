@@ -55,45 +55,106 @@
 
                             <!-- Bảng hiển thị danh sách loại phòng -->
                             <table class="table table-borderless datatable">
-                                <thead>
+                              <thead>
                                   <tr>
-                                    <th scope="col">Tên phòng</th>
-                                    <th scope="col">Mã loại phòng</th>
-                                    <th scope="col">Sức chứa</th>
-                                    <th scope="col">Giá thuê</th>
-                                    <th scope="col">Tình trạng</th>
-                                    <th scope="col">Chức năng</th>
+                                      <th scope="col">Tên phòng</th>
+                                      <th scope="col">Mã loại phòng</th>
+                                      <th scope="col">Sức chứa</th>
+                                      <th scope="col">Giá thuê</th>
+                                      <th scope="col">Tình trạng</th>
+                                      <th scope="col">Chức năng</th>
                                   </tr>
-                                </thead>
-                                <tbody>
+                              </thead>
+                              <tbody>
                                   @foreach ($rooms as $item)
                                       @php
-                                        $MaLoai = $item->MaLoai;
-                                        $SucChua = $item->SucChua;
+                                          $MaLoai = $item->MaLoai;
+                                          $SucChua = $item->SucChua;
                                       @endphp
                                       @foreach ($item->DanhSachPhong as $x)
-                                      <tr>
-                                          <th scope="row"><a href="#">{{ $x["TenPhong"] }}</a></th>
+                                      <tr id="room-{{ $x['TenPhong'] }}">
+                                          <th scope="row"><a href="#">{{ $x['TenPhong'] }}</a></th>
                                           <td><a href="#" class="text-primary">{{ $MaLoai }}</a></td>
                                           <td>{{ $SucChua }}</td>
-                                          <td>{{ $x["GiaThue"] }}</td>
-                                          @if ($x["TinhTrang"] == 0)
-                                              <td><span class="badge bg-danger">Không hoạt động</span></td>
-                                          @else
-                                              <td><span class="badge bg-success">Còn hoạt động</span></td>
-                                          @endif
-                                          <td><a href="{{ route('showupdateroom', ['id' => $x["TenPhong"]]) }}" type="button" class="btn btn-info" style="border-radius:20%;margin-right:20px;color:white;box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;background-color:#74C0FC">
-                                            <i class="fi fi-rr-file-edit"></i></a><a href="{{ route('activeroom', ['id' => $x["TenPhong"]]) }}" type="button" title="Khôi phục" class="btn btn-info" style="border-radius:20%;margin-right:20px;color:white;box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;background-color:#74C0FC">
-                                            <i class="fa-solid fa-arrow-rotate-left" style="color: #ffffff;"></i></a><a href="{{ route('disableroom', ['id' => $x["TenPhong"]]) }}" type="button" class="btn btn-danger" style="border-radius:20%; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;">
-                                              <i class="fi fi-br-cross"></i></a></td>
-                                          @if (Session::has('error'))
-                                              <td><div class="alert alert-danger" role="alert"> {{ Session::get('error') }} </div></td>
-                                          @endif
+                                          <td>{{ $x['GiaThue'] }}</td>
+                                          <td>
+                                              @if ($x['TinhTrang'] == 0)
+                                                  <span class="badge bg-danger" id="status-{{ $x['TenPhong'] }}">Không hoạt động</span>
+                                              @else
+                                                  <span class="badge bg-success" id="status-{{ $x['TenPhong'] }}">Còn hoạt động</span>
+                                              @endif
+                                          </td>
+                                          <td>
+                                              <!-- Edit Button -->
+                                              <a href="{{ route('showupdateroom', $x['TenPhong']) }}" class="btn edit-room" data-room-id="{{ $x['TenPhong'] }}" 
+                                                      style="border-radius:20%;margin-right:20px;color:white;box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;background-color:#74C0FC">
+                                                  <i class="fa-solid fa-pen-to-square" style="color: #ffffff;"></i>
+                                              </a>
+                
+                                              <!-- Active Button -->
+                                              <button class="btn activate-room" data-room-id="{{ $x['TenPhong'] }}" 
+                                                      style="border-radius:20%;margin-right:20px;color:white;box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;background-color:#74C0FC">
+                                                  <i class="fa-solid fa-arrow-rotate-left" style="color: #ffffff;"></i>
+                                              </button>
+                          
+                                              <!-- Disable Button -->
+                                              <button class="btn btn-danger disable-room" data-room-id="{{ $x['TenPhong'] }}" 
+                                                      style="border-radius:20%; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;">
+                                                  <i class="fi fi-br-cross"></i>
+                                              </button>
+                                          </td>
                                       </tr>
                                       @endforeach
                                   @endforeach
-                                </tbody>
-                              </table>
+                              </tbody>
+                            </table>
+                            <script>
+                              $(document).ready(function() {
+                                $('.activate-room').click(function(e) {
+                                    e.preventDefault();
+                                    var roomId = $(this).data('room-id');
+                                    var url = '{{ route("activeroom", ":id") }}'.replace(':id', roomId);
+
+                                    $.ajax({
+                                        url: url,
+                                        type: 'GET',
+                                        success: function(response) {
+                                            if (response.success) {
+                                                $('#status-' + roomId).removeClass('bg-danger').addClass('bg-success').text('Còn hoạt động');
+                                                alert(response.message);
+                                            } else {
+                                                alert('Có lỗi xảy ra: ' + response.message);
+                                            }
+                                        },
+                                        error: function(xhr) {
+                                            alert('Có lỗi xảy ra khi gửi yêu cầu.');
+                                        }
+                                    });
+                                });
+
+                                $('.disable-room').click(function(e) {
+                                    e.preventDefault();
+                                    var roomId = $(this).data('room-id');
+                                    var url = '{{ route("disableroom", ":id") }}'.replace(':id', roomId);
+
+                                    $.ajax({
+                                        url: url,
+                                        type: 'GET',
+                                        success: function(response) {
+                                            if (response.success) {
+                                                $('#status-' + roomId).removeClass('bg-success').addClass('bg-danger').text('Không hoạt động');
+                                                alert(response.message);
+                                            } else {
+                                                alert('Có lỗi xảy ra: ' + response.message);
+                                            }
+                                        },
+                                        error: function(xhr) {
+                                            alert('Có lỗi xảy ra khi gửi yêu cầu.');
+                                        }
+                                    });
+                                });
+                            });
+                            </script>
 
                           </div>
                         <div class="tab-content pt-2">

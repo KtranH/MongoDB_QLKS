@@ -36,13 +36,15 @@ class RoomController extends Controller
         }
 
         try {
-            /*$room = new Room_hotel();
-            $room->maloai = $request->maloai; 
-            $room->tenphong = $request->tenphong;
-            $room->vitri = Intval($request->vitri);
-            $room->giathue = Intval($request->giathue);
-            $room->tinhtrang = 1;
-            $room->save();*/
+            $room = LoaiPhong::where("_id", $request->maloai)->firstOrFail();
+            $addRoom = [
+                "TenPhong" => $request->tenphong,
+                "ViTri" => intval($request->vitri),
+                "GiaThue" => doubleval($request->giathue),
+                "TinhTrang" => 1
+            ];
+            $room->push('DanhSachPhong', $addRoom);
+            $room->save();
 
             return redirect()->back()->with('success', 'Thêm thành công');
         } catch (\Exception $e) {
@@ -88,7 +90,9 @@ class RoomController extends Controller
                 $newRoomType->push('DanhSachPhong', $updatedRoom);
                 $newRoomType->save();
             } else {
-                $room->DanhSachPhong[$getRoomKey] = $updatedRoom;
+                $update = $room->DanhSachPhong;
+                $update[$getRoomKey] = $updatedRoom;
+                $room->DanhSachPhong = $update;
                 $room->save();
             }
             
@@ -103,28 +107,24 @@ class RoomController extends Controller
 
     public function ActiveRoom($id)
     {
-        try {
-            /*$room = Room_hotel::findOrFail($id);
-            $room->tinhtrang = 1; 
-            $room->save();*/
-        
-            return redirect()->back()->with('success', 'Cập nhật trạng thái phòng thành công');
+        try 
+        {
+            LoaiPhong::where('DanhSachPhong.TenPhong', $id)->update(['DanhSachPhong.$.TinhTrang' => 1]);
+            return response()->json(['success' => true, 'message' => 'Cập nhật trạng thái phòng thành công']);
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Có lỗi xảy ra, không thể thay đổi! ' . $e->getMessage());
+            return response()->json(['success' => false, 'message' => 'Có lỗi xảy ra, không thể thay đổi! ' . $e->getMessage()], 500);
         }
     }
     public function DisableRoom($id)
     {
         try
         {
-            /*$room = Room_hotel::where('_id', $id)->firstOrFail();
-            $room->tinhtrang = 0;
-            $room->save();
-            return redirect()->back();*/
+            LoaiPhong::where('DanhSachPhong.TenPhong', $id)->update(['DanhSachPhong.$.TinhTrang' => 0]);
+            return response()->json(['success' => true, 'message' => 'Cập nhật trạng thái phòng thành công']);
         }
         catch(\Exception $e)
-        {
-            return redirect()->back()->with('error', "Có lỗi xảy ra, không thể thay đổi!");
+        {   
+            return response()->json(['success' => false, 'message' => 'Có lỗi xảy ra, không thể thay đổi! ' . $e->getMessage()], 500);
         }
     }
         

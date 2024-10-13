@@ -51,13 +51,13 @@
 
 
                              <!-- Form hiển thị thêm loại phòng -->
-                                <form class="needs-validation" novalidate method="POST" enctype="multipart/form-data" action="">
-                                @csrf
+                                <form class="needs-validation" novalidate method="POST" enctype="multipart/form-data" action="{{ route('updateemployee', ['id' => $employee[0]['Email']]) }}">
+                                    @csrf
                                     <div style="width:100%; display: flex;justify-content:space-around;margin-bottom: 20px">
                                         <div style="width:100%">
                                             <label for="company" class="col-md-4 col-lg-3 col-form-label" style="font-weight:bold">Họ tên:</label>
                                             <div class="col-md-8 col-lg-9">
-                                                <input name="hoten" type="text" class="form-control" id="company" style="box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;" value="{{ $employee[0]["TenNhanVien"] }}" required>
+                                                <input name="tennhanvien" type="text" class="form-control" id="company" style="box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;" value="{{ $employee[0]["TenNhanVien"] }}" required>
                                             <div class="invalid-feedback">Họ tên không hợp lệ</div>
                                             </div>
                                         </div>
@@ -65,7 +65,7 @@
                                         <div style="width:100%">
                                             <label for="fullName" class="col-md-4 col-lg-3 col-form-label"  style="font-weight:bold">Ngày sinh:</label>
                                             <div class="col-md-8 col-lg-9">
-                                            <input name="ngaysinh" type="date" class="form-control" id="fullName" style="box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;" value="{{ \Carbon\Carbon::createFromTimestampMs($employee[0]["NgaySinh"])->format('Y-m-d') }}" required>
+                                            <input name="ngaysinh" type="date" class="form-control" id="fullName" style="box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;" value="{{ $employee[0]["NgaySinh"] }}" required>
                                             <div class="invalid-feedback">Ngày sinh không hợp lệ</div>
                                             </div>
                                         </div>  
@@ -73,7 +73,7 @@
                                         <div style="width:100%">
                                             <label for="fullName" class="col-md-4 col-lg-3 col-form-label"  style="font-weight:bold">Ngày vào làm:</label>
                                             <div class="col-md-8 col-lg-9">
-                                            <input name="ngayvaolam" type="date" class="form-control" id="fullName" style="box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;" value="{{ \Carbon\Carbon::createFromTimestampMs($employee[0]["NgayVaoLam"])->format('Y-m-d') }}" required>
+                                            <input name="ngayvaolam" type="date" class="form-control" id="fullName" style="box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;" value="{{ $employee[0]["NgayVaoLam"] }}" required>
                                             <div class="invalid-feedback">Ngày vào làm không hợp lệ</div>
                                             </div>
                                         </div>  
@@ -92,7 +92,7 @@
                                         <div style="width:100%">
                                             <label for="company" class="col-md-4 col-lg-3 col-form-label"  style="font-weight:bold">Passsword:</label>
                                             <div class="col-md-8 col-lg-9">
-                                            <input name="matkhau" type="password" class="form-control" id="company" style="box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;" required>
+                                            <input name="matkhau" type="password" minlength="6" class="form-control" id="company" style="box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;">
                                             <div class="invalid-feedback">Passsword không hợp lệ</div>
                                             </div>
                                         </div>
@@ -117,8 +117,8 @@
                                   <div style="row mb-3">
                                     <label for="Job" class="col-md-4 col-lg-3 col-form-label"  style="font-weight:bold">Chức năng:</label>
                                     <div class="col-md-8 col-lg-9">
-                                        <select class="form-select" aria-label="Default select example" style="box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;margin-bottom:60px;width:122%" name="position">
-                                            <option selected>{{ $employee[1]["TenQuyenHan"] }}</option>
+                                        <select class="form-select" aria-label="Default select example" style="box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;margin-bottom:60px;width:122%" name="tenquyenhan">
+                                            <option selected value="{{ $employee[1]["_id"] }}">{{ $employee[1]["TenQuyenHan"] }}</option>
                                             @foreach ($position as $item)
                                                     @if ($item["TenQuyenHan"] != $employee[1]["TenQuyenHan"])
                                                         <option value="{{ $item["_id"] }}">{{ $item["TenQuyenHan"] }}</option>
@@ -131,7 +131,7 @@
                                   <div class="row mb-3">
                                     <label for="about" class="col-md-4 col-lg-2 col-form-label"  style="font-weight:bold">Địa chỉ:</label>
                                     <div class="col-md-8 col-lg-9">
-                                      <textarea name="address" class="form-control" id="about" style="height: 100px; box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;margin-bottom:50px" required>{{ $employee[0]["DiaChi"] }}</textarea>
+                                      <textarea name="diachi" class="form-control" id="about" style="height: 100px; box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;margin-bottom:50px" required>{{ $employee[0]["DiaChi"] }}</textarea>
                                       <div class="invalid-feedback">Địa chỉ không hợp lệ</div>
                                     </div>
                                   </div>

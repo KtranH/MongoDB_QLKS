@@ -52,7 +52,7 @@
                                 @endif
                                 
                              <!-- Form hiển thị thêm loại phòng -->
-                                <form class="needs-validation" novalidate method="POST" enctype="multipart/form-data" action="{{ route('updateservice', ['id' => $service->_id]) }}">
+                                <form class="needs-validation" novalidate method="POST" enctype="multipart/form-data" action="{{ route('addservice', ['id' => $service->_id]) }}">
                                 @csrf
                                   <div style="width:100%; margin-bottom: 50px">
     

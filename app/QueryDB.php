@@ -16,7 +16,12 @@ trait QueryDB
         }
         else
         {
-            $inf = collect($user->DanhSachTaiKhoan)->first();
+            $inf = collect($user->DanhSachTaiKhoan);
+            foreach($inf as $item){
+                if($item["Email"] == $email){
+                    return [$item, $user];
+                }
+            }
             return [$inf, $user];
         }
     }
@@ -48,5 +53,55 @@ trait QueryDB
             }
             return false;
         }
+    }
+    public function Check_Date_BirthDay($date)
+    {
+        $today = date("Y-m-d");
+        $diff = date_diff(date_create($date), date_create($today));
+        if($diff->format('%y') < 18){
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+    public function Check_Date_Worked($date)
+    {
+        $today = date("Y-m-d");
+        $work_date = date("Y-m-d", strtotime($date));
+        
+        if ($work_date <= $today) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    public function Check_Unique($data)
+    {
+        $user = NguoiDung::where('DanhSachTaiKhoan.Email', $data)
+        ->orWhere('DanhSachTaiKhoan.CMND', $data)
+        ->orWhere('DanhSachTaiKhoan.SDT', $data)->first();
+
+        if($user == null){
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    public function Check_Exist($email, $sdt, $cmnd, $emailU, $sdtU, $cmndU)
+    {
+        if($email != $emailU){
+            return $email;
+        }
+        if($sdt != $sdtU){
+            return $sdt;
+        }
+        if($cmnd != $cmndU){
+            return $cmnd;
+        }
+        return null;
     }
 }

@@ -68,20 +68,37 @@
                                 </thead>
                                 <tbody>
                                   @foreach ($service as $item)
-                                  <tr>
+                                  <tr id="service-{{ $item->_id }}">
                                       <th scope="row"><a href="#">{{ $item->_id }}</a></th>
                                       <td><a href="#" class="text-primary">{{ $item->TenDichVu }}</a></td>
                                       <td>{{ $item->MoTa}}</td>
                                       <td>{{ $item->GiaDichVu}}</td>
-                                      @if ($item->TinhTrang == 0)
-                                          <td><span class="badge bg-danger">Không hoạt động</span></td>
-                                      @else
-                                          <td><span class="badge bg-success">Còn hoạt động</span></td>
-                                      @endif
-                                      <td><a href="{{ route('showupdateservice', ['id' => $item->_id]) }}" type="button" class="btn btn-info" style="border-radius:20%;margin-right:20px;color:white;box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;background-color:#74C0FC">
-                                        <i class="fi fi-rr-file-edit"></i></a><a href="#" type="button" title="Khôi phục" class="btn btn-info" style="border-radius:20%;margin-right:20px;color:white;box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;background-color:#74C0FC">
-                                         <i class="fa-solid fa-arrow-rotate-left" style="color: #ffffff;"></i></a><a href="#" type="button" class="btn btn-danger" style="border-radius:20%; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;">
-                                          <i class="fi fi-br-cross"></i></a></td>
+                                      <td>
+                                        @if ($item->TinhTrang == 0)
+                                            <span class="badge bg-danger" id="status-{{ $item->_id }}">Không hoạt động</span>
+                                        @else
+                                            <span class="badge bg-success" id="status-{{ $item->_id }}">Còn hoạt động</span>
+                                        @endif
+                                      </td>
+                                      <td>
+                                        <!-- Edit Button -->
+                                        <a href="{{ route('showupdateservice', $item->_id) }}" class="btn edit-room" data-service-id="{{ $item->_id }}"
+                                            style="border-radius:20%;margin-right:20px;color:white;box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;background-color:#74C0FC">
+                                            <i class="fa-solid fa-pen-to-square" style="color: #ffffff;"></i>
+                                        </a>
+                    
+                                        <!-- Active Button -->
+                                        <button class="btn activate-ServiceRoom" data-service-id="{{ $item->_id }}"
+                                            style="border-radius:20%;margin-right:20px;color:white;box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;background-color:#74C0FC">
+                                            <i class="fa-solid fa-arrow-rotate-left" style="color: #ffffff;"></i>
+                                        </button>
+                    
+                                        <!-- Disable Button -->
+                                        <button class="btn btn-danger disable-ServiceRoom" data-service-id="{{ $item->_id }}"
+                                            style="border-radius:20%; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;">
+                                            <i class="fi fi-br-cross"></i>
+                                        </button>
+                                      </td>
                                       @if (Session::has('error'))
                                           <td><div class="alert alert-danger" role="alert"> {{ Session::get('error') }} </div></td>
                                       @endif
@@ -89,7 +106,53 @@
                                 @endforeach
                                 </tbody>
                               </table>
+                              <script>
+                               $(document).ready(function() {
+                                  $('.activate-ServiceRoom').click(function(e) {
+                                      e.preventDefault();
+                                      var serviceId = $(this).data('service-id');
+                                      var url = '{{ route("activeservice", ":id") }}'.replace(':id', serviceId);
 
+                                      $.ajax({
+                                          url: url,
+                                          type: 'GET',
+                                          success: function(response) {
+                                              if (response.success) {
+                                                  $('#status-' + serviceId).removeClass('bg-danger').addClass('bg-success').text('Còn hoạt động');
+                                                  alert(response.message);
+                                              } else {
+                                                  alert('Có lỗi xảy ra: ' + response.message);
+                                              }
+                                          },
+                                          error: function(xhr) {
+                                              alert('Có lỗi xảy ra khi gửi yêu cầu.');
+                                          }
+                                      });
+                                  });
+
+                                  $('.disable-ServiceRoom').click(function(e) {
+                                      e.preventDefault();
+                                      var serviceId = $(this).data('service-id');
+                                      var url = '{{ route("disableservice", ":id") }}'.replace(':id', serviceId);
+
+                                      $.ajax({
+                                          url: url,
+                                          type: 'GET',
+                                          success: function(response) {
+                                              if (response.success) {
+                                                  $('#status-' + serviceId).removeClass('bg-success').addClass('bg-danger').text('Không hoạt động');
+                                                  alert(response.message);
+                                              } else {
+                                                  alert('Có lỗi xảy ra: ' + response.message);
+                                              }
+                                          },
+                                          error: function(xhr) {
+                                              alert('Có lỗi xảy ra khi gửi yêu cầu.');
+                                          }
+                                      });
+                                  });
+                              });
+                              </script>
                           </div>
                         <div class="tab-content pt-2">
 

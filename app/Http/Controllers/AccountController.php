@@ -50,7 +50,6 @@ class AccountController extends Controller
         if (!Hash::check($password, $user[0]["MatKhau"])) {
             return redirect()->back()->with('error', 'Tài khoản hoặc mật khẩu không đúng');
         }
-
         $cookie = Cookie::make('tokenLogin', $user[0]["Email"], 0);
         return redirect()->route('showhome')->withCookie($cookie);
     }
@@ -60,10 +59,25 @@ class AccountController extends Controller
         Cookie::forget('tokenLogin');
         return redirect()->route('showlogin');
     }
-    public function UpdateAccout()
+    public function UpdatePassword(Request $request)
     {
-        return view('AccountController.UpdateAccout');
+        $user = NguoiDung::where('DanhSachTaiKhoan.Email', Cookie::get('tokenLogin'))->firstOrFail();
+        $getUserKey = collect($user->DanhSachTaiKhoan)->keys()->firstOrFail();
+        if($request->input('newPassword') != $request->input('renewPassword'))
+        {
+            return response()->json(['success' => false, 'message' => 'Mật khẩu nhập lại không đúng!']);
+        }
+        else if(!Hash::check($request->input('currentPassword'), $user->DanhSachTaiKhoan[$getUserKey]['MatKhau']))
+        {
+            return response()->json(['success' => false, 'message' => 'Mật khẩu hiện tại không đúng!']);
+        }
+        else
+        {
+            NguoiDung::where('DanhSachTaiKhoan.Email', Cookie::get('tokenLogin'))->update(['DanhSachTaiKhoan.$.MatKhau' => Hash::make($request->input('newPassword'))]);
+            return response()->json(['success' => true, 'message' => 'Cập nhật thành công!']);
+        }
     }
+
     public function Setting()
     {
         return view('AccountController.Setting');

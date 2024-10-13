@@ -38,11 +38,11 @@
                                                 <thead>
                                                     <tr>
                                                         <th scope="col">Mã phiếu</th>
-                                                        <th scope="col">Mã nhân viên</th>
+                                                        <th scope="col">Tên nhân viên</th>
                                                         <th scope="col">Tên phòng</th>
-                                                        <th scope="col">Ngày đặt</th>
-                                                        <th scope="col">Ngày trả</th>
-                                                        <th scope="col">Tổng tiền</th>
+                                                        <th scope="col">Ngày đặt phòng</th>
+                                                        <th scope="col">Ngày nhận phòng</th>
+                                                        <th scope="col">Ngày trả phòng</th>
                                                         <th scope="col">Tình trạng</th>
                                                         <th scope="col">Trạng thái</th>
                                                         <th scope="col">Chức năng</th>

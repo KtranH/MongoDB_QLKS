@@ -50,40 +50,106 @@
                                   <strong>{{ Session::get('success') }}</strong>
                                 </div>          
                              @endif
-                            <!-- Bảng hiển thị danh sách loại phòng -->
 
+                            <!-- Bảng hiển thị danh sách loại phòng -->
                             <table class="table table-borderless datatable">
-                                <thead>
+                              <thead>
                                   <tr>
-                                    <th scope="col">Mã loại phòng</th>
-                                    <th scope="col">Tên loại phòng</th>
-                                    <th scope="col">Sức chứa</th>
-                                    <th scope="col">Tình trạng</th>
-                                    <th scope="col">Chức năng</th>
+                                      <th scope="col">Mã loại phòng</th>
+                                      <th scope="col">Tên loại phòng</th>
+                                      <th scope="col">Sức chứa</th>
+                                      <th scope="col">Tình trạng</th>
+                                      <th scope="col">Chức năng</th>
                                   </tr>
-                                </thead>
-                                <tbody>
+                              </thead>
+                              <tbody>
                                   @foreach ($listCategoriesRoom as $item)
-                                    <tr>
-                                        <th scope="row"><a href="#">{{ $item->_id }}</a></th>
-                                        <td>{{ $item->MaLoai}}</td>
-                                        <td><a href="#" class="text-primary"><?php echo $item->SucChua ?></a></td>
-                                        @if ($item->TinhTrang == 0)
-                                            <td><span class="badge bg-danger">Không hoạt động</span></td>
-                                        @else
-                                            <td><span class="badge bg-success">Còn hoạt động</span></td>
-                                        @endif
-                                        <td><a href="{{ route('showupdatecategoryroom', ['id' => $item->_id]) }}" type="button" class="btn btn-info" style="border-radius:20%;margin-right:20px;color:white;box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;background-color:#74C0FC">
-                                          <i class="fi fi-rr-file-edit"></i></a><a href="{{ route('activecategoryroom', ['id' => $item->_id]) }}" type="button" title="Khôi phục" class="btn btn-info" style="border-radius:20%;margin-right:20px;color:white;box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;background-color:#74C0FC">
-                                           <i class="fa-solid fa-arrow-rotate-left" style="color: #ffffff;"></i></a><a href="{{ route('disablecategoryroom', ['id' => $item->_id]) }}" type="button" class="btn btn-danger" style="border-radius:20%; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;">
-                                            <i class="fi fi-br-cross"></i></a></td>
-                                        @if (Session::has('error'))
-                                            <td><div class="alert alert-danger" role="alert"> {{ Session::get('error') }} </div></td>
-                                        @endif
-                                    </tr>              
+                                      <tr id="category-{{ $item->_id }}">
+                                          <th scope="row"><a href="#">{{ $item->_id }}</a></th>
+                                          <td>{{ $item->MaLoai }}</td>
+                                          <td><a href="#" class="text-primary">{{ $item->SucChua }}</a></td>
+                                          <td>
+                                              @if ($item->TinhTrang == 0)
+                                                  <span class="badge bg-danger" id="status-{{ $item->_id }}">Không hoạt động</span>
+                                              @else
+                                                  <span class="badge bg-success" id="status-{{ $item->_id }}">Còn hoạt động</span>
+                                              @endif
+                                          </td>
+                                          <td>
+                                              <!-- Edit Button -->
+                                              <a href="{{ route('showupdatecategoryroom', $item->_id) }}" class="btn edit-room" data-category-id="{{ $item->_id }}"
+                                                  style="border-radius:20%;margin-right:20px;color:white;box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;background-color:#74C0FC">
+                                                  <i class="fa-solid fa-pen-to-square" style="color: #ffffff;"></i>
+                                              </a>
+                          
+                                              <!-- Active Button -->
+                                              <button class="btn activate-CategoryRoom" data-category-id="{{ $item->_id }}"
+                                                  style="border-radius:20%;margin-right:20px;color:white;box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;background-color:#74C0FC">
+                                                  <i class="fa-solid fa-arrow-rotate-left" style="color: #ffffff;"></i>
+                                              </button>
+                          
+                                              <!-- Disable Button -->
+                                              <button class="btn btn-danger disable-CategoryRoom" data-category-id="{{ $item->_id }}"
+                                                  style="border-radius:20%; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;">
+                                                  <i class="fi fi-br-cross"></i>
+                                              </button>
+                                          </td>
+                                          @if (Session::has('error'))
+                                              <td><div class="alert alert-danger" role="alert"> {{ Session::get('error') }} </div></td>
+                                          @endif
+                                      </tr>
                                   @endforeach
-                                </tbody>
-                              </table>
+                              </tbody>
+                          </table>
+                        
+                           <script>
+                            $(document).ready(function() {
+                                $('.activate-CategoryRoom').click(function(e) {
+                                    e.preventDefault();
+                                    var categoryId = $(this).data('category-id');
+                                    var url = '{{ route("activecategoryroom", ":id") }}'.replace(':id', categoryId);
+
+                                    $.ajax({
+                                        url: url,
+                                        type: 'GET',
+                                        success: function(response) {
+                                            if (response.success) {
+                                                $('#status-' + categoryId).removeClass('bg-danger').addClass('bg-success').text('Còn hoạt động');
+                                                alert(response.message);
+                                            } else {
+                                                alert('Có lỗi xảy ra: ' + response.message);
+                                            }
+                                        },
+                                        error: function(xhr) {
+                                            alert('Có lỗi xảy ra khi gửi yêu cầu.');
+                                        }
+                                    });
+                                });
+
+                                $('.disable-CategoryRoom').click(function(e) {
+                                    e.preventDefault();
+                                    var categoryId = $(this).data('category-id');
+                                    var url = '{{ route("disablecategoryroom", ":id") }}'.replace(':id', categoryId);
+
+                                    $.ajax({
+                                        url: url,
+                                        type: 'GET',
+                                        success: function(response) {
+                                            if (response.success) {
+                                                $('#status-' + categoryId).removeClass('bg-success').addClass('bg-danger').text('Không hoạt động');
+                                                alert(response.message);
+                                            } else {
+                                                alert('Có lỗi xảy ra: ' + response.message);
+                                            }
+                                        },
+                                        error: function(xhr) {
+                                            alert('Có lỗi xảy ra khi gửi yêu cầu.');
+                                        }
+                                    });
+                                });
+                            });
+
+                           </script>
 
                           </div>
                         <div class="tab-content pt-2">
@@ -128,7 +194,7 @@
                                       <div style="width:100%">
                                         <label for="Country" class="col-md-4 col-lg-3 col-form-label"  style="font-weight:bold">Diện tích:</label>
                                         <div class="col-md-8 col-lg-9">
-                                          <input name="dientich" type="number" min="20" class ="form-control @error('dientich') is-invalid @enderror" id="Country" style="box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;">
+                                          <input name="dientich" type="decimal" min="20" class ="form-control @error('dientich') is-invalid @enderror" id="Country" style="box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;">
                                           @error('dientich')
                                               <div class="invalid-feedback">{{ $message }}</div>
                                           @enderror

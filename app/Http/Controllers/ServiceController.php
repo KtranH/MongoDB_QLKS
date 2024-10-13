@@ -27,12 +27,13 @@ class ServiceController extends Controller
 
         try
         {
-            /*$service = new Service();
-            $service->tendv = $request->tendv;
-            $service->giadv = Intval($request->giadv);
-            $service->mota = $request->mota;
-            $service->tinhtrang = 1;
-            $service->save();*/
+            $service = new DichVu();
+            $service->TenDichVu = $request->tendv;
+            $service->GiaDichVu = Intval($request->giadv);
+            $service->MoTa = $request->mota;
+            $service->TinhTrang = 1;
+            $service->save();
+
             return redirect()->back()->with('success', 'Thêm dịch vụ thành công');
         }
         catch(\Exception $e)
@@ -54,16 +55,44 @@ class ServiceController extends Controller
 
         try
         {
-            /*$service = Service::where('_id', $id)->firstOrFail();
-            $service->tendv = $request->tendv;
-            $service->giadv = Intval($request->giadv);
-            $service->mota = $request->mota;
-            $service->save();*/
+            $service = DichVu::where('_id', $id)->firstOrFail();
+            $service->TenDichVu = $request->tendv;
+            $service->GiaDichVu = Intval($request->giadv);
+            $service->MoTa = $request->mota;
+            $service->save();
             return redirect()->back()->with('success', 'Cập nhật dịch vụ thành công');
         }
         catch(\Exception $e)
         {
             return redirect()->back()->with('error', 'Cập nhật dịch vụ thất bại');
+        }
+    }
+    public function ActiveService($id)
+    {
+        try
+        {
+            $service = DichVu::where('_id', $id)->firstOrFail();
+            $service->TinhTrang = 1;
+            $service->save();
+            return response()->json(['success' => true, 'message' => 'Kích hoạt dịch vụ thành công']);
+        }
+        catch(\Exception $e)
+        {
+            return response()->json(['success' => false, 'message' => 'Kích hoạt dịch vụ thất bại']);
+        }
+    }
+    public function DisableService($id)
+    {
+        try
+        {
+            $service = DichVu::where('_id', $id)->firstOrFail();
+            $service->TinhTrang = 0;
+            $service->save();
+            return response()->json(['success' => true, 'message' => 'Khóa dịch vụ thành công']);
+        }
+        catch(\Exception $e)
+        {
+            return response()->json(['success' => false, 'message' => 'Khóa dịch vụ thất bại']);
         }
     }
     public function ShowUpdateService($id)

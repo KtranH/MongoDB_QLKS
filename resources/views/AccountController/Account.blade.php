@@ -45,7 +45,7 @@
                         <!-- Bordered Tabs -->
                         <ul class="nav nav-tabs nav-tabs-bordered">
                             <li class="nav-item">
-                                <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-edit">Cập nhật thông tin</button>
+                                <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-edit">Thông tin tổng quan</button>
                             </li>
                             <li class="nav-item">
                                 <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-change-password">Đổi mật khẩu</button>
@@ -55,20 +55,18 @@
 
                             <div class="tab-pane fade show active profile-edit pt-3" id="profile-edit">
                         
-                                <!-- Profile Edit Form -->
-                               <form action="#" method="post">
-                                @csrf
-                                <div class="row mb-3">
-                                  <label for="company" class="col-md-4 col-lg-3 col-form-label">Chức vụ</label>
-                                  <div class="col-md-8 col-lg-9">
-                                    <input name="position" type="text" class="form-control" id="company" value="{{ $user[1]["TenQuyenHan"] }}" disabled>
-                                  </div>
-                                </div>
+                                <!-- Profile Form -->
+                                    <div class="row mb-3">
+                                      <label for="company" class="col-md-4 col-lg-3 col-form-label">Chức vụ</label>
+                                      <div class="col-md-8 col-lg-9">
+                                        <input name="position" type="text" class="form-control" id="company" value="{{ $user[1]["TenQuyenHan"] }}" disabled>
+                                      </div>
+                                    </div>
 
                                     <div class="row mb-3">
                                       <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Họ và tên</label>
                                       <div class="col-md-8 col-lg-9">
-                                        <input name="fullName" type="text" class="form-control" id="fullName" value="{{ $user[0]["TenNhanVien"] }}" required>
+                                        <input name="tennhanvien" type="text" class="form-control" id="fullName" value="{{ $user[0]["TenNhanVien"] }}" readonly>
                                         <div class="invalid-feedback">Họ tên không hợp lệ</div>
                                       </div>
                                     </div>
@@ -76,7 +74,7 @@
                                     <div class="row mb-3">
                                       <label for="company" class="col-md-4 col-lg-3 col-form-label">Địa chỉ</label>
                                       <div class="col-md-8 col-lg-9">
-                                        <input name="address" type="text" class="form-control" id="company" value="{{ $user[0]["DiaChi"] }}" required>
+                                        <input name="diachi" type="text" class="form-control" id="company" value="{{ $user[0]["DiaChi"] }}" readonly>
                                         <div class="invalid-feedback">Địa chỉ không hợp lệ</div>
                                       </div>
                                     </div>
@@ -84,15 +82,23 @@
                                     <div class="row mb-3">
                                       <label for="Job" class="col-md-4 col-lg-3 col-form-label">Số điện thoại</label>
                                       <div class="col-md-8 col-lg-9">
-                                        <input name="phone" type="number" min = 1 minlength= 10 class="form-control" id="Job" value="{{ $user[0]["SDT"] }}" required>
+                                        <input name="sdt" type="number" min = 1 minlength= 10 class="form-control" id="Job" value="{{ $user[0]["SDT"] }}" readonly>
                                         <div class="invalid-feedback">Điện thoại không hợp lệ</div>
+                                      </div>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                      <label for="Job" class="col-md-4 col-lg-3 col-form-label">Căn cước công dân</label>
+                                      <div class="col-md-8 col-lg-9">
+                                        <input name="cmnd" type="number" min = 1 minlength= 10 class="form-control" id="Job" value="{{ $user[0]["CMND"] }}" readonly>
+                                        <div class="invalid-feedback">Căn cước không hợp lệ</div>
                                       </div>
                                     </div>
         
                                     <div class="row mb-3">
                                       <label for="Address" class="col-md-4 col-lg-3 col-form-label">Email</label>
                                       <div class="col-md-8 col-lg-9">
-                                        <input name="email" type="email" class="form-control" id="Address" value="{{ $user[0]["Email"] }}" required>
+                                        <input name="email" type="email" class="form-control" id="Address" value="{{ $user[0]["Email"] }}" readonly>
                                         <div class="invalid-feedback">Email không hợp lệ</div>
                                       </div>
                                     </div>
@@ -100,7 +106,7 @@
                                     <div class="row mb-3">
                                       <label for="Phone" class="col-md-4 col-lg-3 col-form-label">Ngày Sinh</label>
                                       <div class="col-md-8 col-lg-9">
-                                        <input name="birthday" type="date" class="form-control" id="Phone" value="{{ \Carbon\Carbon::createFromTimestampMs($user[0]["NgaySinh"])->format('Y-m-d') }}"  required>
+                                        <input name="ngaysinh" type="date" class="form-control" id="Phone" value="{{ $user[0]["NgaySinh"] }}" readonly>
                                         <div class="invalid-feedback">Ngày sinh không hợp lệ</div>
                                       </div>
                                     </div>
@@ -108,45 +114,95 @@
                                     <div class="row mb-3">
                                       <label for="Email" class="col-md-4 col-lg-3 col-form-label">Ngày vào làm</label>
                                       <div class="col-md-8 col-lg-9">
-                                        <input name="birthday" type="date" class="form-control" id="Phone" value="{{ \Carbon\Carbon::createFromTimestampMs($user[0]["NgayVaoLam"])->format('Y-m-d') }}" required>
+                                        <input name="ngayvaolam" type="date" class="form-control" id="Phone" value="{{ $user[0]["NgayVaoLam"] }}" readonly>
                                         <div class="invalid-feedback">Ngày vào làm không hợp lệ</div>
                                       </div>
                                     </div>            
-                                    <div class="text-center">
-                                      <button type="submit" name = "check" class="btn btn-primary" style="border-radius:20px">Lưu và thay đổi</button>
-                                    </div>
-                                  </form>
                                 <!-- End Profile Edit Form -->
                             </div>
                             <div class="tab-pane fade pt-3" id="profile-change-password">
                                 <!-- Change Password Form -->
-                                <form method="post" action="#">
-                                  @csrf
+                                  <form id="updatePasswordForm" method="post" action="{{ route('updatepassword') }}">
+                                    @csrf
                                     <div class="row mb-3">
-                                      <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Mật khẩu hiện tại</label>
-                                      <div class="col-md-8 col-lg-9">
-                                        <input name="password" type="password" class="form-control" id="currentPassword">
-                                      </div>
+                                        <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Mật khẩu hiện tại</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <input name="currentPassword" type="password" minlength="6" class="form-control @error('currentPassword') is-invalid @enderror" id="currentPassword" required>
+                                            @error('currentPassword')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                          </div>
                                     </div>
-                
+                                
                                     <div class="row mb-3">
-                                      <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">Mật khẩu mới</label>
-                                      <div class="col-md-8 col-lg-9">
-                                        <input name="newpassword" type="password" class="form-control" id="newPassword">
-                                      </div>
+                                        <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">Mật khẩu mới</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <input name="newPassword" type="password" minlength="6" class="form-control @error('newPassword') is-invalid @enderror" id="newPassword" required>
+                                            @error('newPassword')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                          </div>
                                     </div>
-                
+                                
                                     <div class="row mb-3">
-                                      <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label">Nhập lại mật khẩu</label>
-                                      <div class="col-md-8 col-lg-9">
-                                        <input name="renewpassword" type="password" class="form-control" id="renewPassword">
-                                      </div>
+                                        <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label">Nhập lại mật khẩu</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <input name="renewPassword" type="password" minlength="6" class="form-control @error('renewPassword') is-invalid @enderror" id="renewPassword" required>
+                                            @error('renewPassword')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                          </div>
                                     </div>
-                
+                                
                                     <div class="text-center">
-                                      <button type="submit" class="btn btn-primary">Lưu và thay đổi</button>
+                                        <button type="submit" class="btn btn-primary">Lưu và thay đổi</button>
                                     </div>
-                                  </form>
+                                </form>
+                                
+                                <!-- Khu vực hiển thị thông báo -->
+                                <div id="alertMessage" class="alert alert-dismissible fade show" role="alert" style="display:none; margin-top: 10px;">
+                                    <span id="alertContent"></span>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                                
+                                <script>
+                                    $(document).ready(function() {
+                                        $('#updatePasswordForm').on('submit', function(e) {
+                                            e.preventDefault(); 
+                                
+                                            var formData = $(this).serialize();
+                                
+                                            $.ajax({
+                                                url: $(this).attr('action'), 
+                                                type: 'POST',
+                                                data: formData,
+                                                success: function(response) {
+                                                    $('#currentPassword').val('');
+                                                    $('#newPassword').val('');
+                                                    $('#renewPassword').val('');
+                                                    if(response.success) {
+                                                        $('#alertMessage').removeClass('alert-danger').addClass('alert-success').show();
+                                                        $('#alertContent').text(response.message);
+                                                    } else {
+                                                        $('#alertMessage').removeClass('alert-success').addClass('alert-danger').show();
+                                                        $('#alertContent').text(response.message);
+                                                    }
+                                                },
+                                                error: function(xhr) {
+                                                    $('#alertMessage').removeClass('alert-success').addClass('alert-danger').show();
+                                                    $('#alertContent').text('Có lỗi xảy ra khi gửi yêu cầu.');
+                                                }
+                                            });
+                                        });
+                                    });
+                                 </script>
+
                                 <!-- End Change Password Form -->
                             </div>
                         </div>
