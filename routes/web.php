@@ -104,8 +104,14 @@ Route::middleware([CheckLogin::class])->group(function () {
     //Truy cập trang đặt và nhận phòng
     Route::get('/checkin', [CheckinController::class, 'Checkin'])->name("showcheckin");
 
-    //Truy cập trang thêm mới đặt và trả phòng
+    //Truy cập trang thêm mới đặt và nhận phòng
     Route::get('/addcheckin', [CheckinController::class, 'AddCheckin'])->name("showaddcheckin");
+
+    //Xác nhận mới đặt và nhận phòng
+    Route::post('/detailcheckin', [CheckinController::class, 'DetailCheckin'])->name("showdetailcheckin");
+
+    //Truy cập trang chi tiết đặt và nhận phòng
+    Route::get('/detailcheckin/{id}/{bill}/{capacity}', [CheckinController::class, 'SaveDetailCheckin'])->name("savedetailcheckin");
 
     //Truy cập trang trả phòng
     Route::get('/checkout', [CheckoutController::class, 'Checkout'])->name("showcheckout");

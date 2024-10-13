@@ -53,7 +53,13 @@
                                                         <td><a href="#" class="text-primary" style="text-align:center">{{ $item->Phong }}</a></td>
                                                         <td>{{ $item->NgayCheckin }}</td>
                                                         <td>{{ $item->NgayCheckOutDuKien }}</td>
-                                                        <td><span class="badge bg-success">{{ $item->TinhTrang }}</span></td>
+                                                        <td>
+                                                            @if ($item->TinhTrang == 'Đã nhận phòng')
+                                                                <span class="badge bg-success">{{ $item->TinhTrang }}</span>
+                                                            @elseif ($item->TinhTrang == 'Chờ xác nhận')
+                                                                <span class="badge bg-warning">{{ $item->TinhTrang }}</span>
+                                                            @endif
+                                                        </td>
                                                         <td><a href="" type="button" class="btn btn-info" style="border-radius:20%;margin-right:20px;color:white;box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;background-color:#74C0FC"><i class="fi fi-rr-file-edit"></i></a></td>
                                                     </tr>             
                                                 @endforeach

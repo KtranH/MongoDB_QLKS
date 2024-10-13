@@ -19,11 +19,6 @@ class AccountController extends Controller
         $user = $this->Inf_User(Cookie::get('tokenLogin'));
         return view('AccountController.Account', compact('user'));
     }
-    public function SignUp()
-    {
-        return view('AccountController.SignUp');
-    }
-
     public function Login()
     {
         return view('AccountController.Login');

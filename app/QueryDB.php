@@ -5,6 +5,7 @@ namespace App;
 use App\Models\KhachThue;
 use App\Models\LoaiPhong;
 use App\Models\NguoiDung;
+use Illuminate\Support\Carbon;
 
 trait QueryDB
 {
@@ -115,5 +116,13 @@ trait QueryDB
         {
             return $user;
         }
+    }
+    public function Number_Of_Days_InHotel($checkin, $checkout)
+    {
+        $checkinDate = Carbon::parse($checkin);
+        $checkoutDate = Carbon::parse($checkout);
+
+        $days = $checkinDate->diffInDays($checkoutDate);
+        return $days;
     }
 }

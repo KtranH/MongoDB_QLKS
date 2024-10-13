@@ -41,11 +41,6 @@
                                         font-size: 14px;">
                                         Phòng khả dụng</h5>
 
-                                    @if (Session::has('success'))
-                                        <div class="alert alert-success" role="alert">
-                                            {{ Session::get('success') }}
-                                        </div>
-                                    @endif
                                     @if (Session::has('error'))
                                         <div class="alert alert-danger" role="alert">
                                             {{ Session::get('error') }}
@@ -97,11 +92,11 @@
                                     <h5 class="card-title"
                                         style="margin-top:-10px; font-family: 'Montserrat', sans-serif;
                                         font-optical-sizing: auto;
-                                        font-weight: bold;
+                                        font-weight: 400;
                                         font-style: normal;
                                         font-size: 14px;">
                                         Đặt và nhận phòng</h5>
-                                    <form class="needs-validation" novalidate method="POST" action="">
+                                    <form class="needs-validation" novalidate method="POST" action="{{ route("showdetailcheckin") }}">
                                         @csrf
                                         <div style="display:flex; justify-content: space-around;margin-bottom: 10px;">
                                             <div style="width:100%;margin-right:20px;">
