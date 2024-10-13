@@ -58,6 +58,8 @@
                                       <th scope="col">Mã loại phòng</th>
                                       <th scope="col">Tên loại phòng</th>
                                       <th scope="col">Sức chứa</th>
+                                      <th scope="col">Diện tích</th>
+                                      <th scope="col">Quy định</th>
                                       <th scope="col">Tình trạng</th>
                                       <th scope="col">Chức năng</th>
                                   </tr>
@@ -68,6 +70,8 @@
                                           <th scope="row"><a href="#">{{ $item->_id }}</a></th>
                                           <td>{{ $item->MaLoai }}</td>
                                           <td><a href="#" class="text-primary">{{ $item->SucChua }}</a></td>
+                                          <td>{{ $item->DienTich }}</td>
+                                          <td>{{ $item->QuyDinh }}</td>
                                           <td>
                                               @if ($item->TinhTrang == 0)
                                                   <span class="badge bg-danger" id="status-{{ $item->_id }}">Không hoạt động</span>

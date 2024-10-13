@@ -44,13 +44,8 @@
         </a>
         <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
-            <a href="{{ route('showbooking') }}">
-              <i class="bi bi-circle"></i><span>Quản lý đặt phòng</span>
-            </a>
-          </li>
-          <li>
-            <a href="{{ route('showchecking') }}">
-              <i class="bi bi-circle"></i><span>Quản lý nhận phòng</span>
+            <a href="{{ route('showcheckin') }}">
+              <i class="bi bi-circle"></i><span>Quản lý đặt và nhận phòng</span>
             </a>
           </li>
         </ul>

@@ -1,9 +1,8 @@
 <?php
 
 use App\Http\Controllers\AccountController;
-use App\Http\Controllers\BookingController;
 use App\Http\Controllers\CategoryRoomController;
-use App\Http\Controllers\CheckingController;
+use App\Http\Controllers\CheckinController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ListEmployee;
@@ -102,11 +101,11 @@ Route::middleware([CheckLogin::class])->group(function () {
     //Tùy chỉnh tình trạng nhân viên sang không hoạt động
     Route::get('/setting/disableemployee/{id}', [ListEmployee::class, 'DisableEmployee'])->name("disableemployee");
 
-    //Truy cập trang đặt phòng
-    Route::get('/booking', [BookingController::class, 'Booking'])->name("showbooking");
+    //Truy cập trang đặt và nhận phòng
+    Route::get('/checkin', [CheckinController::class, 'Checkin'])->name("showcheckin");
 
-    //Truy cập trang nhận phòng
-    Route::get('/checking', [CheckingController::class, 'Checking'])->name("showchecking");
+    //Truy cập trang thêm mới đặt và trả phòng
+    Route::get('/addcheckin', [CheckinController::class, 'AddCheckin'])->name("showaddcheckin");
 
     //Truy cập trang trả phòng
     Route::get('/checkout', [CheckoutController::class, 'Checkout'])->name("showcheckout");

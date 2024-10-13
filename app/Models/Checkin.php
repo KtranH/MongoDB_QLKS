@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use MongoDB\Laravel\Eloquent\Model;
 
-class Booking_Checkin extends Model
+class Checkin extends Model
 {
     use HasFactory;
-    protected $collection = 'Booking_Checkin';
-    protected $fillable = ['NhanVienLap', 'Phong', 'NgayBooking', 'NgayCheckin', 'NgayCheckOutDuKien', 'DanhSachKhachHang'];
+    protected $collection = 'Checkin';
+    protected $fillable = ['NhanVienLap', 'Phong', 'NgayCheckin', 'NgayCheckOutDuKien', 'DanhSachKhachHang', 'TinhTrang'];
 
     public function khachThue()
     {

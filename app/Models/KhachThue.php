@@ -12,6 +12,6 @@ class KhachThue extends Model
     protected $fillable = ['TenKhachHang', 'CMND', 'SDT'];
     public function bookingCheckins()
     {
-        return $this->belongsToMany(Booking_Checkin::class, null, 'CMND', 'DanhSachKhachHang');
+        return $this->belongsToMany(Checkin::class, null, 'CMND', 'DanhSachKhachHang');
     }
 }

@@ -37,6 +37,12 @@
   <link href="{{ url('assets/css/style.css')}}" rel="stylesheet">
   <link href="{{ url('assets/css/khoi.css')}}" rel="stylesheet">
 
+  <!-- Tagify CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
+  <!-- Tagify JS -->
+  <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.polyfills.min.js"></script>
+
 </head>
 
 <body>

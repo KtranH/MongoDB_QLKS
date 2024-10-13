@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Models\KhachThue;
 use App\Models\LoaiPhong;
 use App\Models\NguoiDung;
 
@@ -103,5 +104,16 @@ trait QueryDB
             return $cmnd;
         }
         return null;
+    }
+    public function Find_Customer($cmnd)
+    {
+        $user = KhachThue::where('CMND', $cmnd)->first();
+        if($user == null){
+            return false;
+        }
+        else
+        {
+            return $user;
+        }
     }
 }
