@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Checkin;
+use App\Models\KhachThue;
 use App\Models\LoaiPhong;
 use App\QueryDB;
 use Illuminate\Http\Request;
@@ -54,6 +55,65 @@ class CheckinController extends Controller
         $takeBill = $bill;
         $takeCapacity = $capacity;
         $takeCheckin = Checkin::where('_id', $id)->firstOrFail();
-        return view('Checkin_Controller.DetailCheckin', compact('takeID', 'takeBill', 'takeCapacity', 'takeCheckin'));
+        $takeListCustomer = [];
+        foreach($takeCheckin->DanhSachKhachHang as $item)
+        {
+            $takeListCustomer[] = $this->Find_Customer($item);
+        }
+        return view('Checkin_Controller.DetailCheckin', compact('takeID', 'takeBill', 'takeCapacity', 'takeCheckin', 'takeListCustomer'));
+    }
+    public function SearchCheckin(Request $request)
+    {
+        $cmnd = $request->input('makh');
+        $result = KhachThue::where('CMND', $cmnd)->get();
+        return response()->json($result);
+    }
+    public function AddCustomer(Request $request)
+    {
+        if($this->Check_Exist_Customer($request->input('cmnd'), $request->input('sdt')) == false)
+        {
+            return response()->json(['success' => false, 'message' => 'Lỗi: Khách hàng đã tồn tại không thể thêm mới']);
+        }
+        else if($this->Check_Capacity($request->input('capacity'), $request->input('idCheckin')) == false)
+        {
+            return response()->json(['success' => false, 'message' => 'Lỗi: Phòng đã đủ số lượng khách']);
+        }
+        $newCustomer = new KhachThue();
+        $newCustomer->CMND = $request->input('cmnd');
+        $newCustomer->TenKhachHang = $request->input('hoten');
+        $newCustomer->SDT = $request->input('sdt');
+        $newCustomer->save();
+        
+        $addCustomer = Checkin::where('_id', $request->input('idCheckin'))->firstOrFail();
+        $addCustomer->push('DanhSachKhachHang', $newCustomer->CMND);
+        $addCustomer->save();
+
+        return response()->json(['success' => true, 'message' => 'Thêm khách hàng thành công', 'customer' => $newCustomer]);
+    }
+    public function AddCustomer2(Request $request)
+    {
+        if($this->Check_Customer_Exist_InCheckin($request->input('id'), $request->input('idCheckin')) == false)
+        {
+            return response()->json(['success' => false, 'message' => 'Lỗi: Khách hàng đã được thêm']);
+        }
+        else if($this->Check_Capacity($request->input('capacity'), $request->input('idCheckin')) == false)
+        {
+            return response()->json(['success' => false, 'message' => 'Lỗi: Phòng đã đủ số lượng khách']);
+        }
+       
+        $addCustomer = Checkin::where('_id', $request->input('idCheckin'))->firstOrFail();
+        $addCustomer->push('DanhSachKhachHang', $request->input('id'));
+        $addCustomer->save();
+
+        $newCustomer = KhachThue::where('CMND', $request->input('id'))->firstOrFail();
+
+        return response()->json(['success' => true, 'message' => 'Thêm khách hàng thành công', 'customer' => $newCustomer]);
+    }
+    public function RemoveCustomer(Request $request)
+    {
+        $removeCustomer = Checkin::where('_id', $request->input('idCheckin'))->firstOrFail();
+        $removeCustomer->pull('DanhSachKhachHang', $request->input('id'));
+        $removeCustomer->save();
+        return response()->json(['success' => true, 'message' => 'Xóa khách hàng thành công']);
     }
 }

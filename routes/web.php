@@ -113,6 +113,18 @@ Route::middleware([CheckLogin::class])->group(function () {
     //Truy cập trang chi tiết đặt và nhận phòng
     Route::get('/detailcheckin/{id}/{bill}/{capacity}', [CheckinController::class, 'SaveDetailCheckin'])->name("savedetailcheckin");
 
+    //Tìm kiếm khách trong một checkin
+    Route::post('/searchcheckin', [CheckinController::class, 'SearchCheckin'])->name("searchcheckin");
+
+    //Xác nhận thêm một khách hàng
+    Route::post('/setting/addmorecustomer', [CheckinController::class, 'AddCustomer'])->name("addmorecustomer");
+
+    //Xác nhận thêm một khách hàng ver2
+    Route::get('/setting/addmorecustomer2', [CheckinController::class, 'AddCustomer2'])->name("addmorecustomer2");
+
+    //Xác nhận xóa một khách hàng ra khỏi checkin
+    Route::get('/setting/removecustomer', [CheckinController::class, 'RemoveCustomer'])->name("removecustomer");
+
     //Truy cập trang trả phòng
     Route::get('/checkout', [CheckoutController::class, 'Checkout'])->name("showcheckout");
 

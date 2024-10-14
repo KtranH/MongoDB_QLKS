@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Models\Checkin;
 use App\Models\KhachThue;
 use App\Models\LoaiPhong;
 use App\Models\NguoiDung;
@@ -124,5 +125,35 @@ trait QueryDB
 
         $days = $checkinDate->diffInDays($checkoutDate);
         return $days;
+    }
+    public function Check_Exist_Customer($cmnd, $sdt)
+    {
+        $user = KhachThue::where('CMND', $cmnd)->orWhere('SDT', $sdt)->first();
+        if($user == null){
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    public function Check_Capacity($capacity, $id)
+    {
+        $checkin = Checkin::where('_id', $id)->firstOrFail();
+        if(count($checkin->DanhSachKhachHang) > $capacity){
+            return false;
+        }
+        return true;
+    }   
+    public function Check_Customer_Exist_InCheckin($cmnd, $id)
+    {
+        $checkin = Checkin::where('_id', $id)->firstOrFail();
+        foreach($checkin->DanhSachKhachHang as $item)
+        {
+            if($item == $cmnd){
+                return false;
+            }
+        }
+        return true;
     }
 }
