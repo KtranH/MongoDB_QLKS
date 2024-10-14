@@ -56,66 +56,89 @@
                             <div class="tab-pane fade show active profile-edit pt-3" id="profile-edit">
                         
                                 <!-- Profile Edit Form -->
-                               <form action="#" method="post">
-                                @csrf
-                                <div class="row mb-3">
-                                  <label for="company" class="col-md-4 col-lg-3 col-form-label">Chức vụ</label>
-                                  <div class="col-md-8 col-lg-9">
-                                    <input name="position" type="text" class="form-control" id="company" value="{{ $user->getPosition->tennhom }}" disabled>
-                                  </div>
-                                </div>
+                                <form action="{{ route('account.update') }}" method="POST">
+                                    @csrf
 
+                                    <!-- Chức vụ -->
                                     <div class="row mb-3">
-                                      <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Họ và tên</label>
-                                      <div class="col-md-8 col-lg-9">
-                                        <input name="fullName" type="text" class="form-control" id="fullName" value="{{ $user->tennv }}" required>
-                                        <div class="invalid-feedback">Họ tên không hợp lệ</div>
-                                      </div>
+                                        <label for="position" class="col-md-4 col-lg-3 col-form-label">Chức vụ</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <input name="position" type="text" class="form-control" id="position" value="{{ old('position', $user->getPosition->tennhom) }}" disabled>
+                                        </div>
                                     </div>
-                
+
+                                    <!-- Họ và tên -->
                                     <div class="row mb-3">
-                                      <label for="company" class="col-md-4 col-lg-3 col-form-label">Địa chỉ</label>
-                                      <div class="col-md-8 col-lg-9">
-                                        <input name="address" type="text" class="form-control" id="company" value="{{ $user->diachi }}" required>
-                                        <div class="invalid-feedback">Địa chỉ không hợp lệ</div>
-                                      </div>
+                                        <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Họ và tên</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <input name="tennv" type="text" class="form-control" id="fullName" value="{{ old('tennv', $user->tennv) }}" required>
+                                            @error('tennv')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
+                                        </div>
                                     </div>
-                
+
+                                    <!-- Địa chỉ -->
                                     <div class="row mb-3">
-                                      <label for="Job" class="col-md-4 col-lg-3 col-form-label">Số điện thoại</label>
-                                      <div class="col-md-8 col-lg-9">
-                                        <input name="phone" type="number" min = 1 minlength= 10 class="form-control" id="Job" value="{{ $user->sdt }}" required>
-                                        <div class="invalid-feedback">Điện thoại không hợp lệ</div>
-                                      </div>
+                                        <label for="address" class="col-md-4 col-lg-3 col-form-label">Địa chỉ</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <input name="diachi" type="text" class="form-control" id="address" value="{{ old('diachi', $user->diachi) }}" required>
+                                            @error('diachi')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
+                                        </div>
                                     </div>
-        
+
+                                    <!-- Số điện thoại -->
                                     <div class="row mb-3">
-                                      <label for="Address" class="col-md-4 col-lg-3 col-form-label">Email</label>
-                                      <div class="col-md-8 col-lg-9">
-                                        <input name="email" type="email" class="form-control" id="Address" value="{{ $user->email }}" required>
-                                        <div class="invalid-feedback">Email không hợp lệ</div>
-                                      </div>
+                                        <label for="phone" class="col-md-4 col-lg-3 col-form-label">Số điện thoại</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <input name="sdt" type="tel" pattern="[0-9]{10,11}" class="form-control" id="phone" value="{{ old('sdt', $user->sdt) }}" required>
+                                            @error('sdt')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
+                                        </div>
                                     </div>
-                
+
+                                    <!-- Email -->
                                     <div class="row mb-3">
-                                      <label for="Phone" class="col-md-4 col-lg-3 col-form-label">Ngày Sinh</label>
-                                      <div class="col-md-8 col-lg-9">
-                                        <input name="birthday" type="datetime" class="form-control" id="Phone" value="{{ \Carbon\Carbon::createFromTimestampMs($user->ngaysinh)->format('d-m-Y') }}"  required>
-                                        <div class="invalid-feedback">Ngày sinh không hợp lệ</div>
-                                      </div>
+                                        <label for="email" class="col-md-4 col-lg-3 col-form-label">Email</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <input name="email" type="email" class="form-control" id="email" value="{{ old('email', $user->email) }}" required>
+                                            @error('email')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
+                                        </div>
                                     </div>
-                
+
+                                    <!-- Ngày sinh -->
                                     <div class="row mb-3">
-                                      <label for="Email" class="col-md-4 col-lg-3 col-form-label">Ngày vào làm</label>
-                                      <div class="col-md-8 col-lg-9">
-                                        <input name="birthday" type="datetime" class="form-control" id="Phone" value="{{ \Carbon\Carbon::createFromTimestampMs($user->ngvl)->format('d-m-Y') }}" required>
-                                        <div class="invalid-feedback">Ngày vào làm không hợp lệ</div>
-                                      </div>
-                                    </div>            
+                                        <label for="birthday" class="col-md-4 col-lg-3 col-form-label">Ngày Sinh</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <input name="ngaysinh" type="date" class="form-control" id="birthday" 
+                                            value="{{ old('ngaysinh', $user->ngaysinh ? \Carbon\Carbon::parse($user->ngaysinh)->format('Y-m-d') : '') }}" required>
+                                            @error('ngaysinh')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                    </div>
+
+                                    <!-- Ngày vào làm -->
+                                    <div class="row mb-3">
+                                        <label for="ngvl" class="col-md-4 col-lg-3 col-form-label">Ngày vào làm</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <input name="ngvl" type="date" class="form-control" id="ngvl" 
+                                            value="{{ old('ngvl', $user->ngvl ? \Carbon\Carbon::parse($user->ngvl)->format('Y-m-d') : '') }}" required>
+                                            @error('ngvl')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                    </div>
+
                                     <div class="text-center">
-                                      <button type="submit" name = "check" class="btn btn-primary" style="border-radius:20px">Lưu và thay đổi</button>
+                                        <button type="submit" class="btn btn-primary" style="border-radius:20px">Lưu và thay đổi</button>
                                     </div>
-                                  </form>
+                                </form>
                                 <!-- End Profile Edit Form -->
                             </div>
                             <div class="tab-pane fade pt-3" id="profile-change-password">
