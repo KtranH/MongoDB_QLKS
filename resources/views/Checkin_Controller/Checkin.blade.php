@@ -8,11 +8,11 @@
     <main id="main" class="main">
 
         <div class="pagetitle">
-            <h1>Đặt và nhận phòng</h1>
+            <h1>Nhận và đặt phòng</h1>
             <nav>
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
-                    <li class="breadcrumb-item">Đặt và nhận phòng</li>
+                    <li class="breadcrumb-item">Nhận và đặt phòng</li>
                 </ol>
             </nav>
         </div><!-- End Page Title -->
@@ -26,7 +26,7 @@
                             <ul class="nav nav-tabs nav-tabs-bordered">
                                 <li class="nav-item">
                                     <button class="nav-link active" data-bs-toggle="tab"
-                                        data-bs-target="#danhsachdatphong">Đặt, nhận phòng</button>
+                                        data-bs-target="#danhsachdatphong">Nhận và đặt phòng</button>
                                 </li>
                             </ul>
                             <div class="tab-content pt-2">
@@ -58,9 +58,17 @@
                                                                 <span class="badge bg-success">{{ $item->TinhTrang }}</span>
                                                             @elseif ($item->TinhTrang == 'Chờ xác nhận')
                                                                 <span class="badge bg-warning">{{ $item->TinhTrang }}</span>
+                                                            @else
+                                                                <span class="badge bg-danger">{{ $item->TinhTrang }}</span>
                                                             @endif
                                                         </td>
-                                                        <td><a href="" type="button" class="btn btn-info" style="border-radius:20%;margin-right:20px;color:white;box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;background-color:#74C0FC"><i class="fi fi-rr-file-edit"></i></a></td>
+                                                        <td>
+                                                            @if ($item->TinhTrang == 'Đã hủy')
+                                                                <a href="" type="button" class="btn disabled" style="border-radius:20%;margin-right:20px;color:white;box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;background-color:#74C0FC"><i class="fi fi-rr-file-edit"></i></a>
+                                                            @else
+                                                                <a href="{{ route('showupdatedetailcheckin', ['id' => $item->_id]) }}" type="button" class="btn" style="border-radius:20%;margin-right:20px;color:white;box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;background-color:#74C0FC"><i class="fi fi-rr-file-edit"></i></a>
+                                                            @endif
+                                                        </td>
                                                     </tr>             
                                                 @endforeach
                                             </tbody>
@@ -71,7 +79,7 @@
 
                                 </div>
                                 <div class="text-center" style="margin-top:20px;">
-                                    <a href="{{ route('showaddcheckin') }}" class="btn btn-primary">Thêm mới đặt và nhận phòng</a>
+                                    <a href="{{ route('showaddcheckin') }}" class="btn btn-primary">Thêm mới nhận và đặt phòng</a>
                                 </div>
                             </div>
                         </div>

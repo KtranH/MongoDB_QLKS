@@ -54,7 +54,7 @@
 
 
                              <!-- Form hiển thị thêm phòng -->
-                                <form class="needs-validation" novalidate method="POST" enctype="multipart/form-data" action="{{ route("updateroom",["id" => $room[0]["TenPhong"]]) }}">
+                                <form class="needs-validation" novalidate method="POST" enctype="multipart/form-data" action="{{ route("updateroom",["id" => $room[0]["MaPhong"]]) }}">
                                 @csrf
                                   <div style="width:100%; display: flex;justify-content:space-around;margin-bottom: 20px; flex-wrap:wrap">
                                     <div style="width:100%">

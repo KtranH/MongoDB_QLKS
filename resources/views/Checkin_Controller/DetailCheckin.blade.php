@@ -8,12 +8,12 @@
     <main id="main" class="main">
 
         <div class="pagetitle">
-            <h1>Đặt và nhận phòng</h1>
+            <h1>Nhận và đặt phòng</h1>
             <nav>
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
-                    <li class="breadcrumb-item">Đặt và nhận phòng</li>
-                    <li class="breadcrumb-item active">Chi tiết đặt và nhận phòng</li>
+                    <li class="breadcrumb-item">Nhận và đặt phòng</li>
+                    <li class="breadcrumb-item active">Chi tiết nhận và đặt phòng</li>
                 </ol>
             </nav>
         </div><!-- End Page Title -->
@@ -27,7 +27,7 @@
                             <ul class="nav nav-tabs nav-tabs-bordered">
                                 <li class="nav-item">
                                     <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#ctpdkt">Chi tiết
-                                        đặt và nhận phòng</button>
+                                        nhận và đặt phòng</button>
                                 </li>
                             </ul>
                             <div class="tab-content pt-2">
@@ -45,9 +45,42 @@
                                                 style="font-weight:bold;color:red">{{ $takeCheckin->NgayCheckOutDuKien }}</span>
                                         </h5>
                                         <div style="marign-bottom:20px">
-                                            <a href="" type="submit" class="btn btn-primary">Hoàn tất nhận phòng</a>
-                                            <a href="" type="submit" class="btn btn-primary">Đặt trước</a>
+                                            <a href="{{ route("showcheckin") }}" type="submit" class="btn btn-primary">Quay lại</a>
+                                            <a href="{{ route("confirmcheckin", ['id' => $takeCheckin->_id, 'bill' => $takeBill])}}" type="submit" class="btn btn-primary confirm-checkin">Hoàn tất nhận phòng</a>
                                         </div>
+                                        <script>
+                                          $(document).ready(function(){
+                                            $(".confirm-checkin").click(function(e){
+                                              e.preventDefault();
+                                              const rowCount = $('#CustomerTable tbody tr').length;
+                                              if(rowCount < 2)
+                                              {
+                                                Swal.fire({ title: 'Cảnh báo', 
+                                                text: "Vui lòng thêm một khách hàng để xác nhận hoàn thành!", 
+                                                icon: 'error', 
+                                                confirmButtonColor: '#d33', 
+                                                confirmButtonText: 'Đồng ý'
+                                                });
+                                              }
+                                              else
+                                              {
+                                                Swal.fire({ title: 'Bạn có chắc chắn muốn xác nhận hoàn thành không?', text: "Hãy chắc chắn số lượng khách, bạn sẽ không thể cập nhật thêm!", icon: 'warning', showCancelButton: true, confirmButtonColor: '#3085d6', cancelButtonColor: '#d33', confirmButtonText: 'Đồng ý', cancelButtonText: 'Hủy bỏ'
+                                                }).then((result) => {
+                                                    if (result.isConfirmed) {
+                                                        Swal.fire(
+                                                            'Đã xác nhận!',
+                                                            'Đang tiến hành xác nhận!',
+                                                            'success'
+                                                        );
+                                                        setTimeout(() => {
+                                                          window.location.href = "{{ route("confirmcheckin", ['id' => $takeCheckin->_id, 'bill' => $takeBill])}}";
+                                                        }, 2000);
+                                                    }
+                                                });
+                                              }
+                                            });
+                                          });
+                                        </script>
                                     </div>
 
                                     <div style="display:flex; flex-wrap:wrap; justify-content:flex-end; max-width:350px">
@@ -62,9 +95,28 @@
                                             VNĐ
                                         </h5>
                                         <div style="marign-bottom:20px">
-                                            <a href="" type="submit" class="btn btn-danger">Hủy đặt và nhận
-                                                phòng</a>
+                                            <a href="{{ route("cancelcheckin", ['id' => $takeCheckin->_id]) }}" type="submit" class="btn btn-danger cancel-checkin">Hủy nhận và đặt phòng</a>
                                         </div>
+                                        <script>
+                                          $(document).ready(function(){
+                                            $(".cancel-checkin").click(function(e){
+                                              e.preventDefault();
+                                              Swal.fire({ title: 'Bạn có chắc chắn muốn hủy không?', text: "Bạn sẽ không thể khôi phục lại quyết định này!", icon: 'warning', showCancelButton: true, confirmButtonColor: '#3085d6', cancelButtonColor: '#d33', confirmButtonText: 'Đồng ý', cancelButtonText: 'Hủy bỏ'
+                                              }).then((result) => {
+                                                  if (result.isConfirmed) {
+                                                      Swal.fire(
+                                                          'Đã hủy!',
+                                                          'Đang tiến hành hủy!',
+                                                          'success'
+                                                      );
+                                                      setTimeout(() => {
+                                                        window.location.href = "{{ route("cancelcheckin", ['id' => $takeCheckin->_id]) }}";
+                                                      }, 2000);
+                                                  }
+                                              });
+                                            });
+                                          });
+                                        </script>
                                     </div>
                                 </div>
 

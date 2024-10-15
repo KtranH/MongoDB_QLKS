@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Checkin;
+use App\Models\Checkout;
 use App\Models\KhachThue;
 use App\Models\LoaiPhong;
 use App\QueryDB;
@@ -23,6 +24,38 @@ class CheckinController extends Controller
         $roomAvailable = LoaiPhong::where('TinhTrang', 1)->get();
         return view('Checkin_Controller.NewCheckin', compact('roomAvailable'));
     }
+    public function UpdateCheckin($id)
+    {
+        $checkin = Checkin::where('_id', $id)->firstOrFail();
+        $room = $this->Get_Room($checkin->Phong);
+        $bill = $this->Number_Of_Days_InHotel($checkin->NgayCheckin, $checkin->NgayCheckOutDuKien) * $room[0]['GiaThue'];
+        return redirect()->route('savedetailcheckin', ['id' => $checkin->_id, 'bill' => $bill, 'capacity' => $room[1]['SucChua']]);
+    }
+    public function CancelCheckin($id)
+    {
+        $checkin = Checkin::where('_id', $id)->firstOrFail();
+        $checkin->TinhTrang = "Đã hủy";
+        $checkin->save();
+        $this->Update_State_Available_Room($checkin->Phong);
+
+        return redirect()->route('showcheckin');
+    }
+    public function ConfirmCheckin($id, $bill)
+    {
+        $checkin = Checkin::where('_id', $id)->firstOrFail();
+        $checkin->TinhTrang = "Đã nhận phòng";
+        $checkin->save();
+
+        $this->Update_State_NoAvailable_Room($checkin->Phong);
+
+        $invoice = new Checkout();
+        $invoice->Booking_Checkin = $id;
+        $invoice->NgayLap = $checkin->NgayCheckOutDuKien;
+        $invoice->ThanhToan = doubleval($bill);
+        $invoice->DanhSachDichVuDaSuDung = [];
+        $invoice->save();
+        return redirect()->route('showcheckin');
+    }
     public function DetailCheckin(Request $request)
     {
         $roomAvailable = json_decode($request->input('roomavailable'), true);
@@ -31,6 +64,8 @@ class CheckinController extends Controller
         {
             return redirect()->back()->with('error', 'Phòng không tồn tại');
         }
+
+        $this->Update_State_Book_Room($roomAvailable[0]['value']);
 
         $employee = $this->Inf_User(Cookie::get('tokenLogin'));
         $checkin = $request->input('checkin');
@@ -51,7 +86,6 @@ class CheckinController extends Controller
     }
     public function SaveDetailCheckin($id, $bill, $capacity)
     {
-        $takeID = $id;
         $takeBill = $bill;
         $takeCapacity = $capacity;
         $takeCheckin = Checkin::where('_id', $id)->firstOrFail();
@@ -60,7 +94,7 @@ class CheckinController extends Controller
         {
             $takeListCustomer[] = $this->Find_Customer($item);
         }
-        return view('Checkin_Controller.DetailCheckin', compact('takeID', 'takeBill', 'takeCapacity', 'takeCheckin', 'takeListCustomer'));
+        return view('Checkin_Controller.DetailCheckin', compact( 'takeBill', 'takeCapacity', 'takeCheckin', 'takeListCustomer'));
     }
     public function SearchCheckin(Request $request)
     {

@@ -13,6 +13,6 @@ class Checkout extends Model
 
     public function bookingCheckin()
     {
-        return $this->belongsTo(Booking_Checkin::class, 'Booking_Checkin', '_id');
+        return $this->belongsTo(Checkin::class, 'Booking_Checkin', '_id');
     }
 }

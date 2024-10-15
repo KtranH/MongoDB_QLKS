@@ -42,7 +42,7 @@ trait QueryDB
     }
     public function Get_Room($id)
     {
-        $query = LoaiPhong::where('DanhSachPhong.TenPhong', $id)->firstOrFail();
+        $query = LoaiPhong::where('DanhSachPhong.MaPhong', $id)->firstOrFail();
         if($query == null){
             return false;
         }
@@ -50,12 +50,35 @@ trait QueryDB
         {
             $inf = collect($query->DanhSachPhong);
             foreach ($inf as $item) {
-                if($item["TenPhong"] == $id){
+                if($item["MaPhong"] == $id){
                     return [$item, $query];
                 }
             }
             return false;
         }
+    }
+    public function Check_Exists_Room($id)
+    {
+        $query = LoaiPhong::where('DanhSachPhong.MaPhong', $id)->first();
+        if($query == null){
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    public function Update_State_Book_Room($id)
+    {
+        $query = LoaiPhong::where('DanhSachPhong.MaPhong', $id)->update(['DanhSachPhong.$.TinhTrang' => 2]);
+    }
+    public function Update_State_Available_Room($id)
+    {
+        $query = LoaiPhong::where('DanhSachPhong.MaPhong', $id)->update(['DanhSachPhong.$.TinhTrang' => 1]);
+    }
+    public function Update_State_NoAvailable_Room($id)
+    {
+        $query = LoaiPhong::where('DanhSachPhong.MaPhong', $id)->update(['DanhSachPhong.$.TinhTrang' => 3]);
     }
     public function Check_Date_BirthDay($date)
     {

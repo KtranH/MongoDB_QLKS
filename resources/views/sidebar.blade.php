@@ -61,11 +61,6 @@
               <i class="bi bi-circle"></i><span>Xử lý trả phòng</span>
             </a>
           </li>
-          <li>
-            <a href="{{ route('showHistoryCheckout') }}">
-              <i class="bi bi-circle"></i><span>Lịch sử trả phòng</span>
-            </a>
-          </li>
         </ul>
       </li><!-- End Charts Nav -->
 

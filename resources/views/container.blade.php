@@ -37,6 +37,8 @@
   <link href="{{ url('assets/css/style.css')}}" rel="stylesheet">
   <link href="{{ url('assets/css/khoi.css')}}" rel="stylesheet">
 
+  <!-- JS CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <!-- Tagify CSS -->
   <link href="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
   <!-- Tagify JS -->

@@ -17,27 +17,19 @@ class RoomController extends Controller
     }
     public function AddMoreRoom(Request $request)
     {
-        $request->validate([
-            'tenphong' => 'required',
-            'vitri' => 'required',
-            'giathue' => 'required',
-            
-        ], 
-        [
-            'tenphong.required' => 'Vui lòng nhập tên phòng',
-            'vitri.required' => 'Vui lòng nhập sức chứa',
-            'giathue.required' => 'Vui lòng nhập giá thuê',
-            
-        ]);
-
         if($request->maloai == "Chưa rõ")
         {
             return redirect()->back()->with('error', 'Vui lòng chọn loại phòng');
+        }
+        else if($this->Check_Exists_Room($request->maphong) == false)
+        {
+            return redirect()->back()->with('error', 'Phòng đã tồn tại, không thể thêm');
         }
 
         try {
             $room = LoaiPhong::where("_id", $request->maloai)->firstOrFail();
             $addRoom = [
+                "MaPhong" => $request->maphong,
                 "TenPhong" => $request->tenphong,
                 "ViTri" => intval($request->vitri),
                 "GiaThue" => doubleval($request->giathue),
@@ -53,23 +45,11 @@ class RoomController extends Controller
     }
     public function UpdateRoom(Request $request, $id)
     {
-        $request->validate([
-            'tenphong' => 'required',
-            'vitri' => 'required',
-            'giathue' => 'required',
-            
-        ],[
-            'tenphong.required' => 'Vui lòng nhập tên phòng',
-            'vitri.required' => 'Vui lòng nhập sức chứa',
-            'giathue.required' => 'Vui lòng nhập giá thuê',
-            
-        ]);
-        
         try
         {
-            $room = LoaiPhong::where("DanhSachPhong.TenPhong", $id)->firstOrFail();
+            $room = LoaiPhong::where("DanhSachPhong.MaPhong", $id)->firstOrFail();
 
-            $getRoomKey = collect($room->DanhSachPhong)->where('TenPhong', $id)->keys()->firstOrFail();
+            $getRoomKey = collect($room->DanhSachPhong)->where('MaPhong', $id)->keys()->firstOrFail();
         
             if ($room == null || $getRoomKey === false) {
                 return redirect()->back()->with('error', 'Không tìm thấy phòng');
@@ -109,7 +89,7 @@ class RoomController extends Controller
     {
         try 
         {
-            LoaiPhong::where('DanhSachPhong.TenPhong', $id)->update(['DanhSachPhong.$.TinhTrang' => 1]);
+            LoaiPhong::where('DanhSachPhong.MaPhong', $id)->update(['DanhSachPhong.$.TinhTrang' => 1]);
             return response()->json(['success' => true, 'message' => 'Cập nhật trạng thái phòng thành công']);
         } catch (\Exception $e) {
             return response()->json(['success' => false, 'message' => 'Có lỗi xảy ra, không thể thay đổi! ' . $e->getMessage()], 500);
@@ -119,7 +99,7 @@ class RoomController extends Controller
     {
         try
         {
-            LoaiPhong::where('DanhSachPhong.TenPhong', $id)->update(['DanhSachPhong.$.TinhTrang' => 0]);
+            LoaiPhong::where('DanhSachPhong.MaPhong', $id)->update(['DanhSachPhong.$.TinhTrang' => 0]);
             return response()->json(['success' => true, 'message' => 'Cập nhật trạng thái phòng thành công']);
         }
         catch(\Exception $e)

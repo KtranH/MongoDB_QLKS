@@ -110,6 +110,9 @@ Route::middleware([CheckLogin::class])->group(function () {
     //Xác nhận mới đặt và nhận phòng
     Route::post('/detailcheckin', [CheckinController::class, 'DetailCheckin'])->name("showdetailcheckin");
 
+    //Truy cập trang tùy chỉnh đặt và nhận phòng
+    Route::get('/setting/detailcheckin{id}', [CheckinController::class, 'UpdateCheckin'])->name("showupdatedetailcheckin");
+
     //Truy cập trang chi tiết đặt và nhận phòng
     Route::get('/detailcheckin/{id}/{bill}/{capacity}', [CheckinController::class, 'SaveDetailCheckin'])->name("savedetailcheckin");
 
@@ -125,11 +128,14 @@ Route::middleware([CheckLogin::class])->group(function () {
     //Xác nhận xóa một khách hàng ra khỏi checkin
     Route::get('/setting/removecustomer', [CheckinController::class, 'RemoveCustomer'])->name("removecustomer");
 
+    //Xác nhận hủy checkin
+    Route::get('/setting/cancelcheckin/{id}', [CheckinController::class, 'CancelCheckin'])->name("cancelcheckin");
+
+    //Xác nhận hoàn thành checkin
+    Route::get('/setting/confirmcheckin/{id}/{bill}', [CheckinController::class, 'ConfirmCheckin'])->name("confirmcheckin");
+
     //Truy cập trang trả phòng
     Route::get('/checkout', [CheckoutController::class, 'Checkout'])->name("showcheckout");
-
-    //Truy cập trang lichjsuwr trả phòng
-    Route::get('/historyCheckout', [CheckoutController::class, 'HistoryCheckout'])->name("showHistoryCheckout");
 
     //Truy cập trang thống kê tìm kiếm khách hàng
     Route::get('/searchlog', [StatisticalController::class, 'SearchLog'])->name("showsearchlog");

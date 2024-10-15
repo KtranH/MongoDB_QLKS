@@ -11,8 +11,4 @@ class CheckoutController extends Controller
     {
         return view('CheckoutController.Checkout');
     }
-    public function HistoryCheckout()
-    {
-        return view('CheckoutController.HistoryCheckout');
-    }
 }

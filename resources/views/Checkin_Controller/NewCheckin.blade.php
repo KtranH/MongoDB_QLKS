@@ -50,6 +50,7 @@
                                     <table class="table table-borderless datatable">
                                         <thead>
                                             <tr>
+                                                <th scope="col">Mã phòng</th>
                                                 <th scope="col">Tên phòng</th>
                                                 <th scope="col">Tên loại</th>
                                                 <th scope="col">Sức chứa</th>
@@ -69,10 +70,11 @@
                                                     @foreach ($item->DanhSachPhong as $x)
                                                         @if ($x['TinhTrang'] == 1)
                                                         @php
-                                                            $listRoomAvailable[] = $x['TenPhong'];
+                                                            $listRoomAvailable[] = $x['MaPhong'];
                                                         @endphp
                                                         <tr>
-                                                            <th scope="row"><a href="#">{{ $x['TenPhong'] }}</a></th>
+                                                            <th scope="row"><a href="#">{{ $x['MaPhong'] }}</a></th>
+                                                            <td>{{ $x['TenPhong'] }}</td>
                                                             <td>{{ $loaiPhong }}</td>
                                                             <td>{{ $sucChua }}</td>
                                                             <td>{{ $x['ViTri'] }}</td>

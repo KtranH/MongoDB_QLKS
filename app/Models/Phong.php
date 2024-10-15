@@ -8,5 +8,5 @@ use MongoDB\Laravel\Eloquent\Model;
 class Phong extends Model
 {
     use HasFactory;
-    protected $fillable = ['TenPhong', 'ViTri', 'GiaThue', 'TinhTrang'];
+    protected $fillable = ['MaPhong', 'TenPhong', 'ViTri', 'GiaThue', 'TinhTrang'];
 }
