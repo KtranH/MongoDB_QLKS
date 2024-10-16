@@ -172,6 +172,7 @@
                 <table class="table table-borderless datatable">
                   <thead>
                     <tr>
+                      <th scope="col">Mã checkout</th>
                       <th scope="col">Mã nhân viên</th>
                       <th scope="col">Tên phòng</th>
                       <th scope="col">Ngày đặt</th>
@@ -183,7 +184,8 @@
                   <tbody>
                     @foreach ($checkout as $item)
                       <tr>
-                          <th scope="row"><a href="#">{{ $item->bookingCheckin->NhanVienLap}}</a></th>
+                          <th scope="row"><a href="#">{{ $item->_id}}</a></th>
+                          <td>{{ $item->bookingCheckin->NhanVienLap }}</td>
                           <td>{{ $item->bookingCheckin->Phong }}</td>
                           <td>{{ $item->bookingCheckin->NgayCheckin}}</td>
                           <td>{{ $item->bookingCheckin->NgayCheckOutDuKien }}</td>
@@ -191,7 +193,7 @@
                               <span class="badge bg-danger">{{ $item->TinhTrang }}</span>
                           </td>
                           <td>
-                              <a href="{{ route('showdetailcheckout', ['id' => $item->_id ]) }}" type="button" class="btn" style="border-radius:20%;margin-right:20px;color:white;box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;background-color:#74C0FC"><i class="fi fi-rr-file-edit"></i></a>
+                              <a href="{{ route('showdetailcheckout', ['id' => $item->_id ]) }}" type="button" class="btn" style="border-radius:20%;margin-right:20px;color:white;box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;background-color:#74C0FC"><i class="fa-solid fa-pen-to-square"></i></a>
                           </td>
                       </tr>
                     @endforeach

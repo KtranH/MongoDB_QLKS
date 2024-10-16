@@ -7,6 +7,7 @@ use App\Models\Checkout;
 use App\Models\Employee;
 use App\Models\KhachThue;
 use App\Models\LoaiPhong;
+use App\QueryDB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -14,6 +15,7 @@ use Illuminate\Support\Facades\Auth;
 class HomeController extends Controller
 {
     //
+    use QueryDB;
     public function Home()
     {
         $count_Customer = KhachThue::count();
@@ -54,15 +56,17 @@ class HomeController extends Controller
             $checkin = Checkin::where('TinhTrang', 'Chờ xác nhận')->get();
             foreach($checkin as $item){
                 $date = Carbon::parse($item->NgayCheckin);
-                if(!$today->greaterThanOrEqualTo($date)){
-                   $item->TinhTrang = "Đã hủy"; 
+                if($today->greaterThanOrEqualTo($date)){
+                   $item->TinhTrang = "Đã hủy";
+                   $this->Update_State_Available_Room($item->Phong);
                    $item->save();
                 }
             }
+            
             $checkout = Checkout::where('TinhTrang', "Chưa thanh toán")->get();
             foreach($checkout as $item){
                 $date = Carbon::parse($item->NgayLap);
-                if(!$today->greaterThanOrEqualTo($date)){
+                if($today->greaterThanOrEqualTo($date)){
                    $item->TinhTrang = "Quá hạn"; 
                    $item->NgayLap = $today->format('Y-m-d');
                    $item->save();
