@@ -128,10 +128,11 @@
                                     <thead>
                                       <tr>
                                         <th scope="col">Mã checkout</th>
-                                        <th scope="col">Mã nhân viên</th>
+                                        <th scope="col">Mã checkin</th>
+                                        <th scope="col">Nhân viên</th>
                                         <th scope="col">Tên phòng</th>
                                         <th scope="col">Ngày nhận</th>
-                                        <th scope="col">Ngày lặp</th>
+                                        <th scope="col">Ngày lập</th>
                                         <th scope="col">Tình trạng</th>
                                         <th scope="col">Chức năng</th>
                                       </tr>
@@ -140,6 +141,7 @@
                                        @foreach ($checkout as $item)
                                         <tr>
                                             <th scope="row"><a href="#">{{ $item->_id}}</a></th>
+                                            <td>{{ $item->bookingCheckin->_id }}</td>
                                             <td>{{ $item->bookingCheckin->NhanVienLap }}</td>
                                             <td>{{ $item->bookingCheckin->Phong }}</td>
                                             <td>{{ $item->bookingCheckin->NgayCheckin}}</td>

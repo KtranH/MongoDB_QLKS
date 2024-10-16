@@ -36,7 +36,9 @@
                                 <table class="table table-borderless datatable">
                                     <thead>
                                       <tr>
-                                        <th scope="col">Mã nhân viên</th>
+                                        <th scope="col">Mã checkout</th>
+                                        <th scope="col">Mã checkin</th>
+                                        <th scope="col">Nhân viên</th>
                                         <th scope="col">Tên phòng</th>
                                         <th scope="col">Ngày đặt</th>
                                         <th scope="col">Ngày trả phòng</th>
@@ -47,7 +49,9 @@
                                     <tbody>
                                        @foreach ($checkout as $item)
                                         <tr>
-                                            <th scope="row"><a href="#">{{ $item->bookingCheckin->NhanVienLap}}</a></th>
+                                            <th scope="row"><a href="#">{{ $item->_id}}</a></th>
+                                            <td>{{ $item->bookingCheckin->_id}}</td>
+                                            <td>{{ $item->bookingCheckin->NhanVienLap }}</td>
                                             <td>{{ $item->bookingCheckin->Phong }}</td>
                                             <td>{{ $item->bookingCheckin->NgayCheckin}}</td>
                                             <td>{{ $item->bookingCheckin->NgayCheckOutDuKien }}</td>

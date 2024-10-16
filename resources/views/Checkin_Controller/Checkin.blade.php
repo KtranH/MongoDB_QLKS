@@ -34,7 +34,7 @@
                                         <table class="table table-borderless datatable">
                                             <thead>
                                                 <tr>
-                                                    <th scope="col">Mã phiếu</th>
+                                                    <th scope="col">Mã checkin</th>
                                                     <th scope="col">Nhân viên</th>
                                                     <th scope="col">Tên phòng</th>
                                                     <th scope="col">Ngày nhận phòng</th>
