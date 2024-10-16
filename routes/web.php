@@ -137,6 +137,15 @@ Route::middleware([CheckLogin::class])->group(function () {
     //Truy cập trang trả phòng
     Route::get('/checkout', [CheckoutController::class, 'Checkout'])->name("showcheckout");
 
+    //Truy cập xử lý trả phòng
+    Route::get('/manage/detailcheckout/{id}', [CheckoutController::class, 'DetailCheckout'])->name("showdetailcheckout");
+
+    //Xác nhận dịch vụ vào trả phòng
+    Route::get('/manage/addservicecheckout/{idCheckout}/{idService}/{price}', [CheckoutController::class, 'AddServiceToCheckout'])->name("addservicecheckout");
+
+    //Xác nhận hủy dịch vụ trong trả phòng
+    Route::get('/manage/cancelservicecheckout/{idCheckout}/{idService}', [CheckoutController::class, 'CancelServiceCheckout'])->name("cancelservicecheckout");
+
     //Truy cập trang thống kê tìm kiếm khách hàng
     Route::get('/searchlog', [StatisticalController::class, 'SearchLog'])->name("showsearchlog");
 

@@ -30,8 +30,6 @@
                                 </li>
                             </ul>
                             <div class="tab-content pt-2">
-                                <div class="tab-content pt-2">
-
                                     <div class="tab-pane fade active show profile-overview" id="danhsachdatphong">
                                         <table class="table table-borderless datatable">
                                             <thead>
@@ -74,9 +72,6 @@
                                             </tbody>
                                         </table>
                                     </div>
-
-                                    <div class="tab-pane fade profile-overview" id="datphong">
-
                                 </div>
                                 <div class="text-center" style="margin-top:20px;">
                                     <a href="{{ route('showaddcheckin') }}" class="btn btn-primary">Thêm mới nhận và đặt phòng</a>

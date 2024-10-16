@@ -32,7 +32,7 @@
                                 <button class="nav-link" data-bs-toggle="tab" data-bs-target="#lichSuDatPhong">Thêm phòng mới</button>
                             </li>
                         </ul>
-                                <div class="tab-content pt-2">
+                        <div class="tab-content pt-2">
 
                           <div class="tab-pane fade active show profile-overview" id="danhSachPhong">
                              <h5 class="card-title" style="font-family: 'Montserrat', sans-serif;

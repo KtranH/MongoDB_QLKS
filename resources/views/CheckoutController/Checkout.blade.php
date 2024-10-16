@@ -20,7 +20,6 @@
     <section class="section profile">
         <div class="row">
             <div class="col-xl-8" style="width:100%">
-
                 <div class="card" style="border-radius:20px;">
                     <div class="card-body pt-1">
                         <!-- Bordered Tabs -->
@@ -29,24 +28,42 @@
                                 <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#hoadon">Lựa chọn trả phòng</button>
                             </li>
                         </ul>
-                            <div class="tab-content pt-1">
-                                <div class="tab-pane fade active show profile-overview" id="hoadon">
-                                    <table class="table table-borderless datatable">
-                                        <thead>
-                                          <tr>
-                                            <th scope="col">Tên loại phòng</th>
-                                            <th scope="col">Tên phòng</th>
-                                            <th scope="col">Mã phiếu</th>
-                                            <th scope="col">Tình trạng</th>
-                                            <th scope="col">Chức năng</th>
-                                          </tr>
-                                        </thead>
-                                        <tbody>
-                                           
-                                        </tbody>
-                                    </table>
-                                </div>
+                        <div class="tab-content pt-1">
+                            <div class="tab-pane fade active show profile-overview" id="hoadon">
+                                <table class="table table-borderless datatable">
+                                    <thead>
+                                      <tr>
+                                        <th scope="col">Mã nhân viên</th>
+                                        <th scope="col">Tên phòng</th>
+                                        <th scope="col">Ngày đặt</th>
+                                        <th scope="col">Ngày trả phòng</th>
+                                        <th scope="col">Tình trạng</th>
+                                        <th scope="col">Chức năng</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                       @foreach ($checkout as $item)
+                                        <tr>
+                                            <th scope="row"><a href="#">{{ $item->bookingCheckin->NhanVienLap}}</a></th>
+                                            <td>{{ $item->bookingCheckin->Phong }}</td>
+                                            <td>{{ $item->bookingCheckin->NgayCheckin}}</td>
+                                            <td>{{ $item->bookingCheckin->NgayCheckOutDuKien }}</td>
+                                            <td>
+                                                @if ($item->TinhTrang == "Chưa thanh toán")
+                                                    <span class="badge bg-warning">{{ $item->TinhTrang }}</span>
+                                                @else
+                                                    <span class="badge bg-danger">{{ $item->TinhTrang }}</span>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                <a href="{{ route('showdetailcheckout', ['id' => $item->_id ]) }}" type="button" class="btn" style="border-radius:20%;margin-right:20px;color:white;box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;background-color:#74C0FC"><i class="fi fi-rr-file-edit"></i></a>
+                                            </td>
+                                        </tr>
+                                       @endforeach
+                                    </tbody>
+                                </table>
                             </div>
+                        </div>  
                     </div>
                 </div>
             </div>

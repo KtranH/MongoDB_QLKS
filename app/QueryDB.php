@@ -3,6 +3,8 @@
 namespace App;
 
 use App\Models\Checkin;
+use App\Models\Checkout;
+use App\Models\DichVu;
 use App\Models\KhachThue;
 use App\Models\LoaiPhong;
 use App\Models\NguoiDung;
@@ -163,7 +165,7 @@ trait QueryDB
     public function Check_Capacity($capacity, $id)
     {
         $checkin = Checkin::where('_id', $id)->firstOrFail();
-        if(count($checkin->DanhSachKhachHang) > $capacity){
+        if(count($checkin->DanhSachKhachHang) >= intval($capacity)){
             return false;
         }
         return true;
@@ -177,6 +179,28 @@ trait QueryDB
                 return false;
             }
         }
+        return true;
+    }
+    public function Check_Exist_Service_Checkout($idService)
+    {
+        $checkout = Checkout::where('DanhSachDichVuDaSuDung.DichVu', $idService)->first();
+        if ($checkout) {
+            $service = collect($checkout->DanhSachDichVuDaSuDung)->firstWhere('DichVu', $idService);
+            
+            if ($service) {
+                $newQuantity = $service['SoLuong'] + 1;
+
+                Checkout::where('_id', $checkout->_id)
+                    ->where('DanhSachDichVuDaSuDung.DichVu', $idService)
+                    ->update([
+                        'DanhSachDichVuDaSuDung.$.SoLuong' => $newQuantity,
+                        'DanhSachDichVuDaSuDung.$.DonGia' => $newQuantity  * ($service['DonGia'] / ($newQuantity - 1)),
+                    ]);
+                
+                return false;
+            }
+        }
+
         return true;
     }
 }
