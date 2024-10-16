@@ -10,6 +10,7 @@ use App\Http\Controllers\RoomController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\StatisticalController;
 use App\Http\Middleware\CheckLogin;
+use App\Http\Middleware\CheckUserRole;
 use Illuminate\Support\Facades\Route;
 
 //Truy cập trang đăng nhập
@@ -20,8 +21,11 @@ Route::post('/loadLogin', [AccountController::class, 'checkLogin'])->name("loadl
 
 Route::middleware([CheckLogin::class])->group(function () {
 
-    // Truy cập trang chủ
+    //Truy cập trang chủ
     Route::get('/', [HomeController::class, 'Home'])->name("showhome");
+
+    //Làm mới dữ liệu
+    Route::get('/reload', [HomeController::class, 'ReloadHome'])->name("reloadhome");
 
     //Truy cập trang quản lý loại phòng
     Route::get('/manage/categoryroom', [CategoryRoomController::class, 'CategoryRoom'])->name("showcategoryroom");
@@ -83,24 +87,25 @@ Route::middleware([CheckLogin::class])->group(function () {
     //Tùy chỉnh tình trạng dịch vụ sang không hoạt động
     Route::get('/setting/disableservice/{id}', [ServiceController::class, 'DisableService'])->name("disableservice");
 
-    //Truy cập trang quản lý nhân viên
-    Route::get('/manage/employee', [ListEmployee::class, 'Employee'])->name("showemployee");
+    Route::middleware([CheckUserRole::class])->group(function () {
+        //Truy cập trang quản lý nhân viên
+        Route::get('/manage/employee', [ListEmployee::class, 'Employee'])->name("showemployee");
 
-    //Truy cập trang tùy chỉnh nhân viên
-    Route::get('/setting/employee/{id}', [ListEmployee::class, 'ShowUpdateEmployee'])->name("showupdateemployee");
+        //Truy cập trang tùy chỉnh nhân viên
+        Route::get('/setting/employee/{id}', [ListEmployee::class, 'ShowUpdateEmployee'])->name("showupdateemployee");
 
-    //Xác nhận thêm một nhân viên
-    Route::post('/setting/addmoreemployee', [ListEmployee::class, 'AddMoreEmployee'])->name("addmoreemployee");
+        //Xác nhận thêm một nhân viên
+        Route::post('/setting/addmoreemployee', [ListEmployee::class, 'AddMoreEmployee'])->name("addmoreemployee");
 
-    //Xác nhận tùy chỉnh nhân viên
-    Route::post('/setting/updateemployee', [ListEmployee::class, 'UpdateEmployee'])->name("updateemployee");
+        //Xác nhận tùy chỉnh nhân viên
+        Route::post('/setting/updateemployee', [ListEmployee::class, 'UpdateEmployee'])->name("updateemployee");
 
-    //Tùy chỉnh tình trạng nhân viên sang hoạt động
-    Route::get('/setting/activeemployee/{id}', [ListEmployee::class, 'ActiveEmployee'])->name("activeemployee");
+        //Tùy chỉnh tình trạng nhân viên sang hoạt động
+        Route::get('/setting/activeemployee/{id}', [ListEmployee::class, 'ActiveEmployee'])->name("activeemployee");
 
-    //Tùy chỉnh tình trạng nhân viên sang không hoạt động
-    Route::get('/setting/disableemployee/{id}', [ListEmployee::class, 'DisableEmployee'])->name("disableemployee");
-
+        //Tùy chỉnh tình trạng nhân viên sang không hoạt động
+        Route::get('/setting/disableemployee/{id}', [ListEmployee::class, 'DisableEmployee'])->name("disableemployee");
+    });
     //Truy cập trang đặt và nhận phòng
     Route::get('/checkin', [CheckinController::class, 'Checkin'])->name("showcheckin");
 
@@ -146,11 +151,20 @@ Route::middleware([CheckLogin::class])->group(function () {
     //Xác nhận hủy dịch vụ trong trả phòng
     Route::get('/manage/cancelservicecheckout/{idCheckout}/{idService}', [CheckoutController::class, 'CancelServiceCheckout'])->name("cancelservicecheckout");
 
-    //Truy cập trang thống kê tìm kiếm khách hàng
+    //Xác nhận thanh toán trả phòng
+    Route::post('/manage/confirmcheckout', [CheckoutController::class, 'ConfirmCheckout'])->name("confirmcheckout");
+
+    //Xác nhận hủy trả phòng
+    Route::post('/manage/cancelcheckout', [CheckoutController::class, 'CancelCheckout'])->name("cancelcheckout");
+
+    //Truy cập trang thống kê tìm kiếm
     Route::get('/searchlog', [StatisticalController::class, 'SearchLog'])->name("showsearchlog");
 
-    //Truy cập trang báo cáo nhận phòng
-    Route::get('/report', [StatisticalController::class, 'Report'])->name("showreport");
+    //Truy cập trang thống kê tìm kiếm checkin
+    Route::get('/searchlogcheckin/{id}', [StatisticalController::class, 'SearchCheckin'])->name("showsearchcheckin");
+
+    //Truy cập trang thống kê tìm kiếm checkout
+    Route::get('/searchlogcheckout/{id}', [StatisticalController::class, 'SearchCheckout'])->name("showsearchcheckout");
 
     //Truy cập trang tài khoản
     Route::get('/account', [AccountController::class, 'Account'])->name("showaccount");

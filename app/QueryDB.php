@@ -119,6 +119,20 @@ trait QueryDB
             return false;
         }
     }
+    public function Check_Unique_Ver2($email, $sdt, $cmnd)
+    {
+        $user = NguoiDung::where('DanhSachTaiKhoan.Email', $email)
+        ->orWhere('DanhSachTaiKhoan.CMND', $cmnd)
+        ->orWhere('DanhSachTaiKhoan.SDT', $sdt)->first();
+
+        if($user == null){
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
     public function Check_Exist($email, $sdt, $cmnd, $emailU, $sdtU, $cmndU)
     {
         if($email != $emailU){
@@ -181,9 +195,9 @@ trait QueryDB
         }
         return true;
     }
-    public function Check_Exist_Service_Checkout($idService)
+    public function Check_Exist_Service_Checkout($idCheckin, $idService)
     {
-        $checkout = Checkout::where('DanhSachDichVuDaSuDung.DichVu', $idService)->first();
+        $checkout = Checkout::where('_id', $idCheckin)->where('DanhSachDichVuDaSuDung.DichVu', $idService)->first();
         if ($checkout) {
             $service = collect($checkout->DanhSachDichVuDaSuDung)->firstWhere('DichVu', $idService);
             
@@ -196,9 +210,8 @@ trait QueryDB
                         'DanhSachDichVuDaSuDung.$.SoLuong' => $newQuantity,
                         'DanhSachDichVuDaSuDung.$.DonGia' => $newQuantity  * ($service['DonGia'] / ($newQuantity - 1)),
                     ]);
-                
-                return false;
             }
+            return false;
         }
 
         return true;

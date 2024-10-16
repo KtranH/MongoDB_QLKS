@@ -56,16 +56,10 @@
                                                                 <span class="badge bg-success">{{ $item->TinhTrang }}</span>
                                                             @elseif ($item->TinhTrang == 'Chờ xác nhận')
                                                                 <span class="badge bg-warning">{{ $item->TinhTrang }}</span>
-                                                            @else
-                                                                <span class="badge bg-danger">{{ $item->TinhTrang }}</span>
                                                             @endif
                                                         </td>
                                                         <td>
-                                                            @if ($item->TinhTrang == 'Đã hủy')
-                                                                <a href="" type="button" class="btn disabled" style="border-radius:20%;margin-right:20px;color:white;box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;background-color:#74C0FC"><i class="fi fi-rr-file-edit"></i></a>
-                                                            @else
-                                                                <a href="{{ route('showupdatedetailcheckin', ['id' => $item->_id]) }}" type="button" class="btn" style="border-radius:20%;margin-right:20px;color:white;box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;background-color:#74C0FC"><i class="fi fi-rr-file-edit"></i></a>
-                                                            @endif
+                                                            <a href="{{ route('showupdatedetailcheckin', ['id' => $item->_id]) }}" type="button" class="btn" style="border-radius:20%;margin-right:20px;color:white;box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;background-color:#74C0FC"><i class="fi fi-rr-file-edit"></i></a>
                                                         </td>
                                                     </tr>             
                                                 @endforeach

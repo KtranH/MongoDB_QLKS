@@ -92,7 +92,7 @@
                                   ">
                                             Tổng tiền (tạm tính): <span
                                                 style="font-weight:bold;color:red; font-size:18px">{{ number_format($takeBill, 0, ',', '.') }}</span>
-                                            VNĐ
+                                                <span style="font-weight:bold">VNĐ</span>
                                         </h5>
                                         <div style="marign-bottom:20px">
                                             <a href="{{ route("cancelcheckin", ['id' => $takeCheckin->_id]) }}" type="submit" class="btn btn-danger cancel-checkin">Hủy nhận và đặt phòng</a>

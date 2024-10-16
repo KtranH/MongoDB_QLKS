@@ -79,6 +79,11 @@ class CategoryRoomController extends Controller
         try
         {
             $categoryRoom = LoaiPhong::where('_id', $id)->firstOrFail();
+            foreach ($categoryRoom->DanhSachPhong as $phong) {
+                if ($phong['TinhTrang'] == 3 || $phong['TinhTrang'] == 2) {
+                    return redirect()->back()->with('error', 'Có lỗi xảy ra, Có 1 phòng trong loại này đang được sử dụng');
+                }
+            }
             $categoryRoom->MaLoai = $request->tenloaiphong;
             $categoryRoom->SucChua = intval($request->succhua);
             $categoryRoom->DienTich = doubleval($request->dientich);
@@ -98,6 +103,12 @@ class CategoryRoomController extends Controller
     {
         try
         {
+            $check = LoaiPhong::where('_id', $id)->first();
+            foreach ($check->DanhSachPhong as $phong) {
+                if ($phong['TinhTrang'] == 3 || $phong['TinhTrang'] == 2) {
+                    return response()->json(['success' => false, 'message' => 'Có lỗi xảy ra, phòng này đang được sử dụng']);
+                }
+            }
             LoaiPhong::where('_id', $id)->update(['TinhTrang' => 1, '$set' => ['DanhSachPhong.$[].TinhTrang' => 1]]);
             return response()->json(['success' => true, 'message' => 'Cập nhật trạng thái thành công']);
         }
@@ -110,6 +121,12 @@ class CategoryRoomController extends Controller
     {
         try
         {
+            $check = LoaiPhong::where('_id', $id)->first();
+            foreach ($check->DanhSachPhong as $phong) {
+                if ($phong['TinhTrang'] == 3 || $phong['TinhTrang'] == 2) {
+                    return response()->json(['success' => false, 'message' => 'Có lỗi xảy ra, phòng này đang được sử dụng']);
+                }
+            }
             LoaiPhong::where('_id', $id)->update(['TinhTrang' => 0, '$set' => ['DanhSachPhong.$[].TinhTrang' => 0]]);
             return response()->json(['success' => true, 'message' => 'Cập nhật trạng thái thành công']);
         }

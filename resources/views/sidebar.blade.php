@@ -74,11 +74,6 @@
               <i class="bi bi-circle"></i><span>Tra cứu</span>
             </a>
           </li>
-          <li>
-            <a href="{{ route('showreport') }}">
-              <i class="bi bi-circle"></i><span>Báo cáo</span>
-            </a>
-          </li>
         </ul>
       </li><!-- End Icons Nav -->
 
@@ -92,7 +87,7 @@
       </li><!-- End Profile Page Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="pages-login.html">
+        <a class="nav-link collapsed" href="{{ route('logout') }}">
           <i class="bi bi-box-arrow-in-right"></i>
           <span>Đăng xuất</span>
         </a>

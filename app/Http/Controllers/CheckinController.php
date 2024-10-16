@@ -16,7 +16,7 @@ class CheckinController extends Controller
     use QueryDB;
     public function Checkin()
     {
-        $checkIn = Checkin::all();
+        $checkIn = Checkin::where('TinhTrang', 'Chờ xác nhận')->orWhere('TinhTrang', 'Đã nhận phòng')->get();
         return view('Checkin_Controller.Checkin', compact('checkIn'));
     }   
     public function AddCheckin()
@@ -52,6 +52,7 @@ class CheckinController extends Controller
         $invoice->Booking_Checkin = $id;
         $invoice->NgayLap = $checkin->NgayCheckOutDuKien;
         $invoice->ThanhToan = doubleval($bill);
+        $invoice->TinhTrang = "Chưa thanh toán";
         $invoice->DanhSachDichVuDaSuDung = [];
         $invoice->save();
         return redirect()->route('showcheckin');

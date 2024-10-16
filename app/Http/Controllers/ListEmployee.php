@@ -6,6 +6,7 @@ use App\Models\NguoiDung;
 use App\QueryDB;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class ListEmployee extends Controller
 {
@@ -45,7 +46,7 @@ class ListEmployee extends Controller
         {
             return redirect()->back()->with('error', 'Ngày vào làm không đúng định dạng');
         }
-        else if($this->Check_Unique($request->input(key: 'email'), $request->input(key: 'sdt'), $request->input(key: 'cmnd')) == false)
+        else if($this->Check_Unique_Ver2($request->input(key: 'email'), $request->input(key: 'sdt'), $request->input(key: 'cmnd')) == false)
         {
             return redirect()->back()->with('error', 'Email hoặc SDT đã được sử dụng');
         }
@@ -59,7 +60,7 @@ class ListEmployee extends Controller
                 "CMND" => $request->input(key: 'cmnd'),
                 "SDT" => $request->input(key: 'sdt'),
                 "Email" => $request->input(key: 'email'),
-                "MatKhau" => $request->input(key: 'matkhau'),
+                "MatKhau" => Hash::make($request->input(key: 'matkhau')),
                 "DiaChi" => $request->input(key: 'diachi'),
                 'IsDelete' => 0
             ];

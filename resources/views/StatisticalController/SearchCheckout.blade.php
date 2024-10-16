@@ -37,19 +37,6 @@
                                                 font-style: normal;">
                                                 Dịch vụ<span>/Danh sách dịch vụ</span>
                                             </h5>
-
-                                            @if (Session::has('success'))
-                                                <div class="alert alert-success" role="alert">
-                                                    {{ Session::get('success') }}
-                                                </div>
-                                            @endif
-
-                                            @if (Session::has('error'))
-                                            <div class="alert alert-danger" role="alert">
-                                                {{ Session::get('error') }}
-                                            </div>
-                                            @endif
-
                                             <div class="row bg-white" style="padding:20px;border-radius:20px;width:100%;display:flex;justify-content: space-between;">
                                                 <table class="table table-borderless datatable">
                                                     <thead>
@@ -57,7 +44,6 @@
                                                             <th scope="col">Mã dịch vụ</th>
                                                             <th scope="col">Tên dịch vụ</th>
                                                             <th scope="col">Đơn giá</th>
-                                                            <th scope="col">Chức năng</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -66,12 +52,6 @@
                                                                 <th scope="row"><a href="#">{{ $item->_id }}</a></th>
                                                                 <td>{{ $item->TenDichVu }}</td>
                                                                 <td>{{ $item->GiaDichVu }}</td>
-                                                                <td>
-                                                                    <a href="{{ route('addservicecheckout', ['idCheckout' => $checkout->_id, 'idService' => $item->_id, 'price' => $item->GiaDichVu]) }}" class="btn edit-room" 
-                                                                            style="border-radius:20%;margin-right:20px;color:white;box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;background-color:#74C0FC">
-                                                                        <i class="fa-solid fa-pen-to-square" style="color: #ffffff;"></i>
-                                                                    </a>
-                                                                </td>
                                                             </tr>
                                                         @endforeach
                                                     </tbody>
@@ -129,15 +109,6 @@
 
                                     </div>
 
-                                    @php
-                                        $sum = 0;
-                                        $sumService = 0;
-                                        foreach ($listServiceInCheckout as $item) {
-                                            $sumService += $item['DonGia'];
-                                        }
-                                        $sum = $sumService + $checkout->ThanhToan;
-                                    @endphp
-
                                     <div class="card" style="border-radius:20px">
                                         <div class="card-body">
                                             <h5 class="card-title"
@@ -153,74 +124,22 @@
                                                 font-optical-sizing: auto;
                                                 font-weight: 600;
                                                 font-style: normal;">
-                                                Tổng tiền<span>/Tạm tính</span></h5>
+                                                Tổng tiền<span>/{{ $checkout->TinhTrang }}</span></h5>
                                             <div class="row bg-white"
                                                 style="padding:20px;border-radius:20px;width:100%;display:flex;justify-content: space-between;">
 
                                                 <p style="display:flex; justify-content: space-between;margin-bottom:30px; font-weight:bold">
-                                                    <span style="font-weight:bold">Tạm tính:</span>{{ number_format($sum, 0, ',', '.') }} VNĐ</p>
+                                                    <span style="font-weight:bold">Tạm tính:</span>{{ number_format($checkout->ThanhToan, 0, ',', '.') }} VNĐ</p>
                                                 <p style="display:flex; justify-content: space-between;"><span
                                                         style="font-weight:bold">Tổng tiền: </span><span
-                                                        style="margin-top:-10px; color: red;font-size:25px; font-weight:bold">{{ number_format($sum, 0, ',', '.') }} VNĐ</span></p>
+                                                        style="margin-top:-10px; color: red;font-size:25px; font-weight:bold">{{ number_format($checkout->ThanhToan, 0, ',', '.') }} VNĐ</span></p>
                                             </div>
+                                            <div class="text-center" style="margin-bottom:20px">
+                                                <a href="{{ route("showsearchlog") }}" class="btn btn-primary"
+                                                     style="border-radius:20px;width:90%"><i class="fa-solid fa-arrow-left" style="color: #ffff"></i> Quay lại
+                                                 </a>
+                                             </div>
                                         </div>
-                                        <div class="text-center" style="margin-bottom:20px">
-                                           <form action="{{ route('confirmcheckout') }}" method="POST">
-                                            @csrf
-                                            <input type="hidden" name="idCheckout" value="{{ $checkout->_id }}">
-                                            <input type="hidden" name="sum" value="{{ $sum }}">
-                                            <button type="submit" class="btn btn-primary confirm-checkout"
-                                                style="border-radius:20px;width:90%"><i class="fa-solid fa-check"
-                                                style="color: #ffffff;"></i> Hoàn thành
-                                            </button>
-                                           </form>
-                                        </div>
-                                        <div class="text-center" style="margin-bottom:20px">
-                                            <form action="{{ route('cancelcheckout') }}" method="POST">
-                                             @csrf
-                                             <input type="hidden" name="idCheckout" value="{{ $checkout->_id }}">
-                                             <button type="submit" class="btn btn-danger cancel-checkout"
-                                                 style="border-radius:20px;width:90%"><i class="fa-solid fa-xmark" 
-                                                 style="color: #ffffff;"></i> Hủy bỏ
-                                             </button>
-                                            </form>
-                                         </div>
-                                        <script>
-                                            $(document).ready(function () {
-                                                $('.confirm-checkout').click(function (e) {
-                                                    e.preventDefault();
-                                                    Swal.fire({ title: 'Bạn có chắc chắn muốn hoàn thành trả phòng?', text: "Bạn sẽ không thể khôi phục lại quyết định này!", icon: 'warning', showCancelButton: true, confirmButtonColor: '#3085d6', cancelButtonColor: '#d33', confirmButtonText: 'Đồng ý', cancelButtonText: 'Hủy bỏ'
-                                                    }).then((result) => {
-                                                        if (result.isConfirmed) {
-                                                            Swal.fire(
-                                                                'Đã xác nhận!',
-                                                                'Đang tiến hành xác nhận!',
-                                                                'success'
-                                                            );
-                                                            setTimeout(() => {
-                                                                    $(this).closest('form').submit();
-                                                            }, 2000);
-                                                        }
-                                                    });
-                                                })
-                                                $('.cancel-checkout').click(function (e) {
-                                                    e.preventDefault();
-                                                    Swal.fire({ title: 'Bạn có chắc chắn muốn hủy bỏ trả phòng?', text: "Bạn sẽ không thể khôi phục lại quyết định này!", icon: 'warning', showCancelButton: true, confirmButtonColor: '#3085d6', cancelButtonColor: '#d33', confirmButtonText: 'Đồng ý', cancelButtonText: 'Hủy bỏ'
-                                                    }).then((result) => {
-                                                        if (result.isConfirmed) {
-                                                            Swal.fire(
-                                                                'Đã xác nhận!',
-                                                                'Đang tiến hành xác nhận!',
-                                                                'success'
-                                                            );
-                                                            setTimeout(() => {
-                                                                    $(this).closest('form').submit();
-                                                            }, 2000);
-                                                        }
-                                                    });
-                                                })
-                                            })
-                                        </script>
                                     </div>
                                 </div>
                             </div>

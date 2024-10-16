@@ -30,6 +30,9 @@
                         </ul>
                         <div class="tab-content pt-1">
                             <div class="tab-pane fade active show profile-overview" id="hoadon">
+                                @if (Session::has('success'))
+                                    <div class="alert alert-success" role="alert">{{ Session::get('success') }}</div>
+                                @endif
                                 <table class="table table-borderless datatable">
                                     <thead>
                                       <tr>

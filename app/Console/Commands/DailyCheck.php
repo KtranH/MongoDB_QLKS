@@ -33,7 +33,7 @@ class DailyCheck extends Command
         //
         $today = Carbon::today();
 
-        $checkin = Checkin::all();
+        $checkin = Checkin::where('TinhTrang', 'Chờ xác nhận')->get();
         foreach($checkin as $item){
             $date = Carbon::parse($item->NgayCheckin);
             if(!$today->greaterThanOrEqualTo($date)){
@@ -41,11 +41,11 @@ class DailyCheck extends Command
                $item->save();
             }
         }
-        $checkout = Checkout::where('TinhTrang', "Chờ thanh toán")->get();
+        $checkout = Checkout::where('TinhTrang', "Chưa thanh toán")->get();
         foreach($checkout as $item){
             $date = Carbon::parse($item->NgayLap);
             if(!$today->greaterThanOrEqualTo($date)){
-               $item->TinhTrang = "Quá hạn trả phòng"; 
+               $item->TinhTrang = "Quá hạn"; 
                $item->NgayLap = $today->format('Y-m-d');
                $item->save();
             }

@@ -7,7 +7,6 @@
     <h1>Trang chủ</h1>
     <nav>
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="">Home</a></li>
         <li class="breadcrumb-item active">Trang chủ</li>
       </ol>
     </nav>
@@ -37,7 +36,7 @@
                   </div>
                   <div class="ps-3">
                     <h6>
-                      10
+                      {{ $count_Customer }}
                     </h6>
                     <span class="text-success small pt-1 fw-bold">Đã</span><span class="text-muted small pt-2 ps-1">ghé thăm</span>
 
@@ -65,7 +64,7 @@
                   </div>
                   <div class="ps-3">
                     <h6>
-                      60
+                      {{ $count_Room }}
                     </h6>
                     <span class="text-success small pt-1 fw-bold">Vẫn còn</span><span class="text-muted small pt-2 ps-1">trống</span>
 
@@ -94,7 +93,7 @@
                   </div>
                   <div class="ps-3">
                     <h6>
-                      50
+                      {{number_format($count_Revenue, 0, ',','.') }}
                     </h6>
                     <span class="text-danger small pt-1 fw-bold">VNĐ</span><span class="text-muted small pt-2 ps-1">từ trước đến nay</span>
 
@@ -107,6 +106,13 @@
           </div><!-- End Customers Card -->
 
           <!-- Recent Sales -->
+          @if (Session::has('success'))
+            <div class="alert alert-success" role="alert">{{ Session::get('success')}}</div>
+          @endif
+          @if (Session::has('error'))
+            <div class="alert alert-danger" role="alert">{{ Session::get('error')}}</div>
+          @endif
+
           <div class="col-12">
             <div class="card recent-sales overflow-auto" style="border-radius:20px">
 
@@ -115,22 +121,38 @@
                 font-optical-sizing: auto;
                 font-weight: 600;
                 font-style: normal;
-                font-size: 14px;">Danh sách phiếu thuê phòng <span>| Tất cả</span></h5>
+                font-size: 14px;">Danh sách chờ xác nhận <span>| Tất cả</span></h5>
 
                 <h5 id="title" style="color:red;font-weight:bold"></h5>
-                <table class="table table-borderless datatable" id = "adminTable">
-                  <thead>
-                      <tr>
-                        <th scope="col">Mã khách</th>
-                        <th scope="col">Mã phòng</th>
-                        <th scope="col">Tên khách</th>
-                        <th scope="col">Mã phiếu</th>
-                        <th scope="col">Tình trạng</th>
-                      </tr>
-                  </thead>
-                  <tbody>
-                  
-                  </tbody>
+                <table class="table table-borderless datatable">
+                    <thead>
+                        <tr>
+                            <th scope="col">Mã phiếu</th>
+                            <th scope="col">Nhân viên</th>
+                            <th scope="col">Tên phòng</th>
+                            <th scope="col">Ngày nhận phòng</th>
+                            <th scope="col">Ngày trả phòng</th>
+                            <th scope="col">Tình trạng</th>
+                            <th scope="col">Chức năng</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($checkin as $item)
+                            <tr>
+                                <th scope="row"><a href="#">{{ $item->_id }}</a></th>
+                                <td>{{ $item->NhanVienLap }}</td>
+                                <td><a href="#" class="text-primary" style="text-align:center">{{ $item->Phong }}</a></td>
+                                <td>{{ $item->NgayCheckin }}</td>
+                                <td>{{ $item->NgayCheckOutDuKien }}</td>
+                                <td>
+                                    <span class="badge bg-warning">{{ $item->TinhTrang }}</span>
+                                </td>
+                                <td>
+                                    <a href="{{ route('showupdatedetailcheckin', ['id' => $item->_id]) }}" type="button" class="btn" style="border-radius:20%;margin-right:20px;color:white;box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;background-color:#74C0FC"><i class="fa-solid fa-pen-to-square"></i></a>
+                                </td>
+                            </tr>             
+                        @endforeach
+                    </tbody>
                 </table>
               </div>
             </div>
@@ -145,25 +167,45 @@
                 font-optical-sizing: auto;
                 font-weight: 600;
                 font-style: normal;
-                font-size: 14px;">Những loại phòng tiêu biểu <span>| Tất cả</span></h5>
+                font-size: 14px;">Danh sách quá hạn trả phòng <span>| Tất cả</span></h5>
 
                 <table class="table table-borderless datatable">
                   <thead>
                     <tr>
-                      <th scope="col">Mã loại</th>
-                      <th scope="col">Tên loại</th>
-                      <th scope="col">Giá thuê</th>
-                      <th scope="col">Tổng số lần thuê</th>
+                      <th scope="col">Mã nhân viên</th>
+                      <th scope="col">Tên phòng</th>
+                      <th scope="col">Ngày đặt</th>
+                      <th scope="col">Ngày trả phòng</th>
+                      <th scope="col">Tình trạng</th>
+                      <th scope="col">Chức năng</th>
                     </tr>
                   </thead>
                   <tbody>
-                   
+                    @foreach ($checkout as $item)
+                      <tr>
+                          <th scope="row"><a href="#">{{ $item->bookingCheckin->NhanVienLap}}</a></th>
+                          <td>{{ $item->bookingCheckin->Phong }}</td>
+                          <td>{{ $item->bookingCheckin->NgayCheckin}}</td>
+                          <td>{{ $item->bookingCheckin->NgayCheckOutDuKien }}</td>
+                          <td>
+                              <span class="badge bg-danger">{{ $item->TinhTrang }}</span>
+                          </td>
+                          <td>
+                              <a href="{{ route('showdetailcheckout', ['id' => $item->_id ]) }}" type="button" class="btn" style="border-radius:20%;margin-right:20px;color:white;box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;background-color:#74C0FC"><i class="fi fi-rr-file-edit"></i></a>
+                          </td>
+                      </tr>
+                    @endforeach
                   </tbody>
                 </table>
 
               </div>
 
             </div>
+            <div class="text-center" style="margin-bottom:20px">
+               <a href="{{ route("reloadhome") }}" class="btn btn-primary confirm-checkout"
+                   style="border-radius:20px;width:90%"><i class="fa-solid fa-rotate-right" style="color: #ffff"></i> Làm mới dữ liệu
+            </a>
+           </div>
           </div><!-- End Top Selling -->
 
         </div>
@@ -204,13 +246,19 @@
                 },
                 series: [
                   {
-                    name: "Nhận phòng",
-                    data: [50],
+                    name: "Đã nhận phòng",
+                    data: [{{ $count_Complete_Checkin }}],
+                    type: 'bar'
+                  },
+                  {
+                    name: "Chờ xác nhận",
+                    data: [{{ $count_Reserve_Checkin }}],
                     type: 'bar'
                   },
                   {
                     name: "Hủy phòng",
-                    data: [10],
+                    data: [{{ $count_Cancel_Checkin }}],
+                    color: 'red',
                     type: 'bar'
                   }
                 ]
@@ -262,18 +310,13 @@
                     labelLine: {
                       show: false
                     },
-                    data: [{
-                        value: 10,
-                        name: 'Phòng cao cấp'
-                      },
-                      {
-                        value: 20,
-                        name: 'Phòng phổ thông'
-                      },
-                      {
-                        value: 30,
-                        name: 'Phòng giá rẻ'
-                      }
+                    data: [
+                      @foreach ($count_Category_Room as $item)
+                        {
+                          value: '{{ $item["Số phòng"] }}', 
+                          name: '{{ $item["Mã loại"] }}'
+                        },
+                      @endforeach
                     ]
                   }]
                 });
