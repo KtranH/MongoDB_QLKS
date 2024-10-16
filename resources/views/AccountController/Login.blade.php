@@ -64,6 +64,7 @@
                                         <h5 class="card-title text-center pb-0 fs-4"
                                             style="font-family: Montserrat, sans-serif;font-optical-sizing: auto;font-weight: 500;">
                                             Đăng nhập tài khoản của bạn</h5>
+
                                         <p class="text-center small">Truy cập vào trang quản lý</p>
                                     </div>
 

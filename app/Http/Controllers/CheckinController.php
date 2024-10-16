@@ -61,7 +61,7 @@ class CheckinController extends Controller
     {
         $roomAvailable = json_decode($request->input('roomavailable'), true);
         $room = $this->Get_Room($roomAvailable[0]['value']);
-        if($room == null)
+        if($room == false)
         {
             return redirect()->back()->with('error', 'Phòng không tồn tại');
         }

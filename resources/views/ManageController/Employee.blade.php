@@ -23,7 +23,7 @@
             <div class="col-xl-8" style="width:100%">
 
                 <div class="card" style="border-radius:20px;">
-                    <div class="card-body pt-3">
+                    <div class="card-body pt-2">
                         <!-- Bordered Tabs -->
                         <ul class="nav nav-tabs nav-tabs-bordered">
                             <li class="nav-item">
@@ -32,9 +32,12 @@
                             <li class="nav-item">
                                 <button class="nav-link" data-bs-toggle="tab" data-bs-target="#themNhanvien">Thêm nhân viên</button>
                             </li>
-                            <li class="nav-item">
+                            {{--<li class="nav-item">
                                 <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tuyChinhQuyen">Tùy chỉnh quyền</button>
                             </li>
+                            <li class="nav-item">
+                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#themquyen">Thêm quyền</button>
+                            </li>--}}
                         </ul>
 
                         <div class="tab-content pt-2">
@@ -294,13 +297,86 @@
                                       @enderror
                                     </div>
                                   </div>
-
                                   <div class="text-center">
                                     <button type="submit" class="btn btn-primary">Thêm mới</button>
                                   </div>
                                 </form>
                             </div>
-                         </div>                           
+                         </div>      
+                         {{--<div class="tab-content" style="margin-top:-10px">
+                          <div class="tab-pane fade show profile-overview" id="tuyChinhQuyen">
+                            <h5 class="card-title" style="font-family: 'Montserrat', sans-serif;
+                            font-optical-sizing: auto;
+                            font-weight: 400;
+                            font-style: normal;
+                            font-size: 14px;">Danh sách các quyền</h5>
+                            <table class="table table-borderless datatable">
+                              <thead>
+                                <tr>
+                                  <th scope="col">Mã quyền</th>
+                                  <th scope="col">Tên quyền</th>
+                                  <th scope="col">Chức năng</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                @foreach ($employee as $item)
+                                  <tr>
+                                      <th scope="row"><a href="#" class="text-primary">{{ $item->_id}}</a></th>
+                                      <td>{{ $item->TenQuyenHan }}</td>
+                                      <td>
+                                        <!-- Edit Button -->
+                                        <a href="" class="btn edit-room"
+                                            style="border-radius:20%;margin-right:20px;color:white;box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;background-color:#74C0FC">
+                                            <i class="fa-solid fa-pen-to-square" style="color: #ffffff;"></i>
+                                        </a>
+                                    </td>
+                                  </tr>              
+                                @endforeach
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                        <div class="tab-content pt-2">
+
+                          <div class="tab-pane fade show profile-overview" id="themquyen">
+                              
+                              <h5 class="card-title" style="margin-top:-10px; font-family: 'Montserrat', sans-serif;
+                              font-optical-sizing: auto;
+                              font-weight: bold;
+                              font-style: normal;">Thêm một quyền hạn mới</h5>
+                      
+                           <!-- Form hiển thị thêm loại phòng -->
+                              <form class="needs-validation" novalidate method="POST" enctype="multipart/form-data" action="">
+                              @csrf
+                                  <div style="width:100%">
+                                      <label for="company" class="col-md-4 col-lg-3 col-form-label"  style="font-weight:bold">Họ tên:</label>
+                                      <div class="col-md-8 col-lg-11">
+                                          <input name="tennhanvien" type="text" class="form-control" id="company" style="box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;" required>
+                                        <div class="invalid-feedback">Họ tên không hợp lệ</div>
+                                      </div>
+                                  </div>
+  
+                                  <div style="width:100%">
+                                    <label for="fullName" class="col-md-4 col-lg-3 col-form-label"  style="font-weight:bold">Ngày sinh:</label>
+                                      <div class="col-md-8 col-lg-11">
+                                        <input name="ngaysinh" type="date" class="form-control" id="fullName" style="box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;" required>
+                                        <div class="invalid-feedback">Ngày sinh không hợp lệ</div>
+                                      </div>
+                                  </div>            
+                                  <div style="row mb-3; display:flex;">
+                                    <label><input type="checkbox" name="danhsachquyen[]" value="1"> NguoiDung</label><br>
+                                    <label><input type="checkbox" name="danhsachquyen[]" value="2"> Checkout</label><br>
+                                    <label><input type="checkbox" name="danhsachquyen[]" value="3"> DichVu</label><br>
+                                    <label><input type="checkbox" name="danhsachquyen[]" value="4"> KhachThue</label><br>
+                                    <label><input type="checkbox" name="danhsachquyen[]" value="5"> Checkin</label><br>
+                                    <label><input type="checkbox" name="danhsachquyen[]" value="6"> LoaiPhong</label><br>
+                                  </div>
+                                <div class="text-center">
+                                  <button type="submit" class="btn btn-primary">Thêm mới</button>
+                                </div>
+                              </form>
+                          </div>
+                       </div>--}}   
                       </div>
                     </div>
                 </div>

@@ -156,7 +156,8 @@ class ListEmployee extends Controller
     {
         try
         {
-            NguoiDung::where('DanhSachTaiKhoan.CMND', $id)->update(['DanhSachTaiKhoan.$.IsDelete' => 1]);
+            $updated = NguoiDung::where('DanhSachTaiKhoan.CMND', $id)
+            ->update(['DanhSachTaiKhoan.$.IsDelete' => 0]);
             return response()->json(['success' => true, 'message' => 'Kích hoạt nhân viên thành công']);
         }
         catch(\Exception $e)
@@ -168,17 +169,18 @@ class ListEmployee extends Controller
     {
         try
         {
-            NguoiDung::where('DanhSachTaiKhoan.CMND', $id)->update(['DanhSachTaiKhoan.$.IsDelete' => 0]);
+            $updated = NguoiDung::where('DanhSachTaiKhoan.CMND', $id)
+            ->update(['DanhSachTaiKhoan.$.IsDelete' => 1]);
             return response()->json(['success' => true, 'message' => 'Khóa nhân viên thành công']);
         }
         catch(\Exception $e)
         {
-            return response()->json(['success' => false, 'message' => 'Khóa nhân viên thất bại']);
+            return response()->json(['success' => false, 'message' => 'Khóa nhân viên thất bại' . $e->getMessage()]);
         }
     }
     public function ShowUpdateEmployee($id)
     {
-        $employee = $this->Inf_User($id);
+        $employee = $this->Get_User($id);
         if($employee == false)
         {
             return redirect()->back()->with('error', 'Không tìm thấy nhân viên');

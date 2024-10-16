@@ -132,7 +132,8 @@
                                                 return yyyy + '-' + mm + '-' + dd;
                                             }
                                         
-                                            checkinInput.value = getTodayDate();
+                                            checkinInput.min = getTodayDate();
+                                            checkinInput.value = getTodayDate(); 
                                         
                                             checkinInput.addEventListener('change', function() {
                                                 checkoutInput.min = checkinInput.value;
@@ -148,6 +149,7 @@
                                         
                                             checkoutInput.min = checkinInput.value;
                                         </script>
+                                        
 
                                         <div style="width:100%">
                                             <label for="fullName" class="col-md-4 col-lg-3 col-form-label"

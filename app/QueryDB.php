@@ -44,7 +44,7 @@ trait QueryDB
     }
     public function Get_Room($id)
     {
-        $query = LoaiPhong::where('DanhSachPhong.MaPhong', $id)->firstOrFail();
+        $query = LoaiPhong::where('DanhSachPhong.MaPhong', $id)->first();
         if($query == null){
             return false;
         }
@@ -56,7 +56,7 @@ trait QueryDB
                     return [$item, $query];
                 }
             }
-            return false;
+            return true;
         }
     }
     public function Check_Exists_Room($id)
