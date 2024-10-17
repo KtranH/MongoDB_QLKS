@@ -38,6 +38,7 @@ class DailyCheck extends Command
             $date = Carbon::parse($item->NgayCheckin);
             if($today->greaterThanOrEqualTo($date)){
                $item->TinhTrang = "Đã hủy"; 
+               $this->Update_State_Available_Room($item->Phong);
                $item->save();
             }
         }
