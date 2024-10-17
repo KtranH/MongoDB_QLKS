@@ -34,6 +34,11 @@
 
                                 <div style="display:flex; justify-content:space-between; margin-bottom:20px">
                                     <div style="display:flex; flex-wrap:wrap; max-width:350px">
+
+                                        @if (Session::has('error'))
+                                            <div class="alert alert-danger" role="alert">{{ Session::get('error') }}</div>
+                                        @endif
+
                                         <h5 class="card-title"
                                             style="font-family: 'Montserrat', sans-serif;
                                   font-optical-sizing: auto;

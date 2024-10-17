@@ -34,10 +34,16 @@ class CheckinController extends Controller
     public function CancelCheckin($id)
     {
         $checkin = Checkin::where('_id', $id)->firstOrFail();
-        $checkin->TinhTrang = "Đã hủy";
-        $checkin->save();
-        $this->Update_State_Available_Room($checkin->Phong);
-
+        if($checkin->TinhTrang == "Đã nhận phòng")
+        {
+            return redirect()->back()->with('error', 'Không thể hủy vì đã nhận phòng');
+        }
+        else
+        {
+            $checkin->TinhTrang = "Đã hủy";
+            $checkin->save();
+            $this->Update_State_Available_Room($checkin->Phong);
+        }
         return redirect()->route('showcheckin');
     }
     public function ConfirmCheckin($id, $bill)

@@ -56,6 +56,7 @@ class RoomController extends Controller
             }
                  
             $updatedRoom = [
+                'MaPhong' => $id,
                 'TenPhong' => $request->input('tenphong'),
                 'ViTri' => intval($request->input('vitri')),
                 'GiaThue' => doubleval($request->input('giathue')),
