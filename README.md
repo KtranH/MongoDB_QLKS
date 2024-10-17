@@ -5,6 +5,8 @@
 <p>Giới hạn trong phạm vi giả định, chỉ tập trung vào 2 nghiệp vụ chính là đặt, nhận phòng và thanh toán đơn trả phòng. Ngoài ra còn các chức năng nhật kí phòng ghi lại lịch sử đặt của khách hoặc của phòng.</p>
 <h1>Tổng quan database</h1>
 <img src="https://scontent.fsgn5-14.fna.fbcdn.net/v/t1.15752-9/462479445_844603594173176_2014272407004763926_n.png?_nc_cat=101&ccb=1-7&_nc_sid=9f807c&_nc_ohc=H84OEFSowk4Q7kNvgEVQaJT&_nc_zt=23&_nc_ht=scontent.fsgn5-14.fna&_nc_gid=ATerR1oL9-PpE3NCmTLHg4C&oh=03_Q7cD1QH-O-QSU51bHrwGk8yo7_fY-Akx6qt2UF5E4LsH0wV-PQ&oe=67375844">
+<h1>Video demon sản phẩm</h1>
+<a href="https://drive.google.com/file/d/1-8W7JtTVvmP6br3Q_Ja0hhHYlJ5Dccor/view?usp=drive_link">Bấm vào đây!!!</a>
 <h1>Thành viên trong nhóm</h1>
 <table>
         <caption>Danh sách thành viên</caption>
