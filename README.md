@@ -12,6 +12,12 @@
 
 Giới hạn trong phạm vi giả định, chỉ tập trung vào 2 nghiệp vụ chính là đặt, nhận phòng và thanh toán đơn trả phòng. Ngoài ra còn các chức năng nhật kí phòng ghi lại lịch sử đặt của khách hoặc của phòng.
 
+# Công nghệ sử dụng
+
+1.    Ngôn ngữ: PHP
+2.    Framework: Laravel
+3.    Database: MongoDB
+
 # Tổng quan database
 
 ![Database Overview](https://scontent.fsgn5-14.fna.fbcdn.net/v/t1.15752-9/462479445_844603594173176_2014272407004763926_n.png?_nc_cat=101&ccb=1-7&_nc_sid=9f807c&_nc_ohc=H84OEFSowk4Q7kNvgEVQaJT&_nc_zt=23&_nc_ht=scontent.fsgn5-14.fna&_nc_gid=ATerR1oL9-PpE3NCmTLHg4C&oh=03_Q7cD1QH-O-QSU51bHrwGk8yo7_fY-Akx6qt2UF5E4LsH0wV-PQ&oe=67375844)
@@ -24,6 +30,7 @@ Giới hạn trong phạm vi giả định, chỉ tập trung vào 2 nghiệp v�
    composer create-project laravel/laravel QLKS
    ```
 2. ### Cài đặt MongoDB for Windown từ [PECL](https://pecl.php.net/package/mongodb/1.17.1/windows)
+   
    Sau khi tải xuống thì thêm file '.dll' vào thư mục extensions của PHP
      
    Thêm dòng sau vào file php.ini:
@@ -31,10 +38,12 @@ Giới hạn trong phạm vi giả định, chỉ tập trung vào 2 nghiệp v�
    extension=mongodb
    ```
 4. ### Cài đặt jensegers/mongodb
+   
    ```bash
    composer require jenssegers/mongodb
    ```
-5. ### Cấu hình lại file .env
+6. ### Cấu hình lại file .env
+   
    ```bash
    DB_CONNECTION=mongodb
    DB_HOST=127.0.0.1
