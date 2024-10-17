@@ -104,7 +104,8 @@
             </div>
 
           </div><!-- End Customers Card -->
-          <!-- Website Traffic -->
+          
+                  <!-- Website Traffic -->
           <div class="card" style="border-radius:20px">
 
             <div class="card-body pb-0">
@@ -112,54 +113,54 @@
               font-optical-sizing: auto;
               font-weight: 600;
               font-style: normal;
-              font-size: 14px;">Số lượng các loại phòng <span>| Tất cả</span></h5>
+              font-size: 14px;">Dịch vụ được sử dụng nhiều nhất <span>| Tất cả</span></h5>
 
-              <div id="trafficChart" style="min-height: 400px;" class="echart"></div>
+              <div id="SimpleChart" style="min-height: 400px;" class="echart"></div>
 
               <script>
                 document.addEventListener("DOMContentLoaded", () => {
-                  echarts.init(document.querySelector("#trafficChart")).setOption({
-                    tooltip: {
-                      trigger: 'item'
-                    },
-                    legend: {
-                      top: '5%',
-                      left: 'center'
-                    },
-                    series: [{
-                      name: 'Đang hiển thị',
-                      type: 'pie',
-                      radius: ['40%', '70%'],
-                      avoidLabelOverlap: false,
-                      label: {
-                        show: false,
-                        position: 'center'
-                      },
-                      emphasis: {
-                        label: {
-                          show: true,
-                          fontSize: '18',
-                          fontWeight: 'bold'
-                        }
-                      },
-                      labelLine: {
-                        show: false
-                      },
-                      data: [
-                        @foreach ($count_Category_Room as $item)
-                          {
-                            value: '{{ $item["Số phòng"] }}', 
-                            name: '{{ $item["Mã loại"] }}'
-                          },
-                        @endforeach
-                      ]
-                    }]
-                  });
+                  echarts.init(document.querySelector("#SimpleChart")).setOption({
+                    dataset: {
+                    source: [
+                      ['score', 'amount', 'product'],
+                      @foreach ($count_Service as $item)
+                        ['{{ $item['DG'] }}', '{{ $item['SL'] }}', '{{ $item['DV'] }}'],
+                      @endforeach
+                    ]
+                  },
+                  grid: { containLabel: true },
+                  xAxis: { name: 'amount' },
+                  yAxis: { type: 'category' },
+                  visualMap: {
+                    orient: 'horizontal',
+                    left: 'center',
+                    min: 10,
+                    max: 100,
+                    text: ['High Score', 'Low Score'],
+                    // Map the score column to color
+                    dimension: 0,
+                    inRange: {
+                      color: ['#65B581', '#FFCE34', '#FD665F']
+                    }
+                  },
+                  series: [
+                    {
+                      type: 'bar',
+                      encode: {
+                        // Map the "amount" column to X axis.
+                        x: 'amount',
+                        // Map the "product" column to Y axis
+                        y: 'product'
+                      }
+                    }
+                  ]
+                });
                 });
               </script>
 
             </div>
           </div><!-- End Website Traffic -->
+        
           <!-- Recent Sales -->
           @if (Session::has('success'))
             <div class="alert alert-success" role="alert">{{ Session::get('success')}}</div>
@@ -321,56 +322,57 @@
           </div>
         </div><!-- End Budget Report -->
 
-        <!-- Website Traffic -->
-        <div class="card" style="border-radius:20px">
+         <!-- Website Traffic -->
+         <div class="card" style="border-radius:20px">
 
           <div class="card-body pb-0">
             <h5 class="card-title" style="margin-top:-10px; font-family: 'Montserrat', sans-serif;
             font-optical-sizing: auto;
             font-weight: 600;
             font-style: normal;
-            font-size: 14px;">Dịch vụ được sử dụng nhiều nhất <span>| Tất cả</span></h5>
+            font-size: 14px;">Số lượng các loại phòng <span>| Tất cả</span></h5>
 
-            <div id="SimpleChart" style="min-height: 400px;" class="echart"></div>
+            <div id="trafficChart" style="min-height: 400px;" class="echart"></div>
 
             <script>
               document.addEventListener("DOMContentLoaded", () => {
-                echarts.init(document.querySelector("#SimpleChart")).setOption({
-                  dataset: {
-                  source: [
-                    ['score', 'amount', 'product'],
-                    @foreach ($count_Service as $item)
-                      ['{{ $item['DG'] }}', '{{ $item['SL'] }}', '{{ $item['DV'] }}'],
-                    @endforeach
-                  ]
-                },
-                grid: { containLabel: true },
-                xAxis: { name: 'amount' },
-                yAxis: { type: 'category' },
-                visualMap: {
-                  orient: 'horizontal',
-                  left: 'center',
-                  min: 10,
-                  max: 100,
-                  text: ['High Score', 'Low Score'],
-                  // Map the score column to color
-                  dimension: 0,
-                  inRange: {
-                    color: ['#65B581', '#FFCE34', '#FD665F']
-                  }
-                },
-                series: [
-                  {
-                    type: 'bar',
-                    encode: {
-                      // Map the "amount" column to X axis.
-                      x: 'amount',
-                      // Map the "product" column to Y axis
-                      y: 'product'
-                    }
-                  }
-                ]
-              });
+                echarts.init(document.querySelector("#trafficChart")).setOption({
+                  tooltip: {
+                    trigger: 'item'
+                  },
+                  legend: {
+                    top: '5%',
+                    left: 'center'
+                  },
+                  series: [{
+                    name: 'Đang hiển thị',
+                    type: 'pie',
+                    radius: ['40%', '70%'],
+                    avoidLabelOverlap: false,
+                    label: {
+                      show: false,
+                      position: 'center'
+                    },
+                    emphasis: {
+                      label: {
+                        show: true,
+                        fontSize: '18',
+                        fontWeight: 'bold'
+                      }
+                    },
+                    labelLine: {
+                      show: false
+                    },
+                    data: [
+                      @foreach ($count_Category_Room as $item)
+                        {
+                          value: '{{ $item["Số phòng"] }}', 
+                          name: '{{ $item["Mã loại"] }}'
+                        },
+                      @endforeach
+                    ]
+                  }]
+                });
               });
             </script>
 
