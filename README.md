@@ -1,5 +1,3 @@
-![image](https://github.com/user-attachments/assets/f938c469-fb9b-45c6-9182-f4d6072f1994)![image](https://github.com/user-attachments/assets/a8a2e5ca-8850-4cb9-9e7d-9bd17e7c323c)# Video demo sản phẩm
-
 [Bấm vào đây!!!](https://drive.google.com/file/d/1-8W7JtTVvmP6br3Q_Ja0hhHYlJ5Dccor/view?usp=drive_link)
 
 # Phần mềm quản lý đặt phòng khách sạn
