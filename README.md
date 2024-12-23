@@ -6,7 +6,7 @@
 
 Đề tài "Quản Lý Phòng Đặt Khách Sạn". Giả định các tình huống giữa nhân viên và khách hàng khi khách có nhu cầu đặt phòng tại khách sạn, nhân viên thực hiện các nghiệp vụ cần thiết để đáp ứng nhu cầu của khách hàng. Thực hiện các chức năng đặt phòng và thanh toán đặt phòng ở khách sạn, tổng quan được các đơn đặt phòng đã đặt, tính toán chi phí các hóa đơn, xem lịch sử đặt phòng, chi tiết từng phòng.
 
-![Tổng quan](https://scontent.fsgn5-12.fna.fbcdn.net/v/t1.15752-9/462547521_1069517708111820_5310263214614591244_n.png?_nc_cat=103&ccb=1-7&_nc_sid=9f807c&_nc_ohc=GmjZg41ZrkMQ7kNvgGJY9WD&_nc_zt=23&_nc_ht=scontent.fsgn5-12.fna&_nc_gid=AdxnJVlITiMwZrRSqb_uQPS&oh=03_Q7cD1QHuPjlOd2Q1OhTn7NnuaKqFQvYKfJjSeM836yR_P3Q4yw&oe=67382D36)
+![Tổng quan](https://scontent.xx.fbcdn.net/v/t1.15752-9/462245030_1114782760656695_6531671099801741134_n.png?_nc_cat=106&ccb=1-7&_nc_sid=0024fc&_nc_ohc=aisvpcPgttIQ7kNvgEQaGKJ&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent.xx&oh=03_Q7cD1gFmpqSp0dq_vj9gUMUNqvBKBlRhNtN4Fx5IW5M-BdIQZw&oe=679034A2)
 
 # Phạm vi đề tài
 
@@ -20,7 +20,7 @@ Giới hạn trong phạm vi giả định, chỉ tập trung vào 2 nghiệp v�
 
 # Tổng quan database
 
-![Database Overview](https://scontent.fsgn5-14.fna.fbcdn.net/v/t1.15752-9/462479445_844603594173176_2014272407004763926_n.png?_nc_cat=101&ccb=1-7&_nc_sid=9f807c&_nc_ohc=H84OEFSowk4Q7kNvgEVQaJT&_nc_zt=23&_nc_ht=scontent.fsgn5-14.fna&_nc_gid=ATerR1oL9-PpE3NCmTLHg4C&oh=03_Q7cD1QH-O-QSU51bHrwGk8yo7_fY-Akx6qt2UF5E4LsH0wV-PQ&oe=67375844)
+![Database Overview](https://scontent.xx.fbcdn.net/v/t1.15752-9/462479445_844603594173176_2014272407004763926_n.png?_nc_cat=101&ccb=1-7&_nc_sid=0024fc&_nc_ohc=oIWfq8MK_XgQ7kNvgE6r8rH&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent.xx&oh=03_Q7cD1gF4TFxS0AvVFQg-wYUN2S8CrZfQ8yjCQwc-HxXImhvlig&oe=67905584)
 
 # Các bước cài đặt
 
